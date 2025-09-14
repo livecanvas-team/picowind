@@ -27,8 +27,8 @@ function pico_scanner_picowind_provider(): array
     // The current active theme
     $wpTheme = wp_get_theme();
 
-    // if the theme is not picowind and its' child, early return
-    if (!$wpTheme->get('Name') !== 'picowind' && !$wpTheme->get('Name') !== 'picowind Child Base') {
+    // if the theme is not picowind or its' child, early return
+    if (get_template() != 'picowind') {
         return $contents;
     }
 
