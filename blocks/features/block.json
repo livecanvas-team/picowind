@@ -1,0 +1,24 @@
+{
+  "apiVersion": 2,
+  "name": "acf/features",
+  "title": "Features",
+  "description": "Grid of features with icon, title and text.",
+  "category": "custom",
+  "icon": "screenoptions",
+  "keywords": ["features", "grid", "cards", "icons", "benefits"],
+  "supports": {
+    "align": ["wide", "full"],
+    "anchor": true,
+    "jsx": false
+  },
+  "acf": {
+    "mode": "preview",
+    "renderCallback": "Picowind\\acf_block_render_callback"
+  },
+  "example": {
+    "attributes": {
+      "mode": "preview",
+      "data": { "is_preview": true }
+    }
+  }
+}

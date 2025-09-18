@@ -1,0 +1,53 @@
+@source "../../views/**/*.twig";
+@source "../../blocks/**/*.twig";
+@source "../../components/**/*.twig";
+@source "../../**/*.php";
+
+@import "./tokens.css";
+@import "tailwindcss";
+
+@plugin "@tailwindcss/typography";
+@plugin "daisyui" { themes: light --default; }
+
+body {
+  @apply font-sans;
+}
+
+.wp-block{
+  @apply max-w-(--breakpoint-xl);
+}
+
+.wp-block-post-content {
+  @apply max-w-(--breakpoint-xl) mx-auto my-6;
+}
+
+.mce-content-body, .acf_content, .mceContentBody {
+  @apply prose prose-lg max-w-none;
+}
+
+h1.wp-block-post-title {
+  @apply text-4xl font-bold;
+}
+
+.acf-innerblocks-container {
+  @apply w-full;
+}
+
+.editor-styles-wrapper .text-platinum { color: var(--color-platinum); }
+.editor-styles-wrapper .text-gray-900 { color: var(--color-gray-900); }
+.editor-styles-wrapper .text-gray-700 { color: var(--color-gray-700); }
+.editor-styles-wrapper .text-gray-300 { color: var(--color-gray-300); }
+
+.editor-styles-wrapper .bg-rich   { background-color: var(--color-rich); }
+.editor-styles-wrapper .bg-oxford { background-color: var(--color-oxford); }
+.editor-styles-wrapper .bg-yinmn  { background-color: var(--color-yinmn); }
+
+.editor-styles-wrapper .text-yinmn { color: var(--color-yinmn); }
+.editor-styles-wrapper .text-silver { color: var(--color-silver); }
+
+.editor-styles-wrapper .h-10 { height: 2.5rem; }
+.editor-styles-wrapper .h-8  { height: 2rem; }
+.editor-styles-wrapper .w-auto { width: auto; }
+
+.editor-styles-wrapper .fill-current { fill: currentColor; }
+.editor-styles-wrapper .object-contain { object-fit: contain; }

@@ -1,0 +1,50 @@
+{#
+  COMPONENT: Button (DaisyUI)
+
+  Expects:
+    button = {
+      text: string
+      url?: string
+      tag?: 'a'|'button' (defaults to 'a' if url is set, else 'button')
+      variant?: 'primary'|'secondary'|'accent'|'ghost'|'link'|'neutral'|'info'|'success'|'warning'|'error' | 'btn-*'
+      classes?: string
+      attrs?:   { [key:string]: string|bool|null|array }
+      spanAttrs?: { [key:string]: string|bool|null|array }
+    }
+
+  Example:
+    {% include 'components/button/index.twig' with {
+      button: {
+        text: 'Get started',
+        url: '#',
+        variant: 'primary',
+        classes: 'mt-4'
+      }
+    } %}
+#}
+
+{% import 'macros/attributes.twig' as attributes %}
+
+{% set tag = button.tag ?? (button.url is defined ? 'a' : 'button') %}
+{% set attrs = button.attrs ?? {} %}
+{% set additionalClasses = button.classes ? ' ' ~ button.classes : '' %}
+
+{% set variant = (button.variant ?? 'primary')|lower %}
+{% set variantClass = variant starts with 'btn-' ? ' ' ~ variant : ' btn-' ~ variant %}
+
+{% if tag == 'a' %}
+  {% set attrs = attrs|merge({
+    href: button.url ?? '#',
+    target: button.target ?? '_self'
+  }) %}
+{% else %}
+  {% if attrs.type is not defined %}
+    {% set attrs = attrs|merge({ type: 'button' }) %}
+  {% endif %}
+{% endif %}
+
+<{{ tag }} class="btn{{ variantClass }}{{ additionalClasses }}"{{ attributes.attrs(attrs) }}>
+  {% if button.text is defined and button.text is not empty %}
+    <span{{ attributes.attrs(button.spanAttrs ?? {}) }}>{{ button.text }}</span>
+  {% endif %}
+</{{ tag }}>

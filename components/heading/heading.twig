@@ -1,0 +1,37 @@
+{#
+  COMPONENT: Heading
+
+  Expects:
+    heading = {
+      text: string                         # required (HTML allowed)
+      tag?: 'h1'|'h2'|'h3'|'h4'|'h5'|'h6'|'p'|'div'   # defaults to 'h1'
+      classes?: string                     # extra classes appended to wrapper
+      attrs?: { [key:string]: string|bool|array|null }# extra HTML attributes
+    }
+
+  Example usage:
+    {% include 'components/heading/heading.twig' with {
+      heading: {
+        tag: 'h2',
+        text: 'Our <em>Features</em>',
+        classes: 'mt-8 text-4xl font-extrabold',
+        attrs: { id: 'features-heading' }
+      }
+    } %}
+#}
+
+{% import 'macros/attributes.twig' as attributes %}
+
+{% set additionalClasses = heading.classes is defined and heading.classes ? ' ' ~ heading.classes : '' %}
+{% set headingTag = heading.tag is defined and heading.tag ? heading.tag : 'h1' %}
+{% set attrs = heading.attrs ?? {} %}
+
+{% if heading.text %}
+  <{{ headingTag }} class="o-heading{{ underlineClass }}{{ additionalClasses }}"
+    {% for key, value in attrs %}
+      {{ key }}="{{ value is iterable ? value|join(',') : value }}"
+    {% endfor %}
+  >
+    {{ heading.text|raw }}
+  </{{ headingTag }}>
+{% endif %}

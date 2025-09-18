@@ -1,45 +1,31 @@
 <?php
+/**
+ * @package WordPress
+ * @subpackage Picowind
+ * @since Picowind 1.0.0
+ */
 
-// Exit if accessed directly.
-defined( 'ABSPATH' ) || exit;
+$templates = [ 'archive.twig', 'index.twig' ];
 
-get_header();
-?>
-  
- 
+$context = Timber::context();
 
-<section class="py-5 py-xl-6 bg-light-subtle text-dark-emphasis">
-  <div class="container text-center">
-    <h1><?php the_archive_title() ?></h1>
-    <div class="lead text-muted col-md-8 offset-md-2 archive-description"><?php echo category_description(); ?></div> 
- 
-    <!-- <p>
-      <a href="#" class="btn btn-primary my-2">Action</a>
-      <a href="#" class="btn btn-secondary my-2">Secondary action</a>
-    </p> -->
-  </div>
-</section>
+$context['title'] = 'Archive';
+if ( is_day() ) {
+	$context['title'] = 'Archive: ' . get_the_date( 'D M Y' );
+} elseif ( is_month() ) {
+	$context['title'] = 'Archive: ' . get_the_date( 'M Y' );
+} elseif ( is_year() ) {
+	$context['title'] = 'Archive: ' . get_the_date( 'Y' );
+} elseif ( is_tag() ) {
+	$context['title'] = single_tag_title( '', false );
+} elseif ( is_category() ) {
+	$context['title'] = single_cat_title( '', false );
+	array_unshift( $templates, 'archive-' . get_query_var( 'cat' ) . '.twig' );
+} elseif ( is_post_type_archive() ) {
+	$context['title'] = post_type_archive_title( '', false );
+	array_unshift( $templates, 'archive-' . get_post_type() . '.twig' );
+}
 
-<section class="album py-5">
-  <div id="container-content-archive" class="container">
-    <div class="row">
-    <?php 
-        if ( have_posts() ) : 
-            while ( have_posts() ) : the_post();
-              get_template_part('loops/cards');
-            endwhile;
-        else :
-            _e( 'Sorry, no posts matched your criteria.', 'textdomain' );
-        endif;
-        ?>
-    </div>
+$context['posts'] = Timber::get_posts();
 
-    <div class="row">
-      <div class="col lead text-center w-100">
-        <div class="d-inline-block"><?php picowind_pagination() ?></div>
-      </div><!-- /col -->
-    </div> <!-- /row -->
-  </div>
-</section>
- 
-<?php get_footer();
+Timber::render( $templates, $context );

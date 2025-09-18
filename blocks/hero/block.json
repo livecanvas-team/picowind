@@ -1,0 +1,24 @@
+{
+  "apiVersion": 2,
+  "name": "acf/hero",
+  "title": "Hero",
+  "description": "Large above-the-fold section with heading, text and CTAs.",
+  "category": "custom",
+  "icon": "cover-image",
+  "keywords": ["hero", "banner", "jumbotron"],
+  "supports": {
+    "align": ["full", "wide"],
+    "anchor": true,
+    "jsx": false
+  },
+  "acf": {
+    "mode": "preview",
+    "renderCallback": "Picowind\\acf_block_render_callback"
+  },
+  "example": {
+    "attributes": {
+      "mode": "preview",
+      "data": { "is_preview": true }
+    }
+  }
+}

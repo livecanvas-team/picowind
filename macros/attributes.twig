@@ -1,0 +1,8 @@
+{% macro attrs(map) %}
+  {%- for key, value in (map ?? {}) -%}
+    {%- if value is same as(true) -%} {{- ' ' ~ key -}}
+    {%- elseif value is not same as(false) and value is not null -%}
+      {{- ' ' ~ key ~ '="' ~ (value is iterable ? value|join(' ') : value) ~ '"' -}}
+    {%- endif -%}
+  {%- endfor -%}
+{% endmacro %}

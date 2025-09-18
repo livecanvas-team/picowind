@@ -1,0 +1,47 @@
+{
+    "name": "livecanvas-team/picowind",
+    "type": "wordpress-theme",
+    "description": "A modern WordPress theme using Timber, ACF, Tailwind CSS via WindPress, LiveCanvas, and Alpine JS",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "The LiveCanvas Team"
+        },
+        {
+            "name": "The WindPress Team"
+        }
+    ],
+    "require": {
+        "timber/timber": "^2.0"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true,
+        "allow-plugins": {
+            "composer/installers": true
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Picowind\\": "src/"
+        },
+        "files": [
+            "src/functions.php"
+        ]
+    },
+    "minimum-stability": "stable",
+    "scripts": {
+        "complete-check": [
+            "@check-ecs",
+            "@phpstan",
+            "phpunit"
+        ],
+        "phpstan": "vendor/bin/phpstan analyse --ansi --error-format symplify",
+        "rector": "vendor/bin/rector process --ansi",
+        "check-ecs": "vendor/bin/ecs check --ansi",
+        "fix-ecs": "vendor/bin/ecs check --fix --ansi"
+    },
+    "require-dev": {
+        "rector/rector": "^2.1"
+    }
+}

@@ -1,25 +1,21 @@
-</main>
-	<?php 
+<?php
+/**
+ * Third party plugins that hijack the theme will call wp_footer() to get the footer template.
+ * We use this to end our output buffer (started in header.php) and render into the view/page-plugin.twig template.
+ *
+ * If you're not using a plugin that requries this behavior (ones that do include Events Calendar Pro and
+ * WooCommerce) you can delete this file and header.php
+ *
+ * @package WordPress
+ * @subpackage Picowind
+ * @since Picowind 1.0.0
+ */
 
-    // Custom filter to check if footer elements should be displayed. To disable, use: add_filter('picowind_enable_footer_elements', '__return_false');
-    if (apply_filters('picowind_enable_footer_elements', true)):
-    
-        //check if LC option is set to "Handle Footer"   
-        if (!function_exists("lc_custom_footer")) {
-            
-            //use the built-in theme footer elements 
-            get_template_part( 'partials/footer', 'elements' );
-            
-        } else {
-            //use the LiveCanvas Custom Footer
-            lc_custom_footer(); 
-        }
-        
-    endif;
-    ?>
-
-	<?php wp_footer(); ?>
-
-	</body>
-</html>
-
+$timberContext = $GLOBALS['timberContext']; // @codingStandardsIgnoreFile
+if ( ! isset( $timberContext ) ) {
+	throw new \Exception( 'Timber context not set in footer.' );
+}
+$timberContext['content'] = ob_get_contents();
+ob_end_clean();
+$templates = [ 'page-plugin.twig' ];
+Timber::render( $templates, $timberContext );

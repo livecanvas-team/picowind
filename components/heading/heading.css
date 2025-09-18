@@ -1,0 +1,29 @@
+@reference "tailwindcss";
+
+h1, h2, h3, h4, h5, h6, .o-heading {
+  @apply font-sans font-bold;
+}
+
+h1, .o-heading--h1 {
+  @apply leading-[1.15] lg:leading-[1.2] text-3xl lg:text-5xl tracking-tight;
+}
+
+h2, .o-heading--h2 {
+  @apply leading-[1.15] text-2xl  lg:text-4xl tracking-tight;
+}
+
+h3, .o-heading--h3 {
+  @apply leading-[1.15] text-xl lg:text-3xl tracking-tight;
+}
+
+h4, .o-heading--h4 {
+  @apply leading-[1.15] text-lg lg:text-2xl;
+}
+
+h5, .o-heading--h5 {
+  @apply leading-[1.15] text-base lg:text-xl;
+}
+
+h6, .o-heading--h6 {
+  @apply leading-[1.15] text-base lg:text-lg;
+}

@@ -1,10 +1,8 @@
-<?php if (is_active_sidebar( 'main-sidebar' )): ?>
+<?php
+/**
+ * @package WordPress
+ * @subpackage Picowind
+ * @since Picowind 1.0.0
+ */
 
-    <div class="wrapper p-3" id="wrapper-main-sidebar">
-    
-        <?php dynamic_sidebar( 'main-sidebar' ); ?>
-    
-    </div>
-
-<?php endif ?>
-		
+Timber::render( ['sidebar.twig'], $data );

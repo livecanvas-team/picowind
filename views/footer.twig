@@ -1,0 +1,69 @@
+<footer class="bg-rich pt-12 md:pt-20">
+	<div class="container max-w-screen-xl mx-auto space-y-8 overflow-hidden sm:px-6 lg:px-8">
+
+		{% if footer_menu and footer_menu.items %}
+			<nav class="sm:flex flex-wrap justify-center space-y-4 sm:space-y-0 sm:space-x-12">
+				{% for item in footer_menu.items %}
+					<a
+						href="{{ item.link }}"
+						class="block text-center md:text-left sm:flex text-base text-silver hover:text-platinum"
+						{{ item.target ? 'target="' ~ item.target ~ '"' }}
+					>
+						{{ item.title }}
+					</a>
+				{% endfor %}
+				
+			</nav>
+		{% endif %}
+		{% set social_links = options.social_links ?? [] %}
+
+		{% if social_links %}
+			<div class="flex justify-center mt-8 space-x-6">
+				{% for item in social_links %}
+					{% set link      = item.link ?? {} %}
+					{% set url       = link.url   ?? '#' %}
+					{% set title     = link.title ?? 'Social link' %}
+					{% set target    = link.target ?? '_self' %}
+					{% set icon      = item.icon ?? null %}
+					{% set preserve  = item.preserve_colors ?? false %}
+					{% set is_svg    = icon and icon.subtype == 'svg+xml' %}
+
+					<a
+						href="{{ url }}"
+						class="text-silver hover:text-platinum"
+						aria-label="{{ title }}"
+						{{ target == '_blank' ? 'target="_blank" rel="noopener"' }}
+					>
+						{% if is_svg %}
+							{# Monochrome by default: icon color follows currentColor (anchor) #}
+							<span class="inline-block w-6 h-6">
+								{{ inline_svg(icon, {
+									class: 'w-6 h-6 fill-current',
+									monochrome: not preserve,
+									title: title
+								}) }}
+							</span>
+						{% elseif icon %}
+							<img
+								src="{{ icon.sizes.thumbnail ?? icon.url }}"
+								alt="{{ title }}"
+								class="w-6 h-6 object-contain"
+								width="24" height="24" loading="lazy"
+							>
+						{% else %}
+							<span class="sr-only">{{ title }}</span>
+						{% endif %}
+					</a>
+				{% endfor %}
+			</div>
+		{% endif %}
+
+		<div class="border-t border-t-yinmn/50 mt-8 py-8 text-center">
+			<p class="text-base leading-6 text-yinmn">
+				&copy; 2021 SomeCompany, Inc. All rights reserved.
+			</p>
+		</div>
+		
+	</div>
+
+</footer>

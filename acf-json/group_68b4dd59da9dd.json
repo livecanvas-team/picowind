@@ -1,0 +1,51 @@
+{
+    "key": "group_68b4dd59da9dd",
+    "title": "Shared: Appearance",
+    "fields": [
+        {
+            "key": "field_68b4dd5a7926e",
+            "label": "Background Color",
+            "name": "bg_color",
+            "aria-label": "",
+            "type": "button_group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "none": "None",
+                "rich": "Rich Black",
+                "yinmn": "YInMn Blue",
+                "platinum": "Platinum"
+            },
+            "default_value": "none",
+            "return_format": "value",
+            "allow_null": 0,
+            "allow_in_bindings": 0,
+            "layout": "horizontal"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "all"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": false,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1756850963
+}

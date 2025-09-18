@@ -1,0 +1,117 @@
+{# ACF Block: Hero #}
+{% extends 'blocks/_base/block.twig' %}
+
+{% set title = fields.content_title ?? null %}
+{% set body = fields.content_body ?? null %}
+{% set primary_button   = fields.content_primary_button ?? null %}
+{% set secondary_button = fields.content_secondary_button ?? null %}
+{% set img       = fields.media_image ?? null %}
+{% set imgRight  = (fields.layout_media_position ?? 'right') == 'right' %}
+
+{# flip columns if image should be on the left #}
+{% set contentCol = 'col-span-2 md:col-span-1 ' ~ (imgRight ? '' : 'md:order-2') %}
+{% set mediaCol   = 'col-span-2 md:col-span-1 ' ~ (imgRight ? '' : 'md:order-1') %}
+
+{% block block_content %}
+
+  {# <pre style="font-size: 12px;">
+    {{ dump(fields) }}
+  </pre> #}
+
+{% set blockTextClassMap = {
+	rich:     { blockHeading: 'text-platinum', blockBody: 'text-gray-300' },
+	yinmn:    { blockHeading: 'text-platinum', blockBody: 'text-platinum/80' },
+	platinum: { blockHeading: 'text-gray-900',  blockBody: 'text-gray-700' },
+	_default: { blockHeading: 'text-gray-900',  blockBody: 'text-gray-700' }
+} %}
+
+{% set current							 = blockTextClassMap[bg_color]|default(blockTextClassMap._default) %}
+{% set blockHeadingClass 		 = current.blockHeading %}
+{% set blockBodyClass    		 = current.blockBody %}
+
+
+  <div class="c-hero grid grid-cols-2 items-center gap-12 xl:mx-auto xl:max-w-6xl">
+    
+    <div class="{{ contentCol }}">
+      <div class="space-y-9">
+        <div class="space-y-3">
+          {% include 'components/heading/heading.twig' with {
+            heading: {
+              tag: 'h1',
+              text: title,
+              classes: blockHeadingClass,
+            }
+          } %}
+          {% include 'components/rich-text/rich-text.twig' with {
+            richText: {
+              content: body,
+              classes: blockBodyClass,
+              sanitize: true
+            }
+          } %}
+        </div>
+        
+        {% if (primary_button and primary_button.title) or (secondary_button and secondary_button.title) %}
+          <div class="flex flex-wrap gap-4">
+
+            {# Primary CTA #}
+            {% if primary_button and primary_button.url and primary_button.title %}
+              {% include 'components/button/button.twig' with {
+                button: {
+                  text: primary_button.title,
+                  url:  primary_button.url,
+                  variant: 'primary',
+                  attrs: {
+                    target: primary_button.target ?: '_self',
+                    rel: primary_button.target == '_blank' ? 'noopener' : null
+                  }
+                }
+              } %}
+            {% endif %}
+
+            {# Secondary CTA #}
+            {% if secondary_button and secondary_button.url and secondary_button.title %}
+              {% include 'components/button/button.twig' with {
+                button: {
+                  text: secondary_button.title,
+                  url:  secondary_button.url,
+                  variant: 'secondary',
+                  attrs: {
+                    target: secondary_button.target ?: '_self',
+                    rel: secondary_button.target == '_blank' ? 'noopener' : null
+                  }
+                }
+              } %}
+            {% endif %}
+
+          </div>
+          {% endif %}
+
+      </div>
+    </div>
+
+    <div class="{{ mediaCol }}">
+      {% if img and img.url %}
+        <figure class="w-full h-auto overflow-hidden rounded-md shadow-xl sm:rounded-xl">
+          <img
+            class="block w-full h-auto object-cover"
+            src="{{ img.sizes['large'] ?? img.url }}"
+            srcset="
+              {{ img.sizes['medium_large'] ?? '' }} 768w,
+              {{ img.sizes['large'] ?? '' }} 1024w,
+              {{ img.url }} {{ img.width }}w"
+            sizes="(min-width: 768px) 50vw, 100vw"
+            width="{{ img.width }}"
+            height="{{ img.height }}"
+            alt="{{ img.alt ?: img.title }}"
+            loading="lazy"
+            decoding="async"
+          >
+        </figure>
+      {% endif %}
+    </div>
+
+  </div>
+
+{% endblock %}
+    

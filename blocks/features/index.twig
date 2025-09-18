@@ -1,0 +1,89 @@
+{# ACF Block: Features #}
+{% extends 'blocks/_base/block.twig' %}
+
+{% set block_title = fields.block_title ?? null %}
+{% set block_body  = fields.block_body  ?? null %}
+{% set items       = fields.features    ?? [] %}
+
+{% block block_content %}
+
+{% set blockTextClassMap = {
+	rich:     { blockHeading: 'text-platinum', blockBody: 'text-gray-300' },
+	yinmn:    { blockHeading: 'text-platinum', blockBody: 'text-platinum/80' },
+	platinum: { blockHeading: 'text-gray-900',  blockBody: 'text-gray-700' },
+	_default: { blockHeading: 'text-gray-900',  blockBody: 'text-gray-700' }
+} %}
+
+{% set current							 = blockTextClassMap[bg_color]|default(blockTextClassMap._default) %}
+{% set blockHeadingClass 		 = current.blockHeading %}
+{% set blockBodyClass    		 = current.blockBody %}
+
+{% set cardMap = {
+  rich:     { card: 'bg-yinmn', icon: 'bg-oxford' },
+  yinmn:    { card: 'bg-oxford', icon: 'bg-rich'   },
+  platinum: { card: 'bg-yinmn', icon: 'bg-oxford' },
+  _default: { card: 'bg-yinmn', icon: 'bg-oxford' }
+} %}
+
+{% set cardVariant = cardMap[bg_color]|default(cardMap._default) %}
+{% set featureCardClass = cardVariant.card %}
+{% set featureCardIconClass = cardVariant.icon %}
+
+  <div class="text-center space-y-12">
+    {% if block_title or block_body %}
+      <div class="space-y-3 max-w-3xl mx-auto">
+        {% if block_title %}
+          {% include 'components/heading/heading.twig' with {
+            heading: {
+							tag: 'h2',
+							text: block_title,
+							classes: blockHeadingClass,
+						}
+          } %}
+        {% endif %}
+        {% if block_body %}
+          {% include 'components/rich-text/rich-text.twig' with {
+            richText: {
+              content: block_body,
+              classes: blockBodyClass ~ ' mx-auto',
+              sanitize: true
+            }
+          } %}
+        {% endif %}
+      </div>
+    {% endif %}
+    {% if items %}
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 max-w-5xl mx-auto">
+        {% for item in items %}
+          <div class="text-center flex flex-col items-center gap-4 rounded-xl p-6 md:p-8 {{ featureCardClass }}">
+            {% set icon = item.icon ?? null %}
+            {% if icon %}
+              <div class="p-3 rounded-full text-white {{ featureCardIconClass }}">
+                <img
+                  src="{{ icon.url }}"
+                  alt="{{ icon.alt|default('') }}"
+                  class="w-8 h-8 object-contain"
+                  loading="lazy">
+              </div>
+            {% endif %}
+						{% include 'components/heading/heading.twig' with {
+							heading: {
+								tag: 'h4',
+								text: item.title,
+								classes: 'text-platinum',
+							}
+						} %}
+						{% include 'components/rich-text/rich-text.twig' with {
+							richText: {
+								content: item.description,
+								classes: 'text-base text-platinum/80',
+								sanitize: true
+							}
+						} %}
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+{% endblock %}
+		

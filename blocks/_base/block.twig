@@ -1,0 +1,32 @@
+{# expects: block, fields #}
+{# pull from Shared: Appearance clone #}
+{% set appearance = fields.appearance ?? {} %}
+{% set bg_color  = appearance.bg_color ?? null %}
+{% set padding = appearance.padding   ?? ' py-12 md:py-20' %}
+{% set additionalClasses = appearance.classes ? ' ' ~ appearance.classes : '' %}
+
+{% set bg = {
+  'platinum'   : 'bg-platinum',
+  'rich'       : 'bg-rich',
+  'oxford'     : 'bg-oxford',
+  'yinmn'      : 'bg-yinmn',
+  'silver'     : 'bg-silver'
+} %}
+
+{% set bgColorClass = bg_color
+  ? (' ' ~ (bg_color == 'none' ? 'bg-transparent' : (bg[bg_color]|default(''))))
+  : '' %}
+
+  {# -- Auto block modifier class: "block--hero", "block--logo-bar", etc. ---- #}
+{% set _name          = (block.name ?? '')|split('/')|last %}
+{% set blockSlug      = _name|replace({'_':'-'}) %}
+{% set blockTypeClass = blockSlug ? ' block--' ~ blockSlug : '' %}
+
+<section
+  id="{{ block.anchor ?? '' }}"
+  class="block{{ blockTypeClass }}{{ bgColorClass }}{{ padding }}{{ additionalClasses }}{{ block.align == 'full' ? ' w-full' : '' }}"
+>
+  <div class="block__container container">
+    {% block block_content %}{% endblock %}
+  </div>
+</section>

@@ -1,0 +1,116 @@
+{
+    "key": "group_68bc6d3b14885",
+    "title": "Footer: Social Links",
+    "fields": [
+        {
+            "key": "field_68bc6d3b51b62",
+            "label": "Social Links",
+            "name": "social_links",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "table",
+            "pagination": 0,
+            "min": 0,
+            "max": 0,
+            "collapsed": "",
+            "button_label": "Add Social Link",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_68bc704a51b63",
+                    "label": "Link",
+                    "name": "link",
+                    "aria-label": "",
+                    "type": "link",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "array",
+                    "allow_in_bindings": 0,
+                    "parent_repeater": "field_68bc6d3b51b62"
+                },
+                {
+                    "key": "field_68bc712651b64",
+                    "label": "Icon",
+                    "name": "icon",
+                    "aria-label": "",
+                    "type": "image",
+                    "instructions": "Accepts .svg, .jpeg, .jpg or .png files only.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "array",
+                    "library": "all",
+                    "min_width": "",
+                    "min_height": "",
+                    "min_size": "",
+                    "max_width": "",
+                    "max_height": "",
+                    "max_size": "",
+                    "mime_types": ".svg, .jpeg, .jpg, .png",
+                    "allow_in_bindings": 0,
+                    "preview_size": "thumbnail",
+                    "parent_repeater": "field_68bc6d3b51b62"
+                },
+                {
+                    "key": "field_68bc71c551b65",
+                    "label": "Preserve Colors",
+                    "name": "preserve_colors",
+                    "aria-label": "",
+                    "type": "true_false",
+                    "instructions": "Choose whether or not to preserve colors of the SVG (if applicable) being uploaded.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "message": "",
+                    "default_value": 0,
+                    "allow_in_bindings": 0,
+                    "ui_on_text": "",
+                    "ui_off_text": "",
+                    "ui": 1,
+                    "parent_repeater": "field_68bc6d3b51b62"
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "acf-options-footer"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1757180991
+}

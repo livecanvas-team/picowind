@@ -1,40 +1,15 @@
 <?php
-// Exit if accessed directly.
-defined('ABSPATH') || exit;
+/**
+ * Third party plugins that hijack the theme will call wp_head() to get the header template.
+ * We use this to start our output buffer and render into the view/page-plugin.twig template in footer.php
+ *
+ * If you're not using a plugin that requries this behavior (ones that do include Events Calendar Pro and
+ * WooCommerce) you can delete this file and footer.php
+ *
+ * @package WordPress
+ * @subpackage Picowind
+ * @since Picowind 1.0.0
+ */
 
-?>
-<!doctype html>
-<html <?php language_attributes(); ?>>
-
-<head>
-
-	<meta charset="<?php bloginfo('charset'); ?>">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-
-	<!-- wp_head -->
-	<?php wp_head(); ?>
-	<!-- /wp_head -->
-</head>
-
-<body <?php body_class(); ?>>
-	<?php wp_body_open(); ?>
-
-	<?php 
-    // Custom filter to check if header elements should be displayed. To disable, use: add_filter('picowind_enable_header_elements', '__return_false');
-    if (apply_filters('picowind_enable_header_elements', true)):
-
-        //check if LC option is set to "Handle Header"    
-        if (!function_exists('lc_custom_header')) {
-            //use the built-in theme header elements 
-            get_template_part( 'partials/header', 'optional-topbar' ); 
-            get_template_part( 'partials/header', 'navbar' );
-        } else {
-            //use the LiveCanvas Custom Header
-            lc_custom_header(); 
-        }
-
-    endif;
-    
-	?>
-
-	<main id='theme-main'>
+$GLOBALS['timberContext'] = Timber::context();
+ob_start();

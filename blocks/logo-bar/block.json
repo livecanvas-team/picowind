@@ -1,0 +1,29 @@
+{
+  "apiVersion": 2,
+  "name": "acf/logo-bar",
+  "title": "Logo Bar",
+  "description": "Grid of client/partner logos.",
+  "category": "custom",
+  "icon": "images-alt2",
+  "keywords": ["logos", "clients", "brands", "partners", "press"],
+  "supports": {
+    "align": ["wide", "full"],
+    "anchor": true,
+    "multiple": true,
+    "html": false,
+    "spacing": { "padding": true, "margin": true }
+  },
+  "acf": {
+    "mode": "preview",
+    "renderCallback": "Picowind\\acf_block_render_callback"
+  },
+  "example": {
+    "attributes": {
+      "mode": "preview",
+      "data": {
+        "is_preview": true,
+        "heading": "Trusted by great teams"
+      }
+    }
+  }
+}

@@ -1,0 +1,84 @@
+/* --- Design tokens (Tailwind v4) --- */
+@theme {
+  /* Breakpoints (3xl, 4xl) */
+  --breakpoint-3xl: 1600px;
+  --breakpoint-4xl: 1920px;
+
+  /* Colors */
+  
+  /* Grays */
+  --color-gray-100: #F3F3F3;
+  --color-gray-200: #E0E0E0;
+  --color-gray-300: #B8B8B8;
+  --color-gray-400: #929292;
+  --color-gray-500: #6E6E6E;
+  --color-gray-600: #4B4B4B;
+  --color-gray-700: #313131;
+  --color-gray-800: #272727;
+  --color-gray-900: #1A1A1A;
+
+  /* Brand Colors */
+  --color-rich:     #0d1b2a;  /* rich_black  */
+  --color-oxford:   #1b263b;  /* oxford_blue */
+  --color-yinmn:    #415a77;  /* yinmn_blue  */
+  --color-silver:   #778da9;  /* silver_lake_blue */
+  --color-platinum: #e0e1dd;  /* platinum    */
+
+  /* Spacing */
+  --spacing-0:   0px;       /* 0              */
+  --spacing-1:   0.25rem;   /* 4px   -> *-1   */
+  --spacing-2:   0.5rem;    /* 8px   -> *-2   */
+  --spacing-3:   0.75rem;   /* 12px  -> *-3   */
+  --spacing-4:   1rem;      /* 16px  -> *-4   */
+  --spacing-5:   1.25rem;   /* 20px  -> *-5   */
+  --spacing-6:   1.5rem;    /* 24px  -> *-6   */
+  --spacing-7:   1.75rem;   /* 28px  -> *-7   */
+  --spacing-8:   2rem;      /* 32px  -> *-8   */
+  --spacing-9:   2.25rem;   /* 36px  -> *-9   */
+  --spacing-10:  2.5rem;    /* 40px  -> *-10  */
+  --spacing-11:  2.75rem;   /* 44px  -> *-11  */
+  --spacing-12:  3rem;      /* 48px  -> *-12  */
+  --spacing-13:  3.25rem;   /* 52px  -> *-13  */
+  --spacing-14:  3.5rem;    /* 56px  -> *-14  */
+  --spacing-15:  3.75rem;   /* 60px  -> *-15  */
+  --spacing-16:  4rem;      /* 64px  -> *-16  */
+  --spacing-18:  4.5rem;    /* 72px  -> *-18  */
+  --spacing-20:  5rem;      /* 80px  -> *-20  */
+  --spacing-24:  6rem;      /* 96px  -> *-24  */
+  --spacing-28:  7rem;      /* 112px -> *-28  */
+  --spacing-32:  8rem;      /* 128px -> *-32  */
+  --spacing-36:  9rem;      /* 144px -> *-36  */
+  --spacing-40:  10rem;     /* 160px -> *-40  */
+  --spacing-44:  11rem;     /* 176px -> *-44  */
+  --spacing-48:  12rem;     /* 192px -> *-48  */
+  --spacing-52:  13rem;     /* 208px -> *-52  */
+  --spacing-56:  14rem;     /* 224px -> *-56  */
+  --spacing-60:  15rem;     /* 240px -> *-60  */
+  --spacing-64:  16rem;     /* 256px -> *-64  */
+  --spacing-72:  18rem;     /* 288px -> *-72  */
+  --spacing-80:  20rem;     /* 320px -> *-80  */
+  --spacing-96:  24rem;     /* 384px -> *-96  */
+
+  /* Text Size */
+  --text-xxs:  0.625rem;  /* 10px  -> text-xxs  */
+  --text-xs:   0.75rem;   /* 12px  -> text-xs   */
+  --text-sm:   0.875rem;  /* 14px  -> text-sm   */
+  --text-base: 1rem;      /* 16px  -> text-base */
+  --text-lg:   1.125rem;  /* 18px  -> text-lg   */
+  --text-xl:   1.375rem;  /* 22px  -> text-xl   */
+  --text-2xl:  1.5rem;    /* 24px  -> text-2xl  */
+  --text-3xl:  1.75rem;   /* 28px  -> text-3xl  */
+  --text-4xl:  2rem;      /* 32px  -> text-4xl  */
+  --text-5xl:  2.25rem;   /* 36px  -> text-5xl  */
+  --text-6xl:  2.625rem;  /* 42px  -> text-6xl  */
+  --text-7xl:  3rem;      /* 48px  -> text-7xl  */
+  --text-8xl:  4rem;      /* 64px  -> text-8xl  */
+  --text-9xl:  6rem;      /* 96px  -> text-9xl  */
+  --text-10xl: 8rem;      /* 128px -> text-10xl */
+
+  /* Container */
+  --container-padding: 1rem;
+  --container-lg: 1140px;
+  --container-xl: 1340px;
+  --container-2xl: 1340px;
+}

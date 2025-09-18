@@ -1,4 +1,0 @@
-<?php 
-/*
-Enjoy the silence
-*/ 

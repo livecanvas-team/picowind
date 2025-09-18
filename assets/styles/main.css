@@ -1,0 +1,29 @@
+@source "../../views/**/*.twig";
+@source "../../blocks/**/*.twig";
+@source "../../components/**/*.twig";
+@source "../../**/*.php";
+
+@import "./tokens.css";
+@import "tailwindcss";
+
+@plugin "@tailwindcss/typography";
+@plugin "daisyui" { themes: light --default; }
+
+@utility container {
+  @apply w-full mx-auto px-4 md:px-5;
+
+  /* lg (≥1024px) */
+  @media (min-width: 1024px) { max-width: var(--container-lg); }
+
+  /* xl (≥1280px) */
+  @media (min-width: 1280px) { max-width: var(--container-xl); }
+
+  /* 2xl (≥1536px) */
+  @media (min-width: 1536px) { max-width: var(--container-2xl); }
+}
+
+/* Foundations */
+@import "../../components/heading/heading.css";
+
+/* Components */
+@import "../../components/button/button.css";

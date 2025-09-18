@@ -1,0 +1,88 @@
+{# ACF Block: Logo Bar #}
+{% extends 'blocks/_base/block.twig' %}
+
+{% set block_title = fields.block_title ?? null %}
+{% set block_body  = fields.block_body  ?? null %}
+{% set logos   		 = fields.logos  ?? null %}
+
+{% block block_content %}
+
+	{% set blockTextClassMap = {
+		rich:     { blockHeading: 'text-platinum', blockBody: 'text-gray-300' },
+		yinmn:    { blockHeading: 'text-platinum', blockBody: 'text-platinum/80' },
+		platinum: { blockHeading: 'text-gray-900',  blockBody: 'text-gray-700' },
+		_default: { blockHeading: 'text-gray-900',  blockBody: 'text-gray-700' }
+	} %}
+
+	{% set current							 = blockTextClassMap[bg_color]|default(blockTextClassMap._default) %}
+	{% set blockHeadingClass 		 = current.blockHeading %}
+	{% set blockBodyClass    		 = current.blockBody %}
+
+	{% set logoMap = {
+		rich:     { logo: 'text-yinmn' },
+		yinmn:    { logo: 'text-oxford'},
+		platinum: { logo: 'text-yinmn' },
+		_default: { logo: 'text-silver' }
+	} %}
+
+	{% set logoFillCurrent = logoMap[bg_color]|default(logoMap._default) %}
+	{% set logoClass = logoFillCurrent.logo %}
+
+	<div class="text-center space-y-12">
+		{% if block_title or block_body %}
+      <div class="space-y-3 max-w-3xl mx-auto">
+				{# adjust include path if your heading lives under foundations/ #}
+				{% include 'components/heading/heading.twig' with {
+					heading: {
+						tag: 'h2',
+						text: block_title,
+						classes: blockHeadingClass
+					}
+				} %}
+				{% include 'components/rich-text/rich-text.twig' with {
+					richText: {
+						content: block_body,
+						sanitize: true,
+						classes: blockBodyClass
+					}
+				} %}
+      </div>
+    {% endif %}
+		{% if logos %}
+			<div class="flex flex-wrap items-center justify-center gap-12">
+				{% for item in logos %}
+          {% set logo      = item.image %}
+          {% set name      = item.name ?? logo.title ?? '' %}
+          {% set preserve  = item.preserve_colors ?? false %}
+          {% set src       = logo.sizes.medium ?? logo.url %}
+          {% set is_svg    = logo.subtype == 'svg+xml' %}
+
+          <div class="flex flex-wrap items-center justify-center">
+            {% if is_svg %}
+              {# parent color controls monochrome SVG via fill-current #}
+              <span class="inline-block w-auto h-10 {{ logoClass }}" aria-label="{{ name }}">
+                {{ inline_svg(logo, {
+                  class: 'w-auto h-10 w-auto fill-current',
+                  monochrome: not preserve,
+                  title: name
+                }) }}
+              </span>
+            {% else %}
+              <img
+                src="{{ src }}"
+                alt="{{ name }}"
+                class="block object-contain h-10 w-auto"
+                loading="lazy"
+                width="{{ logo.width ?? '' }}"
+                height="{{ logo.height ?? '' }}"
+              >
+            {% endif %}
+          </div>
+        {% endfor %}
+				
+			</div>
+		{% endif %}
+		
+	</div>
+
+{% endblock %}

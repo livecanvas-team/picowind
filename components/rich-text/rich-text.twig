@@ -1,0 +1,43 @@
+{#
+  COMPONENT: Rich Text
+
+  Expects:
+    richText = {
+      content: string                     # HTML or plain text
+      classes?: string                    # extra classes for wrapper
+      attrs?: { [key:string]: string }    # extra HTML attrs (id, data-*, aria-*)
+      autop?: bool                        # apply wpautop if content is plain text (default: false)
+      sanitize?: bool                     # pass through wp_kses_post (default: true)
+    }
+
+  Example:
+    {% include 'components/rich-text/rich-text.twig' with {
+      richText: {
+        content: fields.content_body,           # ACF WYSIWYG "Return: HTML"
+        classes: 'prose prose-lg',              # if using typography plugin
+        attrs: { id: 'intro-copy' },
+        sanitize: true
+      }
+    } %}
+#}
+
+{% import 'macros/attributes.twig' as attributes %}
+
+{% set wrapperClasses = 'o-rte font-body space-y-6' ~ (richText.classes ? ' ' ~ richText.classes : '') %}
+{% set html = richText.content ?? '' %}
+
+{# If it's plain text and you want paragraphs, toggle autop #}
+{% if html and (richText.autop ?? false) %}
+  {% set html = function('wpautop', html) %}
+{% endif %}
+
+{# By default sanitize like WP would (keeps safe tags) #}
+{% if html and (richText.sanitize ?? true) %}
+  {% set html = function('wp_kses_post', html) %}
+{% endif %}
+
+{% if html %}
+  <div class="{{ wrapperClasses }}"{{ attributes.attrs(richText.attrs ?? {}) }}>
+    {{ html|raw }}
+  </div>
+{% endif %}

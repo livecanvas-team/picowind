@@ -1,0 +1,24 @@
+<header class="c-header">
+	<div class="container flex flex-col flex-wrap items-center justify-between py-6 mx-auto md:flex-row">
+		<div class="relative flex flex-col md:flex-row">
+			<a href="#_" class="flex items-center font-medium text-rich mb-6 md:mb-0">
+				<span class="text-2xl font-black italic leading-none text-rich select-none hover:text-yinmn">Brand
+			</a>
+		</div>
+		{% if primary_menu and primary_menu.items %}
+			<nav class="flex flex-wrap items-center space-x-12">
+				{% for item in primary_menu.items %}
+          {% set isActive = item.current or item.current_item_ancestor %}
+          <a
+            href="{{ item.link }}"
+            class="font-medium hover:text-yinmn {{ isActive ? 'text-yinmn' : 'text-rich' }}"
+            {{ item.target ? 'target="' ~ item.target ~ '"' }}
+            >
+            {{ item.title }}
+          </a>
+        {% endfor %}
+			</nav>
+		{% endif %}
+	</div>
+</header>
+
