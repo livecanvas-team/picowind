@@ -1,0 +1,63 @@
+{
+    "name": "livecanvas-team/picowind",
+    "type": "wordpress-theme",
+    "description": "A modern WordPress theme for the LiveCanvas plugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "The LiveCanvas Team"
+        },
+        {
+            "name": "The WindPress Team"
+        }
+    ],
+    "require": {
+        "php": ">=8.1",
+        "kucrut/vite-for-wp": "^0.12.0",
+        "latte/latte": "^3.0",
+        "psr/container": "^2.0",
+        "psr/log": "^2.0|^3.0",
+        "symfony/cache": "^6.4",
+        "symfony/config": "^6.4",
+        "symfony/dependency-injection": "^6.4",
+        "symfony/filesystem": "^6.4",
+        "symfony/property-access": "^6.4",
+        "timber/timber": "^2.0",
+        "webman/blade": "^1.5"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true,
+        "allow-plugins": {
+            "carthage-software/mago": true,
+            "composer/installers": true
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Picowind\\": "src/"
+        },
+        "files": [
+            "src/functions.php"
+        ]
+    },
+    "minimum-stability": "stable",
+    "scripts": {
+        "complete-check": [
+            "@check-ecs",
+            "@phpstan",
+            "phpunit"
+        ],
+        "phpstan": "vendor/bin/phpstan analyse --ansi --error-format symplify",
+        "rector": "vendor/bin/rector process --ansi",
+        "check-ecs": "vendor/bin/ecs check --ansi",
+        "fix-ecs": "vendor/bin/ecs check --fix --ansi",
+        "fmt": "vendor/bin/mago fmt",
+        "lint:fix": "vendor/bin/mago lint --fix --format-after-fix",
+        "lint": "vendor/bin/mago lint --potentially-unsafe --minimum-fail-level=note"
+    },
+    "require-dev": {
+        "carthage-software/mago": "^1.0.0-beta.24",
+        "rector/rector": "^2.1"
+    }
+}

@@ -1,0 +1,75 @@
+php-version = "8.1.0"
+
+[source]
+paths = [
+    "src",
+    "404.php",
+    "archive.php",
+    "constant.php",
+    "functions.php",
+    "header.php",
+    "index.php",
+    "footer.php",
+    "sidebar.php",
+    "single.php",
+    "page.php",
+    "search.php",
+]
+includes = ["vendor"]
+excludes = [
+	"./vendor/composer",
+	"**/.cache",
+	"**/*.stub.php",
+	"**/*.input.php",
+	"**/*.expected.php",
+]
+
+[formatter]
+print-width = 180
+tab-width = 4
+use-tabs = false
+space-after-logical-not-unary-prefix-operator = true
+null-type-hint = "question"
+space-before-arrow-function-parameter-list-parenthesis = true
+always-break-named-arguments-list = false
+preserve-breaking-member-access-chain = true
+preserve-breaking-argument-list = true
+preserve-breaking-array-like = true
+preserve-breaking-parameter-list = true
+preserve-breaking-attribute-list = true
+preserve-breaking-conditional-expression = true
+empty-line-after-opening-tag = false
+
+[linter]
+integrations = ["wordpress"]
+
+[linter.rules]
+interface-name = { psr = false }
+trait-name = { psr = false }
+class-name = { psr = false }
+literal-named-argument = { enabled = false } # todo
+no-error-control-operator = { enabled = false }
+no-boolean-literal-comparison = { enabled = false }
+too-many-methods = { enabled = false }
+kan-defect = { enabled = false }
+cyclomatic-complexity = { enabled = false }
+return-type = { ignore-arrow-function = true, ignore-closure = true }
+parameter-type = { ignore-arrow-function = true, ignore-closure = true }
+too-many-enum-cases = { enabled = false }
+no-redundant-file = { enabled = false }
+assertion-style = { style = "this" }
+strict-assertions = { enabled = false }
+no-else-clause = { enabled = false }
+no-boolean-flag-parameter = { enabled = false }
+no-shorthand-ternary = { enabled = false }
+no-assign-in-condition = { enabled = false }
+strict-types = { enabled = false } # https://github.com/carthage-software/mago/issues/146
+tagged-todo = { enabled = false } # CONSIDER ENABLING
+excessive-parameter-list = { enabled = false } # https://github.com/carthage-software/mago/issues/206
+halstead = { enabled = false }
+prefer-arrow-function = { enabled = false } # enable when references are fixed
+prefer-first-class-callable = { enabled = false } # enable when arguments are fixed
+strict-behavior = { allow-loose-behavior = true }
+
+# [analyzer]
+# override-attribute = { enabled = false } # CONSIDER ENABLING

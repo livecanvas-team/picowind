@@ -1,0 +1,140 @@
+{% extends "base.twig" %}
+
+{% block content %}
+
+	{# Featured Image Hero #}
+	{% if post.thumbnail %}
+		<div class="w-full h-[50vh] relative overflow-hidden">
+			<img src="{{ post.thumbnail.src('full') }}" alt="{{ post.thumbnail.alt }}" class="w-full h-full object-cover"/>
+		</div>
+	{% else %}
+		<div class="w-full py-12"></div>
+	{% endif %}
+
+	{# Post Content Container #}
+	<div id="container-content-single" class="container mx-auto px-4 max-w-5xl relative mb-12 {{ post.thumbnail ? '-mt-20 lg:-mt-28' }}">
+		<div class="bg-base-100 shadow-2xl rounded-2xl p-6 md:p-12">
+
+			{# Post Header #}
+			<div
+				class="text-center mb-8">
+
+				{# Categories #}
+				{% if not theme.mods.singlepost_disable_entry_cats and post.categories %}
+					<div class="flex gap-2 justify-center flex-wrap mb-4">
+						{% for category in post.categories %}
+							<a href="{{ category.link }}" class="badge badge-primary">
+								{{ category.name }}
+							</a>
+						{% endfor %}
+					</div>
+				{% endif %}
+
+				{# Title #}
+				<h1 class="text-4xl md:text-5xl font-bold mb-4">
+					{{ post.title }}
+				</h1>
+
+				{# Post Meta #}
+				{% if not theme.mods.singlepost_disable_date or not theme.mods.singlepost_disable_author %}
+					<div class="post-meta flex gap-4 justify-center items-center text-base-content/70">
+
+						{% if not theme.mods.singlepost_disable_date %}
+							<span class="flex items-center gap-1">
+								{{ omni_icon("lucide:calendar", {class: "w-4 h-4"}) }}
+								{{ post.date }}
+							</span>
+						{% endif %}
+
+						{% if not theme.mods.singlepost_disable_author %}
+							<span class="flex items-center gap-1">
+								{{ omni_icon("lucide:user", {class: "w-4 h-4"}) }}
+								{{ __('by', 'picowind-base') }}
+								{{ post.author.name }}
+							</span>
+						{% endif %}
+					</div>
+				{% endif %}
+
+			</div>
+
+			{# Post Content #}
+			<div class="prose prose-lg max-w-none mx-auto">
+				{{ post.content }}
+			</div>
+
+			{# Sharing Buttons #}
+			{% if theme.mods.enable_sharing_buttons %}
+				<div class="mt-12 pt-8 border-t border-base-300">
+					<h3 class="text-xl font-bold mb-4">{{ __('Share this post', 'picowind-base') }}</h3>
+					<div
+						class="flex gap-3 flex-wrap">
+						{# Facebook #}
+						<a href="https://www.facebook.com/sharer.php?u={{ post.link }}" target="_blank" rel="nofollow" class="btn btn-outline gap-2">
+							{{ omni_icon("fa7-brands:facebook", {class: "w-5 h-5"}) }}
+							<span class="hidden lg:inline">Facebook</span>
+						</a>
+
+						{# Twitter/X #}
+						<a href="https://twitter.com/share?url={{ post.link }}&text={{ post.title }}" target="_blank" rel="nofollow" class="btn btn-outline gap-2">
+							{{ omni_icon("fa7-brands:x-twitter", {class: "w-5 h-5"}) }}
+							<span class="hidden lg:inline">Twitter</span>
+						</a>
+
+						{# WhatsApp #}
+						<a href="https://api.whatsapp.com/send?text={{ post.link }}" target="_blank" rel="nofollow" class="btn btn-outline gap-2">
+							{{ omni_icon("fa7-brands:whatsapp", {class: "w-5 h-5"}) }}
+							<span class="hidden lg:inline">WhatsApp</span>
+						</a>
+
+						{# Telegram #}
+						<a href="https://telegram.me/share/url?url={{ post.link }}" target="_blank" rel="nofollow" class="btn btn-outline gap-2">
+							{{ omni_icon("fa7-brands:telegram", {class: "w-5 h-5"}) }}
+							<span class="hidden lg:inline">Telegram</span>
+						</a>
+
+						{# Email #}
+						<a href="mailto:?subject={{ post.title }}&body={{ post.link }}" target="_blank" rel="nofollow" class="btn btn-outline gap-2">
+							{{ omni_icon("lucide:mail", {class: "w-5 h-5"}) }}
+							<span class="hidden lg:inline">Email</span>
+						</a>
+					</div>
+				</div>
+			{% endif %}
+
+			{# Edit Post Link #}
+			{% if post.edit_link %}
+				<p class="text-end mt-8">
+					<a href="{{ post.edit_link }}" class="link link-primary">
+						{{ __('Edit this post', 'picowind-base') }}
+					</a>
+				</p>
+			{% endif %}
+
+			{# Comments #}
+			{% if not theme.mods.singlepost_disable_comments %}
+				{% if post.comments or post.comment_status == 'open' %}
+					<div class="mt-12 pt-8 border-t border-base-300">
+						<h3 class="text-2xl font-bold mb-6">
+							{% if post.comment_count == 1 %}
+								{{ __('One thought on', 'picowind-base') }}
+								on "{{ post.title }}"
+							{% elseif post.comment_count > 1 %}
+								{{ post.comment_count }}
+								{{ __('thoughts on', 'picowind-base') }}
+								"{{ post.title }}"
+							{% else %}
+								{{ __('Leave a Reply', 'picowind-base') }}
+							{% endif %}
+						</h3>
+
+						{# WordPress Comments Template #}
+						{{ function('comments_template') }}
+					</div>
+				{% endif %}
+			{% endif %}
+
+		</div>
+	</div>
+
+{% endblock %}

@@ -1,0 +1,6 @@
+
+@layer wp-admin, theme, base, components, utilities;
+
+@import './wp-admin.css' layer(base);
+
+@import "tailwindcss" source("../");

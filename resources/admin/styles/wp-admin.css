@@ -1,0 +1,59 @@
+html {
+    --wp-admin--sidebar-width: 160px;
+}
+
+html:has(.folded) {
+    --wp-admin--sidebar-width: 36px;
+}
+
+.wp-admin.appearance_page_picowind {
+    #wpcontent {
+        padding-left: 0 !important;
+
+        #wpbody {
+            background-color: var(--ui-bg);
+            color: var(--ui-text);
+            position: fixed !important;
+            top: 32px;
+            height: calc(100vh - 32px);
+            overflow: auto;
+
+            width: calc(100% - var(--wp-admin--sidebar-width));
+
+            #wpbody-content {
+                padding-bottom: 0;
+
+                /* hide the notice nag if it doesn't have .picowind-notice */
+                .notice:not(.picowind-notice) {
+                    display: none;
+                }
+
+                #picowind-app {
+                    isolation: isolate;
+                }
+            }
+        }
+    }
+
+    #wpfooter {
+        display: none;
+    }
+
+    /* Hide the update nag */
+    .update-nag {
+        display: none;
+    }
+
+    #adminmenumain #adminmenu li img {
+        display: inline;
+    }
+
+    @media screen and (max-width: 782px) {
+        #wpcontent {
+            #wpbody {
+                top: 46px;
+                height: calc(100vh - 46px);
+            }
+        }
+    }
+}

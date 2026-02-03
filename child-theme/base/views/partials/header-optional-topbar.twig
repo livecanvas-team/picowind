@@ -1,0 +1,10 @@
+{# The Topbar Area #}
+{% if theme.mods.enable_topbar %}
+	<div id="wrapper-topbar" class="py-2 {{ theme.mods.topbar_bg_color_choice|default('bg-base-200') }} {{ theme.mods.topbar_text_color_choice|default('text-base-content') }}">
+		<div class="container mx-auto px-4">
+			<div id="topbar-content" class="text-center text-sm">
+				{{ shortcode(theme.mods.topbar_content|default('')) }}
+			</div>
+		</div>
+	</div>
+{% endif %}

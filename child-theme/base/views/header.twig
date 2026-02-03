@@ -1,0 +1,15 @@
+{% do action('wp_body_open') %}
+
+{# Custom filter to check if header elements should be displayed. #}
+{% if theme.mods.enable_header_elements|default(true) %}
+	{% if function_exists('lc_custom_header') %}
+		{# use the LiveCanvas Custom Header #}
+		{{ function('lc_custom_header') }}
+	{% else %}
+            {# use the built-in theme header elements  #}
+			{% include 'partials/header-optional-topbar.twig' %}
+			{% include 'partials/header-navbar.twig' %}
+	{% endif %}
+{% endif %}
+
+<main id="theme-main">

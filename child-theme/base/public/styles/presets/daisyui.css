@@ -1,0 +1,15 @@
+/**
+ * Create a custom theme for yourself using daisyUI theme generator.
+ * https://daisyui.com/theme-generator/
+ */
+
+@plugin "daisyui" {
+    themes: light --default, dark;
+}
+
+/* @plugin "@tailwindcss/typography"; */
+
+/* Add your custom styles below this line */
+
+body {
+}

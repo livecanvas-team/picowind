@@ -1,0 +1,5 @@
+{% if function('is_active_sidebar', 'main-sidebar') %}
+	<div class="space-y-6" id="wrapper-main-sidebar">
+		{{ function('dynamic_sidebar', 'main-sidebar') }}
+	</div>
+{% endif %}

@@ -1,0 +1,19 @@
+<!doctype html>
+<html {{ site.language_attributes }} data-theme="{{ theme.mods.data_theme|default('light') }}">
+<head>
+    <meta charset="{{ site.charset }}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {{ function('wp_head') }}
+</head>
+	<body class="{{body_class}}" data-template="base.twig">
+		{% include 'header.twig' %}
+
+		{% block content %}
+			Sorry, no content
+		{% endblock %}
+
+		{% block footer %}
+			{% include 'footer.twig' %}
+		{% endblock %}
+	</body>
+</html>

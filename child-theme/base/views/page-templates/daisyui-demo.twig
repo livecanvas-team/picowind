@@ -1,0 +1,365 @@
+{% extends "base.twig" %}
+
+{% block content %}
+
+{# Hero Section #}
+<section class="hero bg-gradient-to-r from-primary to-secondary text-primary-content py-20">
+	<div class="hero-content text-center">
+		<div class="max-w-md">
+			<h1 class="text-5xl font-bold">daisyUI 5 Components</h1>
+			<p class="py-6">A comprehensive showcase of daisyUI components powered by Tailwind CSS</p>
+		</div>
+	</div>
+</section>
+
+<div class="container mx-auto px-4 py-12 max-w-7xl">
+	<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+		{# Buttons Section #}
+		<div class="space-y-4">
+			<div class="border-t-4 border-primary pt-4">
+				<h2 class="text-4xl font-bold mb-4">Buttons</h2>
+			</div>
+
+			<div>
+				<h3 class="text-2xl font-semibold mb-3">Button Colors</h3>
+				<div class="flex flex-wrap gap-2">
+					<button class="btn">Default</button>
+					<button class="btn btn-primary">Primary</button>
+					<button class="btn btn-secondary">Secondary</button>
+					<button class="btn btn-accent">Accent</button>
+					<button class="btn btn-info">Info</button>
+					<button class="btn btn-success">Success</button>
+					<button class="btn btn-warning">Warning</button>
+					<button class="btn btn-error">Error</button>
+				</div>
+			</div>
+
+			<div>
+				<h3 class="text-2xl font-semibold mb-3">Button Outline</h3>
+				<div class="flex flex-wrap gap-2">
+					<button class="btn btn-outline">Default</button>
+					<button class="btn btn-outline btn-primary">Primary</button>
+					<button class="btn btn-outline btn-secondary">Secondary</button>
+					<button class="btn btn-outline btn-accent">Accent</button>
+				</div>
+			</div>
+
+			<div>
+				<h3 class="text-2xl font-semibold mb-3">Button Sizes</h3>
+				<div class="flex flex-wrap gap-2 items-center">
+					<button class="btn btn-xs btn-primary">Tiny</button>
+					<button class="btn btn-sm btn-primary">Small</button>
+					<button class="btn btn-primary">Normal</button>
+					<button class="btn btn-lg btn-primary">Large</button>
+				</div>
+			</div>
+
+			<div>
+				<h3 class="text-2xl font-semibold mb-3">Button States</h3>
+				<div class="flex flex-wrap gap-2">
+					<button class="btn btn-primary btn-active">Active</button>
+					<button class="btn btn-primary" disabled>Disabled</button>
+					<button class="btn btn-primary">
+						<span class="loading loading-spinner"></span>
+						Loading
+					</button>
+				</div>
+			</div>
+		</div>
+
+		{# Cards & Badges Section #}
+		<div class="space-y-4">
+			<div class="border-t-4 border-secondary pt-4">
+				<h2 class="text-4xl font-bold mb-4">Cards & Badges</h2>
+			</div>
+
+			<div>
+				<h3 class="text-2xl font-semibold mb-3">Card Example</h3>
+				<div class="card bg-base-100 shadow-xl">
+					<figure class="px-10 pt-10">
+						<div class="bg-base-300 w-full h-32 rounded-xl flex items-center justify-center">
+							{{ omni_icon("lucide:image", {class: "w-12 h-12 text-base-content/50"}) }}
+						</div>
+					</figure>
+					<div class="card-body">
+						<h2 class="card-title">Card Title</h2>
+						<p>This is a daisyUI card component with an image placeholder.</p>
+						<div class="card-actions justify-end">
+							<button class="btn btn-primary">Buy Now</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div>
+				<h3 class="text-2xl font-semibold mb-3">Badges</h3>
+				<div class="flex flex-wrap gap-2">
+					<div class="badge">Default</div>
+					<div class="badge badge-primary">Primary</div>
+					<div class="badge badge-secondary">Secondary</div>
+					<div class="badge badge-accent">Accent</div>
+					<div class="badge badge-ghost">Ghost</div>
+				</div>
+			</div>
+
+			<div>
+				<h3 class="text-2xl font-semibold mb-3">Badge Sizes</h3>
+				<div class="flex flex-wrap gap-2 items-center">
+					<div class="badge badge-lg badge-primary">Large</div>
+					<div class="badge badge-md badge-primary">Medium</div>
+					<div class="badge badge-sm badge-primary">Small</div>
+					<div class="badge badge-xs badge-primary">Tiny</div>
+				</div>
+			</div>
+		</div>
+
+		{# Alerts Section #}
+		<div class="space-y-4">
+			<div class="border-t-4 border-accent pt-4">
+				<h2 class="text-4xl font-bold mb-4">Alerts</h2>
+			</div>
+
+			<div role="alert" class="alert">
+				{{ omni_icon("lucide:info", {class: "w-6 h-6"}) }}
+				<span>This is a default alert</span>
+			</div>
+
+			<div role="alert" class="alert alert-info">
+				{{ omni_icon("lucide:info", {class: "w-6 h-6"}) }}
+				<span>This is an info alert</span>
+			</div>
+
+			<div role="alert" class="alert alert-success">
+				{{ omni_icon("lucide:check-circle", {class: "w-6 h-6"}) }}
+				<span>Your purchase has been confirmed!</span>
+			</div>
+
+			<div role="alert" class="alert alert-warning">
+				{{ omni_icon("lucide:alert-triangle", {class: "w-6 h-6"}) }}
+				<span>Warning: Invalid email address!</span>
+			</div>
+
+			<div role="alert" class="alert alert-error">
+				{{ omni_icon("lucide:x-circle", {class: "w-6 h-6"}) }}
+				<span>Error! Task failed successfully.</span>
+			</div>
+		</div>
+
+		{# Form Components Section #}
+		<div class="space-y-4">
+			<div class="border-t-4 border-info pt-4">
+				<h2 class="text-4xl font-bold mb-4">Form Components</h2>
+			</div>
+
+			<div class="form-control">
+				<label class="label">
+					<span class="label-text">Text Input</span>
+				</label>
+				<input type="text" placeholder="Type here" class="input input-bordered w-full" />
+			</div>
+
+			<div class="form-control">
+				<label class="label">
+					<span class="label-text">Primary Input</span>
+				</label>
+				<input type="text" placeholder="Primary" class="input input-bordered input-primary w-full" />
+			</div>
+
+			<div class="form-control">
+				<label class="label">
+					<span class="label-text">Textarea</span>
+				</label>
+				<textarea class="textarea textarea-bordered" placeholder="Bio"></textarea>
+			</div>
+
+			<div class="form-control">
+				<label class="label">
+					<span class="label-text">Select</span>
+				</label>
+				<select class="select select-bordered w-full">
+					<option disabled selected>Pick your favorite</option>
+					<option>Option 1</option>
+					<option>Option 2</option>
+				</select>
+			</div>
+
+			<div class="form-control">
+				<label class="label cursor-pointer justify-start gap-2">
+					<input type="checkbox" checked="checked" class="checkbox checkbox-primary" />
+					<span class="label-text">Remember me</span>
+				</label>
+			</div>
+
+			<div class="form-control">
+				<label class="label cursor-pointer justify-start gap-2">
+					<input type="radio" name="radio-demo" class="radio radio-primary" checked="checked" />
+					<span class="label-text">Radio Option 1</span>
+				</label>
+				<label class="label cursor-pointer justify-start gap-2">
+					<input type="radio" name="radio-demo" class="radio radio-primary" />
+					<span class="label-text">Radio Option 2</span>
+				</label>
+			</div>
+
+			<div class="form-control">
+				<label class="label cursor-pointer justify-start gap-2">
+					<input type="checkbox" class="toggle toggle-primary" checked="checked" />
+					<span class="label-text">Toggle</span>
+				</label>
+			</div>
+		</div>
+
+		{# Navigation & Tabs #}
+		<div class="space-y-4 lg:col-span-2">
+			<div class="border-t-4 border-success pt-4">
+				<h2 class="text-4xl font-bold mb-4">Navigation & Tabs</h2>
+			</div>
+
+			<div>
+				<h3 class="text-2xl font-semibold mb-3">Tabs</h3>
+				<div role="tablist" class="tabs tabs-boxed">
+					<a role="tab" class="tab tab-active">Tab 1</a>
+					<a role="tab" class="tab">Tab 2</a>
+					<a role="tab" class="tab">Tab 3</a>
+				</div>
+			</div>
+
+			<div>
+				<h3 class="text-2xl font-semibold mb-3">Breadcrumbs</h3>
+				<div class="breadcrumbs text-sm">
+					<ul>
+						<li><a>Home</a></li>
+						<li><a>Documents</a></li>
+						<li>Add Document</li>
+					</ul>
+				</div>
+			</div>
+
+			<div>
+				<h3 class="text-2xl font-semibold mb-3">Join (Grouped Elements)</h3>
+				<div class="join">
+					<button class="btn join-item">Button</button>
+					<button class="btn join-item">Button</button>
+					<button class="btn join-item">Button</button>
+				</div>
+			</div>
+		</div>
+
+		{# Data Display #}
+		<div class="space-y-4 lg:col-span-2">
+			<div class="border-t-4 border-warning pt-4">
+				<h2 class="text-4xl font-bold mb-4">Data Display</h2>
+			</div>
+
+			<div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+				<div class="stat bg-base-200 rounded-box">
+					<div class="stat-title">Total Page Views</div>
+					<div class="stat-value">89,400</div>
+					<div class="stat-desc">21% more than last month</div>
+				</div>
+				<div class="stat bg-base-200 rounded-box">
+					<div class="stat-title">Downloads</div>
+					<div class="stat-value text-primary">31K</div>
+					<div class="stat-desc text-primary">↗︎ 400 (22%)</div>
+				</div>
+				<div class="stat bg-base-200 rounded-box">
+					<div class="stat-title">New Users</div>
+					<div class="stat-value text-secondary">4,200</div>
+					<div class="stat-desc text-secondary">↗︎ 90 (14%)</div>
+				</div>
+				<div class="stat bg-base-200 rounded-box">
+					<div class="stat-title">New Registers</div>
+					<div class="stat-value">1,200</div>
+					<div class="stat-desc text-error">↘︎ 90 (14%)</div>
+				</div>
+			</div>
+		</div>
+
+		{# Progress & Loading #}
+		<div class="space-y-4">
+			<div class="border-t-4 border-error pt-4">
+				<h2 class="text-4xl font-bold mb-4">Progress & Loading</h2>
+			</div>
+
+			<div>
+				<h3 class="text-2xl font-semibold mb-3">Progress Bars</h3>
+				<progress class="progress w-full mb-2" value="0" max="100"></progress>
+				<progress class="progress progress-primary w-full mb-2" value="25" max="100"></progress>
+				<progress class="progress progress-secondary w-full mb-2" value="50" max="100"></progress>
+				<progress class="progress progress-accent w-full mb-2" value="75" max="100"></progress>
+				<progress class="progress progress-success w-full" value="100" max="100"></progress>
+			</div>
+
+			<div>
+				<h3 class="text-2xl font-semibold mb-3">Loading Spinners</h3>
+				<div class="flex gap-4">
+					<span class="loading loading-spinner loading-xs"></span>
+					<span class="loading loading-spinner loading-sm"></span>
+					<span class="loading loading-spinner loading-md"></span>
+					<span class="loading loading-spinner loading-lg"></span>
+				</div>
+			</div>
+
+			<div>
+				<h3 class="text-2xl font-semibold mb-3">Radial Progress</h3>
+				<div class="flex gap-4">
+					<div class="radial-progress text-primary" style="--value:70;" role="progressbar">70%</div>
+					<div class="radial-progress text-secondary" style="--value:80;" role="progressbar">80%</div>
+					<div class="radial-progress text-accent" style="--value:90;" role="progressbar">90%</div>
+				</div>
+			</div>
+		</div>
+
+		{# Modals & Drawers #}
+		<div class="space-y-4">
+			<div class="border-t-4 border-primary pt-4">
+				<h2 class="text-4xl font-bold mb-4">Interactive</h2>
+			</div>
+
+			<div>
+				<h3 class="text-2xl font-semibold mb-3">Modal</h3>
+				<button class="btn btn-primary" onclick="demo_modal.showModal()">Open Modal</button>
+				<dialog id="demo_modal" class="modal">
+					<div class="modal-box">
+						<h3 class="font-bold text-lg">Hello!</h3>
+						<p class="py-4">This is a daisyUI modal component</p>
+						<div class="modal-action">
+							<form method="dialog">
+								<button class="btn">Close</button>
+							</form>
+						</div>
+					</div>
+					<form method="dialog" class="modal-backdrop">
+						<button>close</button>
+					</form>
+				</dialog>
+			</div>
+
+			<div>
+				<h3 class="text-2xl font-semibold mb-3">Dropdown</h3>
+				<div class="dropdown">
+					<div tabindex="0" role="button" class="btn m-1">Click</div>
+					<ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
+						<li><a>Item 1</a></li>
+						<li><a>Item 2</a></li>
+					</ul>
+				</div>
+			</div>
+
+			<div>
+				<h3 class="text-2xl font-semibold mb-3">Collapse / Accordion</h3>
+				<div class="collapse collapse-arrow bg-base-200">
+					<input type="checkbox" />
+					<div class="collapse-title text-xl font-medium">Click to open/close</div>
+					<div class="collapse-content">
+						<p>This is the content inside the collapsible section.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+{% endblock %}

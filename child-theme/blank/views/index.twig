@@ -1,0 +1,15 @@
+{% extends "base.twig" %}
+
+{% block content %}
+
+{# Hero Section #}
+<section class="py-12 text-center bg-base-200">
+    <div class="container mx-auto px-4">
+        <h1 class="text-4xl font-bold mb-4">{{ site.name }}</h1>
+        <div class="text-lg text-base-content/70 max-w-2xl mx-auto">
+            {{ site.description }}
+        </div>
+    </div>
+</section>
+
+{% endblock %}

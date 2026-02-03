@@ -1,0 +1,49 @@
+{
+  "name": "picowind",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "volta": {
+    "node": "24.9.0"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "oxlint ./assets && eslint ./assets",
+    "format": "oxlint --fix ./assets && eslint --fix ./assets",
+    "test": "vitest",
+    "release": "node deploy/release.js"
+  },
+  "devDependencies": {
+    "@iconify-json/lucide": "^1.2.68",
+    "@iconify-json/mdi": "^1.2.3",
+    "@kucrut/vite-for-wp": "^0.12.0",
+    "@tailwindcss/vite": "^4.1.14",
+    "@types/css-tree": "^2.3.11",
+    "@vitejs/plugin-vue": "^6.0.1",
+    "lightningcss": "^1.30.2",
+    "oxlint": "^1.20.0",
+    "pinia": "^3.0.3",
+    "rollup-plugin-external-globals": "^0.13.0",
+    "tailwindcss": "^4.1.14",
+    "tw-animate-css": "^1.4.0",
+    "unplugin-icons": "^22.4.2",
+    "unplugin-vue-components": "^29.1.0",
+    "vite": "npm:rolldown-vite@^7.1.15",
+    "vite-plugin-external": "^6.2.2",
+    "vite-plugin-static-copy": "^3.1.3",
+    "vitest": "^3.2.4",
+    "vue": "^3.5.22",
+    "vue-router": "^4.5.1"
+  },
+  "packageManager": "pnpm@10.15.1+sha512.34e538c329b5553014ca8e8f4535997f96180a1d0f614339357449935350d924e22f8614682191264ec33d1462ac21561aff97f6bb18065351c162c7e8f6de67",
+  "dependencies": {
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "css-tree": "^3.1.0",
+    "lucide-vue-next": "^0.563.0",
+    "redaxios": "^0.5.1",
+    "reka-ui": "^2.8.0",
+    "tailwind-merge": "^3.4.0"
+  }
+}

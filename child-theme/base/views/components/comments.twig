@@ -1,0 +1,145 @@
+{# Comments Template. Enhanced comment display with daisyUI styling #}
+<div class="comments-area">
+	{# Comment List #}
+	{% if comments %}
+		<div class="comments-list space-y-6 mb-12">
+			{% for comment in comments %}
+				{{ _self.render_comment(comment, 0) }}
+			{% endfor %}
+		</div>
+
+		{# Comment Navigation #}
+		{% if function('get_comment_pages_count') > 1 and function('get_option', 'page_comments') %}
+			<nav class="comment-navigation flex justify-between mb-8" role="navigation">
+				<div class="nav-previous">
+					{{ function('previous_comments_link', __('&larr; Older Comments', 'picowind-base')) }}
+				</div>
+				<div class="nav-next">
+					{{ function('next_comments_link', __('Newer Comments &rarr;', 'picowind-base')) }}
+				</div>
+			</nav>
+		{% endif %}
+	{% endif %}
+
+	{# Comment Form #}
+	{% if comments_open %}
+		<div class="comment-respond bg-base-200/50 rounded-2xl p-6 md:p-8">
+			<h3 class="text-2xl font-bold mb-6 flex items-center gap-2">
+				{{ omni_icon("lucide:message-circle", {class: "w-6 h-6"}) }}
+				{{ __('Leave a Reply', 'picowind-base') }}
+			</h3>
+			{{ function('comment_form', {
+				'title_reply': '',
+				'title_reply_before': '',
+				'title_reply_after': '',
+				'cancel_reply_before': '<div class="mb-4">',
+				'cancel_reply_after': '</div>',
+				'cancel_reply_link': '<span class="btn btn-sm btn-ghost">' ~ __('Cancel reply', 'picowind-base') ~ '</span>',
+				'label_submit': __('Post Comment', 'picowind-base'),
+				'comment_notes_before': '',
+				'comment_notes_after': '',
+			}) }}
+		</div>
+	{% elseif show_closed_message %}
+		{# Comments Closed Message #}
+		<div class="alert">
+			{{ omni_icon("lucide:alert-triangle", {class: "stroke-current shrink-0 h-6 w-6"}) }}
+			<span>{{ __('Comments are closed.', 'picowind-base') }}</span>
+		</div>
+	{% endif %}
+
+</div>
+
+{# Macro for rendering individual comments with threading #}
+{% macro render_comment(comment, depth) %}
+	{% set max_depth = function('get_option', 'thread_comments_depth') %}
+	{% set indent_class = depth > 0 ? 'ml-8 md:ml-12 lg:ml-16' : '' %}
+
+	<div id="comment-{{ comment.comment_ID }}" class="comment {{ indent_class }}">
+		<div class="comment-body card bg-base-100 shadow-md hover:shadow-lg transition-shadow duration-200">
+			<div
+				class="card-body p-4 md:p-6">
+
+				{# Comment Header #}
+				<div
+					class="flex items-start gap-4">
+					{# Avatar #}
+					<div class="avatar flex-shrink-0">
+						<div class="w-12 h-12 md:w-14 md:h-14 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+							{{ function('get_avatar', comment.comment_author_email, 56, '', comment.comment_author, {class: 'rounded-full'}) }}
+						</div>
+					</div>
+
+					{# Comment Meta and Content #}
+					<div
+						class="flex-1 min-w-0">
+						{# Author and Date #}
+						<div class="flex flex-wrap items-center gap-2 mb-3">
+							<div class="font-bold text-base md:text-lg">
+								{% if comment.comment_author_url %}
+									<a href="{{ comment.comment_author_url }}" target="_blank" rel="nofollow" class="link link-hover">
+										{{ comment.comment_author }}
+									</a>
+								{% else %}
+									{{ comment.comment_author }}
+								{% endif %}
+							</div>
+
+							<div class="badge badge-ghost badge-sm gap-1">
+								{{ omni_icon("lucide:clock", {class: "w-3 h-3"}) }}
+								<a href="{{ function('get_comment_link', comment.comment_ID) }}" class="link link-hover text-xs">
+									{{ function('get_comment_date', '', comment.comment_ID) }}
+									{{ __('at', 'picowind-base') }}
+									{{ function('get_comment_time', '', comment.comment_ID) }}
+								</a>
+							</div>
+
+							{# Edit Link for logged-in users #}
+							{% set edit_link = function('get_edit_comment_link', comment.comment_ID) %}
+							{% if edit_link %}
+								<a href="{{ edit_link }}" class="badge badge-outline badge-sm">
+									{{ omni_icon("lucide:edit", {class: "w-3 h-3"}) }}
+									{{ __('Edit', 'picowind-base') }}
+								</a>
+							{% endif %}
+						</div>
+
+						{# Comment Content #}
+						<div class="prose prose-sm md:prose-base max-w-none">
+							{% if comment.comment_approved == '0' %}
+								<div class="alert alert-info mb-4">
+									{{ omni_icon("lucide:info", {class: "w-5 h-5"}) }}
+									<span>{{ __('Your comment is awaiting moderation.', 'picowind-base') }}</span>
+								</div>
+							{% endif %}
+							{{ comment.comment_content|raw }}
+						</div>
+
+						{# Reply Button #}
+						{% if function('comments_open') and depth < max_depth %}
+							<div class="mt-4">
+								{{ function('comment_reply_link', {
+									'add_below': 'comment',
+									'depth': depth,
+									'max_depth': max_depth,
+									'before': '',
+									'after': '',
+								}, comment)|raw }}
+							</div>
+						{% endif %}
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		{# Render child comments recursively #}
+		{% if comment.children %}
+			<div class="children mt-4">
+				{% for child in comment.children %}
+					{{ _self.render_comment(child, depth + 1) }}
+				{% endfor %}
+			</div>
+		{% endif %}
+	</div>
+{% endmacro %}

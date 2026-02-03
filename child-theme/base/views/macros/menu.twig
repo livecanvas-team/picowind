@@ -1,0 +1,73 @@
+{# Menu macros for daisyUI navigation. Usage: {% import 'macros/menu.twig' as menu_macros %} #}
+
+{# Render a single menu item #}
+	{% macro menu_item(item, classes = '', depth = 0) %}
+		<li class="{{ item.classes }} {{ classes }}"> {% if item.children|length > 0 %}
+			{# Item with dropdown - add tabindex for proper hover #}
+			<a href="{{ item.url }}" tabindex="0" {% if item.target %} target="{{ item.target }}" {% endif %} {% if item.current %} aria-current="page" {% endif %} class="{% if item.current or item.current_item_ancestor %}active{% endif %}">
+				{{ item.title }}
+			</a>
+			<ul tabindex="0" class="menu dropdown-content bg-base-100 rounded-box z-[1] w-52 p-2 shadow mt-0 pt-2 {% if depth > 0 %}left-full top-0{% endif %}">
+				{% for child in item.children %}
+					{# Nested items should be positioned as dropdowns to the right #}
+					{% set child_classes = child.children|length > 0 ? 'dropdown dropdown-hover dropdown-right' : '' %}
+					{{ _self.menu_item(child, child_classes, depth + 1) }}
+				{% endfor %}
+			</ul>
+		{% else %}
+			{# Regular item without dropdown #}
+			<a href="{{ item.url }}" {% if item.target %} target="{{ item.target }}" {% endif %} {% if item.current %} aria-current="page" {% endif %} class="{% if item.current or item.current_item_ancestor %}active{% endif %}">
+				{{ item.title }}
+			</a>
+		{% endif %}
+	</li>
+{% endmacro %}
+
+{# Render horizontal menu (desktop) #}
+{% macro horizontal_menu(items, menu_class = 'menu menu-horizontal px-1') %}
+	{% if items|length > 0 %}
+		<ul class="{{ menu_class }}">
+			{% for item in items %}
+				{% set item_classes = item.children|length > 0 ? 'dropdown dropdown-hover before:content-[\'\'] before:absolute before:top-full before:left-0 before:right-0 before:h-2' : '' %}
+				{{ _self.menu_item(item, item_classes) }}
+			{% endfor %}
+		</ul>
+	{% endif %}
+{% endmacro %}
+
+{# Render vertical menu (mobile drawer) with collapsible submenus #}
+{% macro vertical_menu_item(item) %}
+	{% if item.children|length > 0 %}
+		{# Item with children - use details/summary for collapsible #}
+		<li>
+			<details>
+				<summary class="{% if item.current or item.current_item_ancestor %}active{% endif %}">
+					{{ item.title }}
+				</summary>
+				<ul>
+					{% for child in item.children %}
+						{{ _self.vertical_menu_item(child) }}
+					{% endfor %}
+				</ul>
+			</details>
+		</li>
+	{% else %}
+		{# Regular item without children #}
+		<li class="{{ item.classes }}">
+			<a href="{{ item.url }}" {% if item.target %} target="{{ item.target }}" {% endif %} {% if item.current %} aria-current="page" {% endif %} class="{% if item.current %}active{% endif %}">
+				{{ item.title }}
+			</a>
+		</li>
+	{% endif %}
+{% endmacro %}
+
+{# Render vertical menu (mobile drawer) #}
+{% macro vertical_menu(items, menu_class = 'menu') %}
+	{% if items|length > 0 %}
+		<ul class="{{ menu_class }}">
+			{% for item in items %}
+				{{ _self.vertical_menu_item(item) }}
+			{% endfor %}
+		</ul>
+	{% endif %}
+{% endmacro %}
