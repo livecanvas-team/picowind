@@ -296,17 +296,33 @@ class WindPress
         if ($main_css_content === false) {
             return;
         }
+        if ($main_css_content === '') {
+            $main_css_size = file_exists($main_css_path) ? filesize($main_css_path) : 0;
+            if ($main_css_size > 0) {
+                $fallback_content = file_get_contents($main_css_path);
+                if ($fallback_content === false) {
+                    return;
+                }
+                $main_css_content = $fallback_content;
+            }
+        }
         $import_statement = '@import "./@picowind/tailwind.css";';
-        if (strpos($main_css_content, $import_statement) === false) {
+        $import_pattern = '~@import\s+["\']\./@picowind/tailwind\.css["\']\s*;~';
+        $commented_import_pattern = '~\/\*\s*@import\s+["\']\./@picowind/tailwind\.css["\']\s*;\s*\*\/~';
+
+        $updated_content = preg_replace($commented_import_pattern, $import_statement, $main_css_content);
+        if ($updated_content !== null) {
+            $main_css_content = $updated_content;
+        }
+        if (! preg_match($import_pattern, $main_css_content)) {
             $main_css_content .= "\n" . $import_statement . "\n";
         }
-        $preflight_statement = '/* @import "tailwindcss/preflight.css" layer(base); */';
-        if (strpos($main_css_content, $preflight_statement) !== false) {
-            $main_css_content = str_replace(
-                $preflight_statement,
-                '@import "tailwindcss/preflight.css" layer(base);',
-                $main_css_content,
-            );
+
+        $preflight_statement = '@import "tailwindcss/preflight.css" layer(base);';
+        $commented_preflight_pattern = '~\/\*\s*@import\s+["\']tailwindcss/preflight\.css["\']\s+layer\(base\)\s*;\s*\*\/~';
+        $updated_content = preg_replace($commented_preflight_pattern, $preflight_statement, $main_css_content);
+        if ($updated_content !== null) {
+            $main_css_content = $updated_content;
         }
         $wp_filesystem->put_contents($main_css_path, $main_css_content);
         if ($is_require_reload) {
