@@ -587,14 +587,22 @@ final class OnboardingController
      */
     private function getRecommendedPluginsCatalog(): array
     {
-        return [
+        $catalog = [
             'windpress' => [
                 'id' => 'windpress',
                 'name' => 'WindPress',
                 'slug' => 'windpress',
                 'source' => 'wporg',
                 'url' => 'https://wordpress.org/plugins/windpress/',
-                'description' => 'Tailwind CSS integration for the block editor, page builders, and themes.',
+                'description' => 'Tailwind CSS integration for WordPress.',
+            ],
+            'yabe-webfont' => [
+                'id' => 'yabe-webfont',
+                'name' => 'Yabe Webfont',
+                'slug' => 'yabe-webfont',
+                'source' => 'wporg',
+                'url' => 'https://wordpress.org/plugins/yabe-webfont/',
+                'description' => 'Use custom fonts, Google Fonts, or Adobe Fonts.',
             ],
             'omni-icon' => [
                 'id' => 'omni-icon',
@@ -602,7 +610,7 @@ final class OnboardingController
                 'slug' => 'omni-icon',
                 'source' => 'wporg',
                 'url' => 'https://wordpress.org/plugins/omni-icon/',
-                'description' => 'Unified icon management with Iconify, local uploads, and bundled icons.',
+                'description' => 'Modern SVG icon library for WordPress.',
             ],
             'livecanvas' => [
                 'id' => 'livecanvas',
@@ -613,6 +621,12 @@ final class OnboardingController
                 'description' => 'Professional page builder for WordPress with front-end editing.',
             ],
         ];
+
+        uasort($catalog, static function (array $left, array $right): int {
+            return strcasecmp($left['name'] ?? '', $right['name'] ?? '');
+        });
+
+        return $catalog;
     }
 
     /**
