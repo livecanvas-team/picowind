@@ -77,6 +77,7 @@ class Template
     public function render_template(string|array $paths, array $context = [], ?string $engine = null, ?bool $print = true): ?string
     {
         do_action('a!picowind/template/render:before', $paths, $context, $engine, $print);
+        $context = apply_filters('f!picowind/template/render:context', $context, $paths, $engine);
 
         // Allow complete override of rendering logic
         $customRender = apply_filters('f!picowind/template/render:output', null, $paths, $context, $engine);

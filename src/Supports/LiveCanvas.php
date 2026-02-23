@@ -18,6 +18,42 @@ class LiveCanvas
 {
     public function __construct() {}
 
+    /**
+     * Remove LiveCanvas content filter when in editing mode to prevent conflicts with our custom context modifications.
+     *
+     * @see `\lc_alter_content_filters()` in LiveCanvas plugin for reference.
+     *
+     * @return void
+     */
+    #[Hook('wp', 'action', PHP_INT_MAX)]
+    public function alter_content_filters(): void
+    {
+        // Check if we are in LiveCanvas editing mode
+        if (isset($_GET['lc_page_editing_mode']) && current_user_can('edit_pages')) {
+            remove_filter('the_content', 'lc_get_main_content_raw');
+        }
+    }
+
+    /**
+     * Add our custom filter hook for wrapping the content
+     *
+     * @see `\lc_alter_content_filters()` in LiveCanvas plugin for reference.
+     *
+     * @param array $context
+     * @return array
+     */
+    #[Hook('f!picowind/template/render:context', 'filter')]
+    public function add_livecanvas_context(array $context)
+    {
+        if (isset($_GET['lc_page_editing_mode']) && current_user_can('edit_pages')) {
+            if (isset($context['post']) && isset($context['post']->post_content)) {
+                $context['post']->post_content = '<main id="lc-main">' . $context['post']->post_content . '</main>';
+            }
+        }
+
+        return $context;
+    }
+
     #[Hook('admin_menu', 'action', priority: 20)]
     public function add_picowind_submenu(): void
     {
