@@ -82,7 +82,7 @@ class Timber extends Site
         // Check if the template produced any meaningful output
         // If it didn't (meaning Twig rendering failed and no fallback was triggered),
         // then include index.php as fallback
-        if (empty(trim($output))) {
+        if (false === $output || empty(trim($output))) {
             include get_template_directory() . '/index.php';
         } else {
             echo $output;
