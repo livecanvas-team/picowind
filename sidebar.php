@@ -13,4 +13,4 @@ declare(strict_types=1);
 namespace Picowind;
 
 $context = context();
-render('sidebar.twig', $context, null, true, true);
+render(template_fallbacks('sidebar'), $context, null, true, true);

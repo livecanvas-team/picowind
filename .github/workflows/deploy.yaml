@@ -1,0 +1,182 @@
+# Builds and deploys the theme
+# Inspired by https://github.com/rectorphp/rector-src/blob/main/.github/workflows/build_scoped_rector.yaml
+name: Deploy the theme
+
+on:
+  push:
+    tags:
+      - '*'
+
+env:
+  # see https://github.com/composer/composer/issues/9368#issuecomment-718112361
+  COMPOSER_ROOT_VERSION: "dev-main"
+
+jobs:
+  build_scoped_theme:
+    # Don't run on forks.
+    if: github.repository == 'livecanvas-team/picowind'
+
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+        - uses: actions/checkout@v4
+          with:
+            fetch-depth: 0
+
+        # Use pnpm to install dependencies and build the assets.
+        - uses: actions/setup-node@v4
+          with:
+            node-version: 22
+
+        - uses: pnpm/action-setup@v4
+
+        - name: Get pnpm store directory
+          shell: bash
+          run: |
+            echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+        - uses: actions/cache@v4
+          name: Setup pnpm cache
+          with:
+            path: ${{ env.STORE_PATH }}
+            key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+            restore-keys: |
+              ${{ runner.os }}-pnpm-store-
+
+        # install dependencies and build the assets
+        - run: pnpm install
+
+        - run: pnpm build
+
+        # Setup PHP 8.1 for initial composer operations (Symfony 6.4 requirement)
+        - uses: shivammathur/setup-php@v2
+          with:
+            php-version: 8.1
+            coverage: none
+          env:
+            COMPOSER_TOKEN: ${{ secrets.ORG_DEV_PAT }}
+
+        # Setup Deno for update-readme-changelog script
+        - uses: denoland/setup-deno@v2
+          with:
+            deno-version: v2.x
+
+        # Extract changelog content before removing the file (if CHANGELOG.md exists)
+        - name: "Extract changelog for version"
+          id: changelog
+          run: |
+            VERSION=${GITHUB_REF#refs/tags/}
+            VERSION_NO_V=${VERSION#v}
+            if [ -f "CHANGELOG.md" ]; then
+              CHANGELOG_CONTENT=$(node deploy/extract-changelog.js "$VERSION_NO_V")
+              echo "content<<EOF" >> $GITHUB_OUTPUT
+              echo "$CHANGELOG_CONTENT" >> $GITHUB_OUTPUT
+              echo "EOF" >> $GITHUB_OUTPUT
+            else
+              echo "content=Release $VERSION_NO_V" >> $GITHUB_OUTPUT
+            fi
+
+        # Update readme.txt changelog from CHANGELOG.md
+        - name: "Update readme.txt changelog"
+          run: deno run --allow-read --allow-write deploy/update-readme-changelog.ts
+
+        # install only prod dependencies
+        - run: composer install --no-dev --classmap-authoritative --ansi
+
+        # Remove incompatible Redis5Proxy files
+        - name: "Remove Redis5Proxy files"
+          run: |
+            rm -f vendor/symfony/cache/Traits/Redis5Proxy.php
+            rm -f vendor/symfony/cache/Traits/RedisCluster5Proxy.php
+            echo "Removed Redis5Proxy files for compatibility"
+
+        # Regenerate classmap after removing files
+        - name: "Regenerate classmap"
+          run: composer dump-autoload --classmap-authoritative --no-dev --ansi
+
+        # copy all files for scoping process
+        - name: "Copy files for scoping"
+          run: |
+            mkdir -p picowind-deploy
+            rsync -av --exclude picowind-deploy --exclude .git --exclude node_modules ./ picowind-deploy/ --quiet
+
+        # Setup PHP 8.2 for php-scoper (humbug/php-scoper requires php ^8.2)
+        - uses: shivammathur/setup-php@v2
+          with:
+            php-version: 8.2
+            coverage: none
+
+        # prefix the namespaces
+        - run: sh deploy/deploy-scoped.sh picowind-deploy picowind-prefixed
+
+        # apply .distignore to remove unnecessary files from final build
+        - name: "Apply .distignore filter"
+          run: |
+            mkdir -p picowind-final
+            rsync -av --exclude-from=".distignore" picowind-prefixed/ picowind-final/ --quiet
+            rm -rf picowind-prefixed
+            mv picowind-final picowind-prefixed
+
+        # clone current repository and checkout/create dist branch
+        - name: "Checkout or create dist branch"
+          run: |
+            git clone https://x-access-token:${{ secrets.ORG_DEV_PAT }}@github.com/${{ github.repository }}.git dist-branch
+            cd dist-branch
+            git fetch origin dist || true
+            git checkout dist 2>/dev/null || git checkout --orphan dist
+            git rm -rf . 2>/dev/null || true
+            git clean -fxd
+
+        # copy files to dist branch
+        - run: cp -a picowind-prefixed/. dist-branch
+
+        # setup git
+        - working-directory: dist-branch
+          run: |
+            git config user.name "Joshua Gugun Siagian"
+            git config user.email suabahasa@gmail.com
+
+        # commit metadata
+        - name: "Get Git log"
+          id: git-log
+          run: |
+              echo "log<<EOF" >> $GITHUB_OUTPUT
+              echo "$(git log ${{ github.event.before }}..${{ github.event.after }} --reverse --pretty='${{ github.server_url }}/${{ github.repository }}/commit/%H %s')" >> $GITHUB_OUTPUT
+              echo 'EOF' >> $GITHUB_OUTPUT
+
+        # publish it to dist branch (without tag, since tag already exists on main)
+        - name: "Commit Prefixed"
+          working-directory: dist-branch
+          if: "startsWith(github.ref, 'refs/tags/')"
+          env:
+              INPUT_LOG: ${{ steps.git-log.outputs.log }}
+          run: |
+            VERSION=${GITHUB_REF#refs/tags/}
+            VERSION_NO_V=${VERSION#v}
+            git add --all
+            git commit -m "Picowind $VERSION_NO_V" -m "$INPUT_LOG"
+            git push --quiet origin dist
+
+        # Create GitHub Release with changelog and zip file
+        - name: "Create theme zip file"
+          run: |
+            mkdir -p picowind-zip/picowind
+            cp -r picowind-prefixed/* picowind-zip/picowind/
+            cd picowind-zip
+            zip -r "../picowind-${{ github.ref_name }}.zip" . -x "*.git*" "*.DS_Store*"
+            cd ..
+            ls -la picowind-*.zip
+
+        - name: "Create GitHub Release"
+          uses: softprops/action-gh-release@v2
+          if: "startsWith(github.ref, 'refs/tags/')"
+          with:
+            name: "${{ github.ref_name }}"
+            body: ${{ steps.changelog.outputs.content }}
+            files: |
+              picowind-${{ github.ref_name }}.zip
+            draft: false
+            prerelease: false
+          env:
+            GITHUB_TOKEN: ${{ secrets.ORG_DEV_PAT }}

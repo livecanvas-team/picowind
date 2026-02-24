@@ -61,6 +61,43 @@ function render($paths, array $context = [], ?string $engine = null, ?bool $prin
 }
 
 /**
+ * Build template fallback candidates for supported engines.
+ *
+ * For each template path, this returns candidates in the following order:
+ * Twig (`.twig`), Blade (`.blade.php`) and Latte (`.latte`).
+ *
+ * @param string|array $templates Template path(s) with or without extension.
+ * @return array<int, string>
+ */
+function template_fallbacks(string|array $templates): array
+{
+    $templates = is_array($templates) ? $templates : [$templates];
+    $fallbacks = [];
+
+    foreach ($templates as $template) {
+        if (! is_string($template) || '' === $template) {
+            continue;
+        }
+
+        $base = $template;
+
+        if (str_ends_with($base, '.blade.php')) {
+            $base = substr($base, 0, -10);
+        } elseif (str_ends_with($base, '.twig')) {
+            $base = substr($base, 0, -5);
+        } elseif (str_ends_with($base, '.latte')) {
+            $base = substr($base, 0, -6);
+        }
+
+        $fallbacks[] = $base . '.twig';
+        $fallbacks[] = $base . '.blade.php';
+        $fallbacks[] = $base . '.latte';
+    }
+
+    return array_values(array_unique($fallbacks));
+}
+
+/**
  * Render a template string using the specified engine.
  *
  * @param string $template_string The template string to render.
@@ -168,5 +205,5 @@ function omni_icon(string $iconName, array $attributes = []): string
  */
 function context(): array
 {
-    return apply_filters('f!picowind/context', Timber::context());
+    return call_user_func('apply_filters', 'f!picowind/context', Timber::context());
 }

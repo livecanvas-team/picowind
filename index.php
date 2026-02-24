@@ -27,9 +27,9 @@ $context['included_templates'] = array_merge(
     ],
 );
 
-$templates = ['index.twig'];
+$templates = template_fallbacks(['index', 'picowind-index']);
 if (is_home()) {
-    array_unshift($templates, 'front-page.twig', 'home.twig');
+    array_unshift($templates, ...template_fallbacks(['front-page', 'home']));
 }
 
 render($templates, $context);

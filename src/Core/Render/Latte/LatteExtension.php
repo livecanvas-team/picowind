@@ -24,6 +24,7 @@ class LatteExtension extends Extension
     public function getTags(): array
     {
         return [
+            '_' => [UnderscoreFunctionTag::class, 'create'],
             'twig' => [TwigTag::class, 'create'],
             'blade' => [BladeTag::class, 'create'],
         ];

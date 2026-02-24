@@ -21,4 +21,4 @@ $context['title'] = sprintf(
 $context['search_query'] = get_search_query();
 $context['posts'] = \Timber\Timber::get_posts();
 
-render(['search.twig', 'archive.twig', 'index.twig'], $context);
+render(template_fallbacks(['search', 'archive', 'index']), $context);

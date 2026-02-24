@@ -14,4 +14,4 @@ $context = \Picowind\context();
 $timber_post = \Timber\Timber::get_post();
 $context['post'] = $timber_post;
 
-\Picowind\render('page-templates/page-sidebar-left.twig', $context);
+\Picowind\render(\Picowind\template_fallbacks('page-templates/page-sidebar-left'), $context);

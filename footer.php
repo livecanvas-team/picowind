@@ -25,6 +25,6 @@ if (! isset($timberContext)) {
 }
 $timberContext['content'] = ob_get_contents();
 ob_end_clean();
-$templates = ['page-plugin.twig'];
+$templates = template_fallbacks('page-plugin');
 
-render($templates, $timberContext, 'twig', true, true);
+render($templates, $timberContext, null, true, true);

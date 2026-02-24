@@ -17,4 +17,4 @@ $context = \Picowind\context();
 $timber_post = \Timber\Timber::get_post();
 $context['post'] = $timber_post;
 
-\Picowind\render('page-templates/empty.twig', $context);
+\Picowind\render(\Picowind\template_fallbacks('page-templates/empty'), $context);

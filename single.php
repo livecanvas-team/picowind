@@ -19,15 +19,15 @@ $timber_post = \Timber\Timber::get_post();
 $context['post'] = $timber_post;
 
 if (post_password_required($timber_post->ID)) {
-    render('single-password.twig', $context, null, true, true);
+    render(template_fallbacks('single-password'), $context, null, true, true);
 } else {
     render(
-        [
-            'single-' . $timber_post->ID . '.twig',
-            'single-' . $timber_post->post_type . '.twig',
-            'single-' . $timber_post->slug . '.twig',
-            'single.twig',
-        ],
+        template_fallbacks([
+            'single-' . $timber_post->ID,
+            'single-' . $timber_post->post_type,
+            'single-' . $timber_post->slug,
+            'single',
+        ]),
         $context,
         null,
         true,

@@ -16,6 +16,7 @@ use Latte\Runtime\Html;
 use Picowind\Core\Discovery\Attributes\Service;
 use Picowind\Core\Render\Latte\LatteExtension;
 use Picowind\Core\Render\Latte\MultiDirectoryLoader;
+use Picowind\Core\Render\Latte\TimberFunctionsExtension;
 use Picowind\Core\Render\TimberFunctionBridge;
 use Picowind\Utils\Theme as UtilsTheme;
 
@@ -28,14 +29,6 @@ class Latte
      * @var array<string, string>
      */
     private const LATTE_FUNCTION_ALIASES = [
-        '__' => 'translate__',
-        '_e' => 'translate_e',
-        '_n' => 'translate_n',
-        '_x' => 'translate_x',
-        '_ex' => 'translate_ex',
-        '_nx' => 'translate_nx',
-        '_n_noop' => 'translate_n_noop',
-        '_nx_noop' => 'translate_nx_noop',
         'function' => 'call',
         'fn' => 'call',
     ];
@@ -75,29 +68,23 @@ class Latte
 
     private function registerTimberFunctions(): void
     {
-        $registered = [];
+        $functions = [];
 
         foreach ($this->timberFunctions->all() as $name => $callable) {
-            $latteFunctionName = self::LATTE_FUNCTION_ALIASES[$name] ?? $name;
+            $alias = self::LATTE_FUNCTION_ALIASES[$name] ?? null;
 
-            if (! $this->isRegisterableLatteFunctionName($latteFunctionName)) {
-                continue;
+            if (! array_key_exists($name, $functions)) {
+                $functions[$name] = $callable;
             }
 
-            if (array_key_exists($latteFunctionName, $registered)) {
-                continue;
+            if (is_string($alias) && ! array_key_exists($alias, $functions)) {
+                $functions[$alias] = $callable;
             }
-
-            $this->latte->addFunction($latteFunctionName, $callable);
-            $registered[$latteFunctionName] = true;
         }
 
-        $this->latte->addFunction('timber', fn (string $name, ...$args) => $this->timberFunctions->call($name, ...$args));
-    }
+        $functions['timber'] = fn (string $name, ...$args) => $this->timberFunctions->call($name, ...$args);
 
-    private function isRegisterableLatteFunctionName(string $name): bool
-    {
-        return (bool) preg_match('#^[a-z]\w*$#iD', $name);
+        $this->latte->addExtension(new TimberFunctionsExtension($functions));
     }
 
     private function withTimberHelpers(array $context): array

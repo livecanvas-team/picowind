@@ -17,4 +17,4 @@ namespace Picowind;
 
 $context = context();
 
-render('404.twig', $context, null, true, true);
+render(template_fallbacks('404'), $context, null, true, true);

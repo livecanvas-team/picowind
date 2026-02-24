@@ -20,15 +20,15 @@ $timber_post = \Timber\Timber::get_post();
 $context['post'] = $timber_post;
 
 $r = render(
-    [
-        'page-' . $timber_post->post_name . '.twig',
-        'page.twig',
-    ],
+    template_fallbacks([
+        'page-' . $timber_post->post_name,
+        'page',
+    ]),
     $context,
     null,
     true,
     true,
 );
 
-// Fallback to page.php if Twig rendering fails.
+// Fallback to page.php if template rendering fails.
 // $r ? print $r : require_once __DIR__ . '/page.php';
