@@ -64,6 +64,26 @@ When rendering templates, Picowind will automatically detect the engine based on
 - `.blade.php`, `.php`, or no extension - Blade
 - `.latte` - Latte
 
+#### Render capabilities
+
+`Picowind\render()` supports mixed-engine fallback arrays out of the box. Leave `$engine` as `null` (default), pass multiple template candidates (even from different engines), and Picowind will try them in order until one renders successfully.
+
+```php
+Picowind\render([
+    'components/hero.twig',
+    'components/hero.blade.php',
+    'components/hero.latte',
+], ['title' => 'Hello']);
+```
+
+You can also use the `.?` extension placeholder with an explicit engine to swap engines without changing template paths:
+
+```php
+Picowind\render('components/hero.?', ['title' => 'Hello'], 'twig');
+Picowind\render('components/hero.?', ['title' => 'Hello'], 'blade');
+Picowind\render('components/hero.?', ['title' => 'Hello'], 'latte');
+```
+
 
 ##### Twig
 ```php
@@ -81,6 +101,53 @@ Picowind\render_string('<div>{{ $text }}</div>', ['text' => 'Hello'], 'blade');
 ```php
 Picowind\render('components/header.latte', ['title' => 'Welcome']);
 Picowind\render_string('<div>{$title}</div>', ['title' => 'Hello'], 'latte');
+```
+
+#### Timber-compatible function helpers (Blade + Latte)
+
+Twig includes Timber helpers like `get_post`, `get_posts`, `function`, `fn`, and translation functions.
+
+Picowind now exposes the same Timber callable map to Blade and Latte:
+
+- **Latte**
+  - Direct function names where Latte allows it: `{get_post(123)}`
+  - `function`/`fn` are available as `call`: `{call('wp_head')}`
+  - Universal dispatcher: `{timber('get_post', 123)}`
+  - Names starting with `_` (for example `__`, `_e`) are exposed via aliases like `translate__`, `translate_e`, etc.
+- **Blade**
+  - Callable variables for Timber functions: `{{ $get_post(123) }}`
+  - `function`/`fn` call style: `{{ $function('wp_head') }}` and `{{ $fn('wp_head') }}`
+  - Universal object access: `{{ $timber->get_post(123) }}`
+
+#### Mixing engines inside templates
+
+Picowind lets templates call other engines directly, so you can compose Twig, Blade, and Latte in the same page.
+
+- **Twig -> Blade/Latte**
+
+```twig
+{% blade 'components/button.blade.php' with {'text': 'Click me'} %}
+{% latte 'components/card.latte' with {'title': post.title} %}
+
+{{ blade('components/button.blade.php', {'text': 'Click me'}) }}
+{{ latte('components/card.latte', {'title': post.title}) }}
+```
+
+- **Blade -> Twig/Latte**
+
+```blade
+@twig('components/card.twig', ['title' => $title])
+@latte('components/card.latte', ['title' => $title])
+```
+
+- **Latte -> Twig/Blade**
+
+```latte
+{twig 'components/card.twig', ['title' => $title]}
+{blade 'components/button.blade.php', ['text' => $title]}
+
+{twig('components/card.twig', ['title' => $title])}
+{blade('components/button.blade.php', ['text' => $title])}
 ```
 
 #### Shortcodes

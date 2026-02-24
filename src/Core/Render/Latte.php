@@ -16,6 +16,7 @@ use Latte\Runtime\Html;
 use Picowind\Core\Discovery\Attributes\Service;
 use Picowind\Core\Render\Latte\LatteExtension;
 use Picowind\Core\Render\Latte\MultiDirectoryLoader;
+use Picowind\Core\Render\TimberFunctionBridge;
 use Picowind\Utils\Theme as UtilsTheme;
 
 use function Picowind\render;
@@ -23,17 +24,35 @@ use function Picowind\render;
 #[Service]
 class Latte
 {
+    /**
+     * @var array<string, string>
+     */
+    private const LATTE_FUNCTION_ALIASES = [
+        '__' => 'translate__',
+        '_e' => 'translate_e',
+        '_n' => 'translate_n',
+        '_x' => 'translate_x',
+        '_ex' => 'translate_ex',
+        '_nx' => 'translate_nx',
+        '_n_noop' => 'translate_n_noop',
+        '_nx_noop' => 'translate_nx_noop',
+        'function' => 'call',
+        'fn' => 'call',
+    ];
+
     private readonly Engine $latte;
+    private readonly TimberFunctionBridge $timberFunctions;
 
     public function __construct()
     {
         $cache_path = UtilsTheme::get_cache_path('latte');
         if (! file_exists($cache_path)) {
-            wp_mkdir_p($cache_path);
+            call_user_func('wp_mkdir_p', $cache_path);
         }
 
         $this->latte = new Engine();
         $this->latte->setTempDirectory($cache_path);
+        $this->timberFunctions = new TimberFunctionBridge();
 
         // Configure custom loader to support multiple template directories with fallback
         $template_dirs = UtilsTheme::get_template_directories();
@@ -41,16 +60,53 @@ class Latte
         $this->latte->setLoader($loader);
 
         // Auto-refresh in development
-        if (defined('WP_DEBUG') && WP_DEBUG) {
+        if (\defined('WP_DEBUG') && \constant('WP_DEBUG')) {
             $this->latte->setAutoRefresh(true);
         }
 
         // Register custom extension with tags and functions
         $this->latte->addExtension(new LatteExtension());
 
+        $this->registerTimberFunctions();
         $this->registerTwigFunction();
         $this->registerBladeFunction();
         $this->registerOmniIconFunction();
+    }
+
+    private function registerTimberFunctions(): void
+    {
+        $registered = [];
+
+        foreach ($this->timberFunctions->all() as $name => $callable) {
+            $latteFunctionName = self::LATTE_FUNCTION_ALIASES[$name] ?? $name;
+
+            if (! $this->isRegisterableLatteFunctionName($latteFunctionName)) {
+                continue;
+            }
+
+            if (array_key_exists($latteFunctionName, $registered)) {
+                continue;
+            }
+
+            $this->latte->addFunction($latteFunctionName, $callable);
+            $registered[$latteFunctionName] = true;
+        }
+
+        $this->latte->addFunction('timber', fn (string $name, ...$args) => $this->timberFunctions->call($name, ...$args));
+    }
+
+    private function isRegisterableLatteFunctionName(string $name): bool
+    {
+        return (bool) preg_match('#^[a-z]\w*$#iD', $name);
+    }
+
+    private function withTimberHelpers(array $context): array
+    {
+        if (! array_key_exists('timber', $context)) {
+            $context['timber'] = $this->timberFunctions;
+        }
+
+        return $context;
     }
 
     private function registerTwigFunction(): void
@@ -91,6 +147,8 @@ class Latte
      */
     public function render_template($paths, array $context = [], bool $print = true)
     {
+        $context = $this->withTimberHelpers($context);
+
         $template_name = null;
         $template_dirs = UtilsTheme::get_template_directories();
 
@@ -136,6 +194,8 @@ class Latte
      */
     public function render_string(string $template_string, array $context = [], bool $print = true)
     {
+        $context = $this->withTimberHelpers($context);
+
         try {
             // Save the current loader
             $originalLoader = $this->latte->getLoader();

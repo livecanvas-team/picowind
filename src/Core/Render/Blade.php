@@ -12,6 +12,7 @@ namespace Picowind\Core\Render;
 
 use Jenssegers\Blade\Blade as BladeBlade;
 use Picowind\Core\Discovery\Attributes\Service;
+use Picowind\Core\Render\TimberFunctionBridge;
 use Picowind\Utils\Theme as UtilsTheme;
 
 use function Picowind\render;
@@ -20,18 +21,39 @@ use function Picowind\render;
 class Blade
 {
     private readonly ?BladeBlade $bladeBlade;
+    private readonly TimberFunctionBridge $timberFunctions;
 
     public function __construct()
     {
         $cache_path = UtilsTheme::get_cache_path('blade');
         if (! file_exists($cache_path)) {
-            wp_mkdir_p($cache_path);
+            call_user_func('wp_mkdir_p', $cache_path);
         }
 
         $this->bladeBlade = new BladeBlade(UtilsTheme::get_template_directories(), $cache_path);
+        $this->timberFunctions = new TimberFunctionBridge();
+        $this->registerTimberHelpers();
         $this->registerTwigDirective();
         $this->registerLatteDirective();
         $this->registerOmniIconDirective();
+    }
+
+    private function registerTimberHelpers(): void
+    {
+        $this->bladeBlade->share('timber', $this->timberFunctions);
+
+        foreach ($this->timberFunctions->all() as $name => $timberCallable) {
+            $this->bladeBlade->share($name, \Closure::fromCallable($timberCallable));
+        }
+    }
+
+    private function withTimberHelpers(array $context): array
+    {
+        if (! array_key_exists('timber', $context)) {
+            $context['timber'] = $this->timberFunctions;
+        }
+
+        return $context;
     }
 
     private function registerTwigDirective(): void
@@ -98,6 +120,8 @@ class Blade
      */
     public function render_template($paths, array $context = [], bool $print = true)
     {
+        $context = $this->withTimberHelpers($context);
+
         $view_name = null;
         $template_dirs = UtilsTheme::get_template_directories();
         $resolve_view_name = function ($path) use ($template_dirs) {
@@ -151,6 +175,8 @@ class Blade
      */
     public function render_string(string $template_string, array $context = [], bool $print = true)
     {
+        $context = $this->withTimberHelpers($context);
+
         // Use the BladeCompiler's render method to compile and render the string
         $output = $this->bladeBlade->compiler()->render($template_string, $context);
 
