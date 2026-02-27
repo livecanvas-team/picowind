@@ -154,6 +154,10 @@ return [
 
             'acf_get_url',
             'acf_register_field_type',
+
+            // LiveCanvas functions
+            'lc_theme_is_livecanvas_friendly',
+            'lc_define_editor_config',
         ]
     ),
     'exclude-constants' => array_merge(
