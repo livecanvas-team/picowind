@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.8] - 2026-02-27
+
+### Fixed
+- Expand scoper patch coverage for additional Twig/Latte/Blade compiled runtime references to prevent prefixed-build render fatals.
+
 ## [0.0.7] - 2026-02-27
 
 ### Fixed
@@ -39,7 +44,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - 🐣 Initial release.
 
-[unreleased]: https://github.com/livecanvas-team/picowind/compare/0.0.7...HEAD
+[unreleased]: https://github.com/livecanvas-team/picowind/compare/0.0.8...HEAD
+[0.0.8]: https://github.com/livecanvas-team/picowind/compare/0.0.7...0.0.8
 [0.0.7]: https://github.com/livecanvas-team/picowind/compare/0.0.6...0.0.7
 [0.0.6]: https://github.com/livecanvas-team/picowind/compare/0.0.5...0.0.6
 [0.0.5]: https://github.com/livecanvas-team/picowind/compare/0.0.4...0.0.5

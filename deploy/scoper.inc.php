@@ -133,6 +133,14 @@ return [
                 );
             }
 
+            if (str_ends_with($filePath, 'twig/twig/src/Profiler/Node/EnterProfileNode.php')) {
+                $contents = str_replace(
+                    'new \\Twig\\Profiler\\Profile(',
+                    'new \\' . $prefix . '\\Twig\\Profiler\\Profile(',
+                    $contents
+                );
+            }
+
             // Fix Latte runtime-compiled templates in scoped builds.
             // Latte\Compiler\TemplateGenerator emits hardcoded `Latte\Runtime` references.
             if (str_ends_with($filePath, 'latte/latte/src/Latte/Compiler/TemplateGenerator.php')) {
@@ -149,12 +157,90 @@ return [
                 );
             }
 
+            if (str_ends_with($filePath, 'latte/latte/src/Latte/Essential/Nodes/TemplatePrintNode.php')) {
+                $contents = str_replace(
+                    'new Latte\\Essential\\Blueprint;',
+                    'new ' . $prefix . '\\Latte\\Essential\\Blueprint;',
+                    $contents
+                );
+            }
+
+            if (str_ends_with($filePath, 'latte/latte/src/Latte/Essential/Nodes/VarPrintNode.php')) {
+                $contents = str_replace(
+                    'new Latte\\\\Essential\\\\Blueprint;',
+                    'new ' . $prefix . '\\\\Latte\\\\Essential\\\\Blueprint;',
+                    $contents
+                );
+            }
+
+            if (str_ends_with($filePath, 'latte/latte/src/Latte/Essential/Nodes/TraceNode.php')) {
+                $contents = str_replace(
+                    'Latte\\Essential\\Tracer::throw() %line;',
+                    $prefix . '\\Latte\\Essential\\Tracer::throw() %line;',
+                    $contents
+                );
+            }
+
+            if (str_ends_with($filePath, 'latte/latte/src/Latte/Essential/Nodes/ForeachNode.php')) {
+                $contents = str_replace(
+                    'new Latte\\Essential\\CachingIterator(',
+                    'new ' . $prefix . '\\Latte\\Essential\\CachingIterator(',
+                    $contents
+                );
+            }
+
+            if (str_ends_with($filePath, 'latte/latte/src/Latte/Essential/Nodes/SpacelessNode.php')) {
+                $contents = str_replace(
+                    "Latte\\Essential\\Filters::%raw",
+                    $prefix . '\\Latte\\Essential\\Filters::%raw',
+                    $contents
+                );
+            }
+
+            if (str_ends_with($filePath, 'latte/latte/src/Latte/Essential/Nodes/TryNode.php')) {
+                $contents = str_replace(
+                    'instanceof Latte\\Essential\\RollbackException',
+                    'instanceof ' . $prefix . '\\Latte\\Essential\\RollbackException',
+                    $contents
+                );
+            }
+
+            if (str_ends_with($filePath, 'latte/latte/src/Latte/Essential/Nodes/RollbackNode.php')) {
+                $contents = str_replace(
+                    'throw new Latte\\Essential\\RollbackException;',
+                    'throw new ' . $prefix . '\\Latte\\Essential\\RollbackException;',
+                    $contents
+                );
+            }
+
             // Fix Blade runtime-compiled templates in scoped builds.
             // Illuminate view compilers emit hardcoded `\\Illuminate\\...` class references.
             if (str_contains($filePath, 'illuminate/view/Compilers/')) {
                 $contents = str_replace(
                     '\\\\Illuminate\\\\',
                     '\\\\' . $prefix . '\\\\Illuminate\\\\',
+                    $contents
+                );
+            }
+
+            if (str_ends_with($filePath, 'illuminate/view/Compilers/ComponentTagCompiler.php')) {
+                $contents = str_replace(
+                    'make(Illuminate\\\\View\\\\Factory::class)',
+                    'make(' . $prefix . '\\\\Illuminate\\\\View\\\\Factory::class)',
+                    $contents
+                );
+
+                $contents = str_replace(
+                    'instanceof Illuminate\\View\\ComponentAttributeBag',
+                    'instanceof ' . $prefix . '\\Illuminate\\View\\ComponentAttributeBag',
+                    $contents
+                );
+            }
+
+            if (str_ends_with($filePath, 'illuminate/view/Compilers/Concerns/CompilesComponents.php')) {
+                $contents = str_replace(
+                    'instanceof Illuminate\\View\\ComponentAttributeBag',
+                    'instanceof ' . $prefix . '\\Illuminate\\View\\ComponentAttributeBag',
                     $contents
                 );
             }
