@@ -80,7 +80,7 @@ if (!\function_exists('PicowindDeps\class_uses_recursive')) {
         }
         $results = [];
         foreach (\array_reverse(\class_parents($class) ?: []) + [$class => $class] as $class) {
-            $results += trait_uses_recursive($class);
+            $results += \PicowindDeps\trait_uses_recursive($class);
         }
         return \array_unique($results);
     }
@@ -129,7 +129,7 @@ if (!\function_exists('PicowindDeps\filled')) {
      */
     function filled($value)
     {
-        return !blank($value);
+        return !\PicowindDeps\blank($value);
     }
 }
 if (!\function_exists('PicowindDeps\laravel_cloud')) {
@@ -159,7 +159,7 @@ if (!\function_exists('PicowindDeps\object_get')) {
         }
         foreach (\explode('.', $key) as $segment) {
             if (!\is_object($object) || !isset($object->{$segment})) {
-                return value($default);
+                return \PicowindDeps\value($default);
             }
             $object = $object->{$segment};
         }
@@ -232,7 +232,7 @@ if (!\function_exists('PicowindDeps\retry')) {
             }
             $sleepMilliseconds = $backoff[$attempts - 1] ?? $sleepMilliseconds;
             if ($sleepMilliseconds) {
-                Sleep::usleep(value($sleepMilliseconds, $attempts, $e) * 1000);
+                Sleep::usleep(\PicowindDeps\value($sleepMilliseconds, $attempts, $e) * 1000);
             }
             goto beginning;
         }
@@ -319,7 +319,7 @@ if (!\function_exists('PicowindDeps\throw_unless')) {
      */
     function throw_unless($condition, $exception = 'RuntimeException', ...$parameters)
     {
-        throw_if(!$condition, $exception, ...$parameters);
+        \PicowindDeps\throw_if(!$condition, $exception, ...$parameters);
         return $condition;
     }
 }
@@ -334,7 +334,7 @@ if (!\function_exists('PicowindDeps\trait_uses_recursive')) {
     {
         $traits = \class_uses($trait) ?: [];
         foreach ($traits as $trait) {
-            $traits += trait_uses_recursive($trait);
+            $traits += \PicowindDeps\trait_uses_recursive($trait);
         }
         return $traits;
     }
@@ -354,7 +354,7 @@ if (!\function_exists('PicowindDeps\transform')) {
      */
     function transform($value, callable $callback, $default = null)
     {
-        if (filled($value)) {
+        if (\PicowindDeps\filled($value)) {
             return $callback($value);
         }
         if (\is_callable($default)) {

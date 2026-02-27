@@ -30,7 +30,7 @@ if (!\function_exists('PicowindDeps\data_fill')) {
      */
     function data_fill(&$target, $key, $value)
     {
-        return data_set($target, $key, $value, \false);
+        return \PicowindDeps\data_set($target, $key, $value, \false);
     }
 }
 if (!\function_exists('PicowindDeps\data_get')) {
@@ -57,11 +57,11 @@ if (!\function_exists('PicowindDeps\data_get')) {
                 if ($target instanceof Collection) {
                     $target = $target->all();
                 } elseif (!\is_iterable($target)) {
-                    return value($default);
+                    return \PicowindDeps\value($default);
                 }
                 $result = [];
                 foreach ($target as $item) {
-                    $result[] = data_get($item, $key);
+                    $result[] = \PicowindDeps\data_get($item, $key);
                 }
                 return \in_array('*', $key) ? Arr::collapse($result) : $result;
             }
@@ -70,7 +70,7 @@ if (!\function_exists('PicowindDeps\data_get')) {
             } elseif (\is_object($target) && isset($target->{$segment})) {
                 $target = $target->{$segment};
             } else {
-                return value($default);
+                return \PicowindDeps\value($default);
             }
         }
         return $target;
@@ -95,7 +95,7 @@ if (!\function_exists('PicowindDeps\data_set')) {
             }
             if ($segments) {
                 foreach ($target as &$inner) {
-                    data_set($inner, $segments, $value, $overwrite);
+                    \PicowindDeps\data_set($inner, $segments, $value, $overwrite);
                 }
             } elseif ($overwrite) {
                 foreach ($target as &$inner) {
@@ -107,7 +107,7 @@ if (!\function_exists('PicowindDeps\data_set')) {
                 if (!Arr::exists($target, $segment)) {
                     $target[$segment] = [];
                 }
-                data_set($target[$segment], $segments, $value, $overwrite);
+                \PicowindDeps\data_set($target[$segment], $segments, $value, $overwrite);
             } elseif ($overwrite || !Arr::exists($target, $segment)) {
                 $target[$segment] = $value;
             }
@@ -116,14 +116,14 @@ if (!\function_exists('PicowindDeps\data_set')) {
                 if (!isset($target->{$segment})) {
                     $target->{$segment} = [];
                 }
-                data_set($target->{$segment}, $segments, $value, $overwrite);
+                \PicowindDeps\data_set($target->{$segment}, $segments, $value, $overwrite);
             } elseif ($overwrite || !isset($target->{$segment})) {
                 $target->{$segment} = $value;
             }
         } else {
             $target = [];
             if ($segments) {
-                data_set($target[$segment], $segments, $value, $overwrite);
+                \PicowindDeps\data_set($target[$segment], $segments, $value, $overwrite);
             } elseif ($overwrite) {
                 $target[$segment] = $value;
             }
@@ -145,18 +145,18 @@ if (!\function_exists('PicowindDeps\data_forget')) {
         if (($segment = \array_shift($segments)) === '*' && Arr::accessible($target)) {
             if ($segments) {
                 foreach ($target as &$inner) {
-                    data_forget($inner, $segments);
+                    \PicowindDeps\data_forget($inner, $segments);
                 }
             }
         } elseif (Arr::accessible($target)) {
             if ($segments && Arr::exists($target, $segment)) {
-                data_forget($target[$segment], $segments);
+                \PicowindDeps\data_forget($target[$segment], $segments);
             } else {
                 Arr::forget($target, $segment);
             }
         } elseif (\is_object($target)) {
             if ($segments && isset($target->{$segment})) {
-                data_forget($target->{$segment}, $segments);
+                \PicowindDeps\data_forget($target->{$segment}, $segments);
             } elseif (isset($target->{$segment})) {
                 unset($target->{$segment});
             }

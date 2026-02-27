@@ -38,6 +38,11 @@ humbug_phpscoper_expose_class('ValueError', 'PicowindDeps\ValueError');
 
 // Function aliases. For more information see:
 // https://github.com/humbug/php-scoper/blob/master/docs/further-reading.md#function-aliases
+if (!function_exists('append_config')) { function append_config() { return \PicowindDeps\append_config(...func_get_args()); } }
+if (!function_exists('blank')) { function blank() { return \PicowindDeps\blank(...func_get_args()); } }
+if (!function_exists('class_basename')) { function class_basename() { return \PicowindDeps\class_basename(...func_get_args()); } }
+if (!function_exists('class_uses_recursive')) { function class_uses_recursive() { return \PicowindDeps\class_uses_recursive(...func_get_args()); } }
+if (!function_exists('collect')) { function collect() { return \PicowindDeps\collect(...func_get_args()); } }
 if (!function_exists('ctype_alnum')) { function ctype_alnum() { return \PicowindDeps\ctype_alnum(...func_get_args()); } }
 if (!function_exists('ctype_alpha')) { function ctype_alpha() { return \PicowindDeps\ctype_alpha(...func_get_args()); } }
 if (!function_exists('ctype_cntrl')) { function ctype_cntrl() { return \PicowindDeps\ctype_cntrl(...func_get_args()); } }
@@ -49,7 +54,14 @@ if (!function_exists('ctype_punct')) { function ctype_punct() { return \Picowind
 if (!function_exists('ctype_space')) { function ctype_space() { return \PicowindDeps\ctype_space(...func_get_args()); } }
 if (!function_exists('ctype_upper')) { function ctype_upper() { return \PicowindDeps\ctype_upper(...func_get_args()); } }
 if (!function_exists('ctype_xdigit')) { function ctype_xdigit() { return \PicowindDeps\ctype_xdigit(...func_get_args()); } }
+if (!function_exists('data_fill')) { function data_fill() { return \PicowindDeps\data_fill(...func_get_args()); } }
+if (!function_exists('data_forget')) { function data_forget() { return \PicowindDeps\data_forget(...func_get_args()); } }
+if (!function_exists('data_get')) { function data_get() { return \PicowindDeps\data_get(...func_get_args()); } }
+if (!function_exists('data_set')) { function data_set() { return \PicowindDeps\data_set(...func_get_args()); } }
+if (!function_exists('e')) { function e() { return \PicowindDeps\e(...func_get_args()); } }
+if (!function_exists('env')) { function env() { return \PicowindDeps\env(...func_get_args()); } }
 if (!function_exists('fdiv')) { function fdiv() { return \PicowindDeps\fdiv(...func_get_args()); } }
+if (!function_exists('filled')) { function filled() { return \PicowindDeps\filled(...func_get_args()); } }
 if (!function_exists('get_debug_type')) { function get_debug_type() { return \PicowindDeps\get_debug_type(...func_get_args()); } }
 if (!function_exists('get_resource_id')) { function get_resource_id() { return \PicowindDeps\get_resource_id(...func_get_args()); } }
 if (!function_exists('grapheme_extract')) { function grapheme_extract() { return \PicowindDeps\grapheme_extract(...func_get_args()); } }
@@ -62,6 +74,9 @@ if (!function_exists('grapheme_strripos')) { function grapheme_strripos() { retu
 if (!function_exists('grapheme_strrpos')) { function grapheme_strrpos() { return \PicowindDeps\grapheme_strrpos(...func_get_args()); } }
 if (!function_exists('grapheme_strstr')) { function grapheme_strstr() { return \PicowindDeps\grapheme_strstr(...func_get_args()); } }
 if (!function_exists('grapheme_substr')) { function grapheme_substr() { return \PicowindDeps\grapheme_substr(...func_get_args()); } }
+if (!function_exists('head')) { function head() { return \PicowindDeps\head(...func_get_args()); } }
+if (!function_exists('laravel_cloud')) { function laravel_cloud() { return \PicowindDeps\laravel_cloud(...func_get_args()); } }
+if (!function_exists('last')) { function last() { return \PicowindDeps\last(...func_get_args()); } }
 if (!function_exists('lc_define_editor_config')) { function lc_define_editor_config() { return \PicowindDeps\lc_define_editor_config(...func_get_args()); } }
 if (!function_exists('lc_theme_is_livecanvas_friendly')) { function lc_theme_is_livecanvas_friendly() { return \PicowindDeps\lc_theme_is_livecanvas_friendly(...func_get_args()); } }
 if (!function_exists('mb_check_encoding')) { function mb_check_encoding() { return \PicowindDeps\mb_check_encoding(...func_get_args()); } }
@@ -110,9 +125,22 @@ if (!function_exists('mb_trim')) { function mb_trim() { return \PicowindDeps\mb_
 if (!function_exists('mb_ucfirst')) { function mb_ucfirst() { return \PicowindDeps\mb_ucfirst(...func_get_args()); } }
 if (!function_exists('normalizer_is_normalized')) { function normalizer_is_normalized() { return \PicowindDeps\normalizer_is_normalized(...func_get_args()); } }
 if (!function_exists('normalizer_normalize')) { function normalizer_normalize() { return \PicowindDeps\normalizer_normalize(...func_get_args()); } }
+if (!function_exists('object_get')) { function object_get() { return \PicowindDeps\object_get(...func_get_args()); } }
+if (!function_exists('optional')) { function optional() { return \PicowindDeps\optional(...func_get_args()); } }
 if (!function_exists('preg_last_error_msg')) { function preg_last_error_msg() { return \PicowindDeps\preg_last_error_msg(...func_get_args()); } }
+if (!function_exists('preg_replace_array')) { function preg_replace_array() { return \PicowindDeps\preg_replace_array(...func_get_args()); } }
+if (!function_exists('retry')) { function retry() { return \PicowindDeps\retry(...func_get_args()); } }
+if (!function_exists('str')) { function str() { return \PicowindDeps\str(...func_get_args()); } }
 if (!function_exists('str_contains')) { function str_contains() { return \PicowindDeps\str_contains(...func_get_args()); } }
 if (!function_exists('str_ends_with')) { function str_ends_with() { return \PicowindDeps\str_ends_with(...func_get_args()); } }
 if (!function_exists('str_starts_with')) { function str_starts_with() { return \PicowindDeps\str_starts_with(...func_get_args()); } }
+if (!function_exists('tap')) { function tap() { return \PicowindDeps\tap(...func_get_args()); } }
+if (!function_exists('throw_if')) { function throw_if() { return \PicowindDeps\throw_if(...func_get_args()); } }
+if (!function_exists('throw_unless')) { function throw_unless() { return \PicowindDeps\throw_unless(...func_get_args()); } }
+if (!function_exists('trait_uses_recursive')) { function trait_uses_recursive() { return \PicowindDeps\trait_uses_recursive(...func_get_args()); } }
+if (!function_exists('transform')) { function transform() { return \PicowindDeps\transform(...func_get_args()); } }
+if (!function_exists('value')) { function value() { return \PicowindDeps\value(...func_get_args()); } }
+if (!function_exists('windows_os')) { function windows_os() { return \PicowindDeps\windows_os(...func_get_args()); } }
+if (!function_exists('with')) { function with() { return \PicowindDeps\with(...func_get_args()); } }
 
 return $loader;

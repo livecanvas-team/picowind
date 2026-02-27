@@ -47,7 +47,7 @@ class DynamicComponent extends Component
 
 namespace PicowindDeps;
 
-\extract(collect($attributes->getAttributes())->mapWithKeys(function ($value, $key) {
+\extract(\PicowindDeps\collect($attributes->getAttributes())->mapWithKeys(function ($value, $key) {
     return [Illuminate\Support\Str::camel(\str_replace([':', '.'], ' ', $key)) => $value];
 })->all(), \EXTR_SKIP);
 ?>
