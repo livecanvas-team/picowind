@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- Expose scoped Illuminate helper functions (including `tap`/`value`) to prevent Blade render fatals in prefixed builds.
+
 ## [0.0.3] - 2026-02-27
 
 ### Fixed
