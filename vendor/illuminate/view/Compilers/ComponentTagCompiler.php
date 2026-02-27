@@ -439,7 +439,7 @@ class ComponentTagCompiler
         return preg_replace_callback('/@(class)(\( ( (?>[^()]+) | (?2) )* \))/x', function ($match) {
             if ($match[1] === 'class') {
                 $match[2] = str_replace('"', "'", $match[2]);
-                return ":class=\"\\Illuminate\\Support\\Arr::toCssClasses{$match[2]}\"";
+                return ":class=\"\\PicowindDeps\\Illuminate\\Support\\Arr::toCssClasses{$match[2]}\"";
             }
             return $match[0];
         }, $attributeString);
@@ -455,7 +455,7 @@ class ComponentTagCompiler
         return preg_replace_callback('/@(style)(\( ( (?>[^()]+) | (?2) )* \))/x', function ($match) {
             if ($match[1] === 'style') {
                 $match[2] = str_replace('"', "'", $match[2]);
-                return ":style=\"\\Illuminate\\Support\\Arr::toCssStyles{$match[2]}\"";
+                return ":style=\"\\PicowindDeps\\Illuminate\\Support\\Arr::toCssStyles{$match[2]}\"";
             }
             return $match[0];
         }, $attributeString);
@@ -512,7 +512,7 @@ class ComponentTagCompiler
     protected function attributesToString(array $attributes, $escapeBound = \true)
     {
         return collect($attributes)->map(function (string $value, string $attribute) use ($escapeBound) {
-            return $escapeBound && isset($this->boundAttributes[$attribute]) && $value !== 'true' && !is_numeric($value) ? "'{$attribute}' => \\Illuminate\\View\\Compilers\\BladeCompiler::sanitizeComponentAttribute({$value})" : "'{$attribute}' => {$value}";
+            return $escapeBound && isset($this->boundAttributes[$attribute]) && $value !== 'true' && !is_numeric($value) ? "'{$attribute}' => \\PicowindDeps\\Illuminate\\View\\Compilers\\BladeCompiler::sanitizeComponentAttribute({$value})" : "'{$attribute}' => {$value}";
         })->implode(',');
     }
     /**

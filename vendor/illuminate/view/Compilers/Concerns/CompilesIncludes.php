@@ -23,7 +23,7 @@ trait CompilesIncludes
     protected function compileInclude($expression)
     {
         $expression = $this->stripParentheses($expression);
-        return "<?php echo \$__env->make({$expression}, \\Illuminate\\Support\\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>";
+        return "<?php echo \$__env->make({$expression}, \\PicowindDeps\\Illuminate\\Support\\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>";
     }
     /**
      * Compile the include-if statements into valid PHP.
@@ -34,7 +34,7 @@ trait CompilesIncludes
     protected function compileIncludeIf($expression)
     {
         $expression = $this->stripParentheses($expression);
-        return "<?php if (\$__env->exists({$expression})) echo \$__env->make({$expression}, \\Illuminate\\Support\\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>";
+        return "<?php if (\$__env->exists({$expression})) echo \$__env->make({$expression}, \\PicowindDeps\\Illuminate\\Support\\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>";
     }
     /**
      * Compile the include-when statements into valid PHP.
@@ -45,7 +45,7 @@ trait CompilesIncludes
     protected function compileIncludeWhen($expression)
     {
         $expression = $this->stripParentheses($expression);
-        return "<?php echo \$__env->renderWhen({$expression}, \\Illuminate\\Support\\Arr::except(get_defined_vars(), ['__data', '__path'])); ?>";
+        return "<?php echo \$__env->renderWhen({$expression}, \\PicowindDeps\\Illuminate\\Support\\Arr::except(get_defined_vars(), ['__data', '__path'])); ?>";
     }
     /**
      * Compile the include-unless statements into valid PHP.
@@ -56,7 +56,7 @@ trait CompilesIncludes
     protected function compileIncludeUnless($expression)
     {
         $expression = $this->stripParentheses($expression);
-        return "<?php echo \$__env->renderUnless({$expression}, \\Illuminate\\Support\\Arr::except(get_defined_vars(), ['__data', '__path'])); ?>";
+        return "<?php echo \$__env->renderUnless({$expression}, \\PicowindDeps\\Illuminate\\Support\\Arr::except(get_defined_vars(), ['__data', '__path'])); ?>";
     }
     /**
      * Compile the include-first statements into valid PHP.
@@ -67,6 +67,6 @@ trait CompilesIncludes
     protected function compileIncludeFirst($expression)
     {
         $expression = $this->stripParentheses($expression);
-        return "<?php echo \$__env->first({$expression}, \\Illuminate\\Support\\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>";
+        return "<?php echo \$__env->first({$expression}, \\PicowindDeps\\Illuminate\\Support\\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>";
     }
 }

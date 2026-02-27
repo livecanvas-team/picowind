@@ -119,7 +119,7 @@ trait CompilesComponents
      */
     protected function compileProps($expression)
     {
-        return "<?php \$attributes ??= new \\Illuminate\\View\\ComponentAttributeBag; ?>\n<?php foreach(\$attributes->onlyProps{$expression} as \$__key => \$__value) {\n    \$\$__key = \$\$__key ?? \$__value;\n} ?>\n<?php \$attributes = \$attributes->exceptProps{$expression}; ?>\n<?php foreach (array_filter({$expression}, 'is_string', ARRAY_FILTER_USE_KEY) as \$__key => \$__value) {\n    \$\$__key = \$\$__key ?? \$__value;\n} ?>\n<?php \$__defined_vars = get_defined_vars(); ?>\n<?php foreach (\$attributes as \$__key => \$__value) {\n    if (array_key_exists(\$__key, \$__defined_vars)) unset(\$\$__key);\n} ?>\n<?php unset(\$__defined_vars); ?>";
+        return "<?php \$attributes ??= new \\PicowindDeps\\Illuminate\\View\\ComponentAttributeBag; ?>\n<?php foreach(\$attributes->onlyProps{$expression} as \$__key => \$__value) {\n    \$\$__key = \$\$__key ?? \$__value;\n} ?>\n<?php \$attributes = \$attributes->exceptProps{$expression}; ?>\n<?php foreach (array_filter({$expression}, 'is_string', ARRAY_FILTER_USE_KEY) as \$__key => \$__value) {\n    \$\$__key = \$\$__key ?? \$__value;\n} ?>\n<?php \$__defined_vars = get_defined_vars(); ?>\n<?php foreach (\$attributes as \$__key => \$__value) {\n    if (array_key_exists(\$__key, \$__defined_vars)) unset(\$\$__key);\n} ?>\n<?php unset(\$__defined_vars); ?>";
     }
     /**
      * Compile the aware statement into valid PHP.

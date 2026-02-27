@@ -13,6 +13,6 @@ trait CompilesStyles
     protected function compileStyle($expression)
     {
         $expression = is_null($expression) ? '([])' : $expression;
-        return "style=\"<?php echo \\Illuminate\\Support\\Arr::toCssStyles{$expression} ?>\"";
+        return "style=\"<?php echo \\PicowindDeps\\Illuminate\\Support\\Arr::toCssStyles{$expression} ?>\"";
     }
 }
