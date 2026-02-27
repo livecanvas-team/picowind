@@ -1,0 +1,63 @@
+{% extends "base.twig" %}
+
+{% block content %}
+
+{# Search Results Header #}
+<section class="py-12 bg-base-200 text-center">
+	<div class="container mx-auto px-4">
+		<h1 class="text-5xl font-bold mb-4">
+			{{ __('Search Results for:', 'picowind-base') }}
+			<span class="text-primary">"{{ search_query }}"</span>
+		</h1>
+	</div>
+</section>
+
+{# Search Results #}
+<section class="py-12 bg-base-100">
+	<div class="container mx-auto px-4 max-w-7xl">
+		{% if posts is not empty %}
+			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+				{% for post in posts %}
+					{% include 'components/post-card.twig' with {post: post} %}
+				{% endfor %}
+			</div>
+
+			{# Pagination #}
+			{% if posts.pagination %}
+				<div class="flex justify-center mt-12">
+					{% include 'components/pagination.twig' %}
+				</div>
+			{% endif %}
+		{% else %}
+			{# No Results Found #}
+			<div class="max-w-2xl mx-auto">
+				<div role="alert" class="alert alert-warning alert-soft alert-dash shadow-lg">
+					<div class="flex items-center space-x-4">
+						{{ omni_icon("lucide:search-x", {class: "size-12"}) }}
+						<div>
+							<h3 class="font-bold">{{ __('No results found', 'picowind-base') }}</h3>
+							<div class="text-sm">{{ __('Sorry, no posts matched your search criteria. Please try again with different keywords.', 'picowind-base') }}</div>
+						</div>
+					</div>
+				</div>
+
+				{# Search Form #}
+				<div class="mt-8 card bg-base-200 shadow-xl p-6">
+					<h3 class="text-2xl font-semibold mb-4">{{ __('Try another search', 'picowind-base') }}</h3>
+					<form role="search" method="get" action="{{ site.url }}" class="form-control">
+						<div class="join w-full">
+							<input type="search" name="s" placeholder="{{ __('Search...', 'picowind-base') }}" value="{{ search_query }}" class="input input-bordered join-item flex-1" required />
+							<button type="submit" class="btn btn-primary join-item">
+								{{ omni_icon("lucide:search", {class: "w-5 h-5"}) }}
+								{{ __('Search', 'picowind-base') }}
+							</button>
+						</div>
+					</form>
+				</div>
+
+			</div>
+		{% endif %}
+	</div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends "base.twig" %}
+
+{% block content %}
+	<main class="min-h-screen flex items-center justify-center bg-base-100">
+		<div class="hero">
+			<div class="hero-content text-center">
+				<div
+					class="max-w-2xl">
+					{# Error Message #}
+					<h1 class="text-6xl font-bold mb-6">
+						{{ __('Page not found', 'picowind-base') }}
+					</h1>
+
+					<p class="text-xl text-base-content/70 mb-8">
+						{{ __('Perhaps you would like to go to our home page?', 'picowind-base') }}
+					</p>
+
+					{# Action Buttons #}
+					<div class="flex gap-4 justify-center flex-wrap">
+						<a href="{{ site.url }}" class="btn btn-primary btn-lg gap-2">
+							{{ omni_icon("lucide:home", {class: "w-5 h-5"}) }}
+							{{ __('Go to home', 'picowind-base') }}
+						</a>
+
+						<a href="javascript:history.back()" class="btn btn-ghost btn-lg gap-2">
+							{{ omni_icon("lucide:arrow-left", {class: "w-5 h-5"}) }}
+							{{ __('Go back', 'picowind-base') }}
+						</a>
+					</div>
+
+					{# Optional: Search box #}
+					<div class="mt-12">
+						<div class="divider">{{ __('Or search for something', 'picowind-base') }}</div>
+						<form action="{{ site.url }}" method="get" class="join w-full max-w-md mx-auto">
+							<input type="text" name="s" placeholder="{{ __('Search...', 'picowind-base') }}" class="input input-bordered join-item flex-1"/>
+							<button type="submit" class="btn btn-primary join-item">
+								{{ omni_icon("lucide:search", {class: "w-5 h-5"}) }}
+							</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+
+{% endblock %}

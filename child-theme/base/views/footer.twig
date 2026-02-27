@@ -1,0 +1,15 @@
+</main>
+
+{# Custom filter to check if footer elements should be displayed. To disable, use: add_filter('picowind_enable_footer_elements', '__return_false') #}
+{# {% if true|apply_filters('picowind_enable_footer_elements') %} #}
+{% if theme.mods.enable_footer_elements|default(true) %}
+	{% if function_exists('lc_custom_footer') %}
+		{# Use the LiveCanvas Custom Footer #}
+		{{ function('lc_custom_footer') }}
+	{% else %}
+		{# Use the built-in theme footer elements #}
+		{% include 'partials/footer-elements.twig' %}
+	{% endif %}
+{% endif %}
+
+{{ function('wp_footer') }}

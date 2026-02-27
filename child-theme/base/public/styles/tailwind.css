@@ -1,0 +1,22 @@
+/**
+ * Getting Started with Picowind default preset
+ */
+@import "./presets/daisyui.css";
+
+/**
+ * Align-wide support for WordPress blocks
+ */
+@layer base {
+  .alignwide {
+    max-width: var(--wp--style--global--wide-size, 1280px);
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .alignfull {
+    max-width: 100%;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+  }
+}

@@ -1,0 +1,41 @@
+{# Pagination Component using daisyUI join and btn classes #}
+{% if posts.pagination.pages %}
+    <nav aria-label="{{ __('Posts navigation', 'picowind-base') }}" class="my-8">
+        <div class="join">
+            {# Previous button #}
+            {% if posts.pagination.prev %}
+                <a href="{{ posts.pagination.prev.link }}" class="join-item btn">
+                    {{ omni_icon("lucide:chevron-left", {class: "w-4 h-4"}) }}
+                </a>
+            {% else %}
+                <button class="join-item btn btn-disabled">
+                    {{ omni_icon("lucide:chevron-left", {class: "w-4 h-4"}) }}
+                </button>
+            {% endif %}
+
+            {# Page numbers #}
+            {% for page in posts.pagination.pages %}
+                {% if page.link %}
+                    <a href="{{ page.link }}" class="join-item btn {{ page.current ? 'btn-active' }}">
+                        {{ page.title }}
+                    </a>
+                {% else %}
+                    <button class="join-item btn btn-disabled">
+                        {{ page.title }}
+                    </button>
+                {% endif %}
+            {% endfor %}
+
+            {# Next button #}
+            {% if posts.pagination.next %}
+                <a href="{{ posts.pagination.next.link }}" class="join-item btn">
+                    {{ omni_icon("lucide:chevron-right", {class: "w-4 h-4"}) }}
+                </a>
+            {% else %}
+                <button class="join-item btn btn-disabled">
+                    {{ omni_icon("lucide:chevron-right", {class: "w-4 h-4"}) }}
+                </button>
+            {% endif %}
+        </div>
+    </nav>
+{% endif %}

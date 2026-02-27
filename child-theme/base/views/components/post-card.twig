@@ -1,0 +1,40 @@
+{# Post Card Component #}
+<div class="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow">
+	{% if post.thumbnail %}
+		<figure>
+			<img src="{{ post.thumbnail.src('medium') }}" alt="{{ post.thumbnail.alt }}" class="w-full h-64 object-cover"/>
+		</figure>
+	{% endif %}
+
+	<div class="card-body">
+		{% if not theme.mods.singlepost_disable_date %}
+			<div class="text-sm text-base-content/60 mb-2">
+				{{ omni_icon("lucide:calendar", {class: "inline w-4 h-4 mr-1"}) }}
+				{{ post.date }}
+			</div>
+		{% endif %}
+
+		<h2 class="card-title">
+			<a href="{{ post.link }}" class="hover:text-primary transition-colors">
+				{{ post.title }}
+			</a>
+		</h2>
+
+		<p class="text-base-content/70">
+			{{ post.excerpt({
+                    words: 50,
+                    strip: true,
+                    read_more: '',
+                    force: true
+                }) 
+            }}
+		</p>
+
+		<div class="card-actions justify-end mt-4">
+			<a href="{{ post.link }}" class="btn btn-primary btn-sm">
+				{{ __('Read More', 'picowind-base') }}
+				{{ omni_icon("lucide:arrow-right", {class: "inline w-4 h-4 ml-1"}) }}
+			</a>
+		</div>
+	</div>
+</div>

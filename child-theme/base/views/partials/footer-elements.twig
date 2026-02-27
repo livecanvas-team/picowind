@@ -1,0 +1,27 @@
+{# Footer widget area #}
+{% if function('is_active_sidebar', 'footerfull') %}
+    <div class="bg-base-200 mt-12 py-12" id="wrapper-footer-widgets">
+        <div class="container mx-auto px-4 max-w-7xl">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                {{ function('dynamic_sidebar', 'footerfull') }}
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+{# Footer colophon #}
+<div class="bg-base-300 py-6" id="wrapper-footer-colophon">
+    <div class="container mx-auto px-4">
+        <footer class="footer footer-center">
+            <div class="site-info text-base-content text-sm">
+                {% if theme.mods.footer_text %}
+                    {{ theme.mods.footer_text|raw }}
+                {% else %}
+                    {% if function('current_user_can', 'administrator') %}
+                        {{ __('You can edit this footer text from the Picowind settings page.', 'picowind-base') }}
+                    {% endif %}
+                {% endif %}
+            </div>
+        </footer>
+    </div>
+</div>

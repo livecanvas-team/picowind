@@ -1,0 +1,10 @@
+/**
+ * Create a custom theme for yourself using daisyUI theme generator.
+ * https://daisyui.com/theme-generator/
+ */
+
+@plugin "daisyui" {
+    themes: light --default, dark;
+}
+
+/* Add your custom styles below this line */

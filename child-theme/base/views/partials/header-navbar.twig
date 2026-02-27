@@ -1,0 +1,251 @@
+{# Import menu macros #}
+{% import 'macros/menu.twig' as menu_macros %}
+
+<style>
+@layer components {
+	.drawer-side {
+		visibility: hidden;
+	}
+}
+</style>
+
+{# The Navbar Area #}
+<div id="wrapper-navbar" itemscope itemtype="http://schema.org/WebSite">
+	<a class="skip-link sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 focus:z-50 focus:p-4 focus:bg-base-100" href="#theme-main">
+		{{ __('Skip to content', 'picowind-base') }}
+	</a>
+
+	<div class="drawer drawer-end">
+		<input
+		id="main-drawer" type="checkbox" class="drawer-toggle"/>
+
+		{# Main content wrapper #}
+		<div class="drawer-content">
+			<nav class="navbar {{ theme.mods.picowind_header_navbar_color_choice|default('bg-base-100') }}" aria-label="Main Navigation">
+				<div
+					class="container mx-auto px-4 flex">
+
+					{# Logo / Site title - Left side #}
+					<div class="navbar-start">
+						<div id="logo-tagline-wrap">
+							{% if not function('has_custom_logo') %}
+								{% if function('is_front_page') and function('is_home') %}
+									<div class="text-xl font-bold">
+										<a rel="home" href="{{ site.url }}" title="{{ site.name }}" itemprop="url">
+											{{ site.name }}
+										</a>
+									</div>
+								{% else %}
+									<a class="text-xl font-bold" rel="home" href="{{ site.url }}" title="{{ site.name }}" itemprop="url">
+										{{ site.name }}
+									</a>
+								{% endif %}
+							{% else %}
+								{{ function('the_custom_logo') }}
+							{% endif %}
+
+							{% if not theme.mods.header_disable_tagline %}
+								<small id="top-description" class="text-sm text-base-content/60 hidden md:block -mt-1">
+									{{ site.description }}
+								</small>
+							{% endif %}
+						</div>
+					</div>
+
+					{# Desktop menu using Twig macros #}
+					<div class="navbar-center hidden lg:flex">
+						{{ menu_macros.horizontal_menu(nav_items.primary|default([])) }}
+					</div>
+
+					{# Right side items #}
+					<div
+						class="navbar-end gap-2">
+						{# Mobile menu button - shown on small screens #}
+						<label for="main-drawer" class="btn btn-ghost lg:hidden">
+							<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewbox="0 0 24 24" stroke="currentColor">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+							</svg>
+						</label>
+
+						{# Search form #}
+						{% if theme.mods.enable_search_form %}
+							<form action="{{ site.url }}" method="get" id="header-search-form" class="hidden md:block">
+								<input type="text" placeholder="{{ __('Search', 'picowind-base') }}" aria-label="{{ __('Search', 'picowind-base') }}" name="s" value="{{ function('get_search_query') }}" class="input input-bordered input-sm w-full max-w-xs"/>
+							</form>
+						{% endif %}
+
+						{# Dark mode toggle - desktop only #}
+						{% if theme.mods.enable_dark_mode_switch %}
+							<label class="swap swap-rotate hidden lg:inline-grid">
+								<input type="checkbox" id="theme-toggle" class="theme-controller"/>
+								{{ omni_icon("lucide:sun", {class: "swap-off fill-current w-6 h-6"}) }}
+								{{ omni_icon("lucide:moon", {class: "swap-on fill-current w-6 h-6"}) }}
+							</label>
+						{% endif %}
+					</div>
+				</div>
+			</nav>
+		</div>
+
+		{# Mobile drawer sidebar #}
+		<div class="drawer-side z-50">
+			<label for="main-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
+			<div
+				class="menu p-4 w-80 min-h-full bg-base-200">
+				{# Mobile logo/title #}
+				<div class="mb-4 px-2">
+					{% if not function('has_custom_logo') %}
+						<a class="text-xl font-bold" rel="home" href="{{ site.url }}" title="{{ site.name }}">
+							{{ site.name }}
+						</a>
+					{% else %}
+						{{ function('the_custom_logo') }}
+					{% endif %}
+				</div>
+
+				{% if nav_items.primary is defined and nav_items.primary is iterable %}
+					{{ menu_macros.vertical_menu(nav_items.primary) }}
+				{% endif %}
+
+				{# Mobile search #}
+				{% if theme.mods.enable_search_form %}
+					<form action="{{ site.url }}" method="get" class="mt-4 px-2">
+						<input type="text" placeholder="{{ __('Search', 'picowind-base') }}" aria-label="{{ __('Search', 'picowind-base') }}" name="s" value="{{ function('get_search_query') }}" class="input input-bordered w-full"/>
+					</form>
+				{% endif %}
+
+				{# Mobile dark mode toggle #}
+				{% if theme.mods.enable_dark_mode_switch %}
+					<div class="mt-4 px-2 lg:hidden">
+						<label class="flex items-center gap-2 cursor-pointer">
+							<div class="swap swap-rotate">
+								<input type="checkbox" id="theme-toggle-mobile" class="theme-controller"/>
+								{{ omni_icon("lucide:sun", {class: "swap-off fill-current w-5 h-5"}) }}
+								{{ omni_icon("lucide:moon", {class: "swap-on fill-current w-5 h-5"}) }}
+							</div>
+							<span id="theme-label-mobile">{{ __('Light Mode', 'picowind-base') }}</span>
+						</label>
+					</div>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+</div>
+
+{% if theme.mods.enable_dark_mode_switch %}
+	<style>
+		/* View Transition API animations */
+		::view-transition-old(root),
+		::view-transition-new(root) {
+			animation: none;
+			mix-blend-mode: normal;
+		}
+
+		::view-transition-new(root) {
+			z-index: 9999;
+		}
+
+		::view-transition-old(root) {
+			z-index: 1;
+		}
+	</style>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+            const themeToggle = document.getElementById('theme-toggle');
+            const themeToggleMobile = document.getElementById('theme-toggle-mobile');
+            const themeLabelMobile = document.getElementById('theme-label-mobile');
+            const currentTheme = localStorage.getItem('theme') || null;
+
+            // Set initial theme
+            if (currentTheme) {
+                document.documentElement.setAttribute('data-theme', currentTheme);
+                if (currentTheme === 'dark') {
+                    if (themeToggle) themeToggle.checked = true;
+                    if (themeToggleMobile) themeToggleMobile.checked = true;
+                    if (themeLabelMobile) themeLabelMobile.textContent = '{{ __('Dark Mode', 'picowind-base') }}';
+                }
+            }
+
+            // Function to update theme with View Transition API
+            function updateTheme(isDark, event) {
+                const theme = isDark ? 'dark' : 'light';
+
+                // Check if View Transition API is supported
+                if (!document.startViewTransition) {
+                    // Fallback without animation
+                    document.documentElement.setAttribute('data-theme', theme);
+                    localStorage.setItem('theme', theme);
+                    updateToggleStates(isDark);
+                    return;
+                }
+
+                // Get click coordinates
+                const x = event?.clientX ?? window.innerWidth / 2;
+                const y = event?.clientY ?? window.innerHeight / 2;
+
+                // Calculate the radius to cover entire viewport
+                const endRadius = Math.hypot(
+                    Math.max(x, window.innerWidth - x),
+                    Math.max(y, window.innerHeight - y)
+                );
+
+                // Start view transition with circular clip-path animation
+                const transition = document.startViewTransition(() => {
+                    document.documentElement.setAttribute('data-theme', theme);
+                    localStorage.setItem('theme', theme);
+                });
+
+                transition.ready.then(() => {
+                    const clipPath = [
+                        `circle(0px at ${x}px ${y}px)`,
+                        `circle(${endRadius}px at ${x}px ${y}px)`
+                    ];
+
+                    document.documentElement.animate(
+                        { clipPath },
+                        {
+                            duration: 600,
+                            easing: 'cubic-bezier(.76,.32,.29,.99)',
+                            pseudoElement: '::view-transition-new(root)'
+                        }
+                    );
+                });
+
+                updateToggleStates(isDark);
+            }
+
+            // Helper to update toggle states
+            function updateToggleStates(isDark) {
+                if (themeToggle) themeToggle.checked = isDark;
+                if (themeToggleMobile) themeToggleMobile.checked = isDark;
+                if (themeLabelMobile) {
+                    themeLabelMobile.textContent = isDark ? '{{ __('Dark Mode', 'picowind-base') }}' : '{{ __('Light Mode', 'picowind-base') }}';
+                }
+            }
+
+            // Store last click coordinates
+            let lastClickEvent = null;
+
+            // Capture click events on the label (parent of checkbox)
+            if (themeToggle) {
+                themeToggle.parentElement.addEventListener('click', function (e) {
+                    lastClickEvent = e;
+                });
+                themeToggle.addEventListener('change', function () {
+                    updateTheme(this.checked, lastClickEvent);
+                });
+            }
+
+            // Mobile toggle listener
+            if (themeToggleMobile) {
+                themeToggleMobile.parentElement.addEventListener('click', function (e) {
+                    lastClickEvent = e;
+                });
+                themeToggleMobile.addEventListener('change', function () {
+                    updateTheme(this.checked, lastClickEvent);
+                });
+            }
+        });
+	</script>
+{% endif %}

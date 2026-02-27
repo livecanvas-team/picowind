@@ -1,0 +1,23 @@
+{
+  "resources/admin/main.ts": {
+    "file": "assets/admin-CpOqB3vT.js",
+    "name": "admin",
+    "src": "resources/admin/main.ts",
+    "isEntry": true,
+    "dynamicImports": [
+      "resources/admin/pages/Onboarding.vue"
+    ],
+    "css": [
+      "assets/admin-DenZc8ux.css"
+    ]
+  },
+  "resources/admin/pages/Onboarding.vue": {
+    "file": "assets/Onboarding-CqUdb6DJ.js",
+    "name": "Onboarding",
+    "src": "resources/admin/pages/Onboarding.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/admin/main.ts"
+    ]
+  }
+}
