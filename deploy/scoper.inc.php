@@ -117,6 +117,22 @@ return [
                 );
             }
 
+            if (str_ends_with($filePath, 'twig/twig/src/Node/CaptureNode.php')) {
+                $contents = str_replace(
+                    '\\\\Twig\\\\Extension\\\\CoreExtension::captureOutput(',
+                    '\\\\' . $prefix . '\\\\Twig\\\\Extension\\\\CoreExtension::captureOutput(',
+                    $contents
+                );
+            }
+
+            if (str_ends_with($filePath, 'twig/twig/src/Node/Expression/Binary/ObjectDestructuringSetBinary.php')) {
+                $contents = str_replace(
+                    '\\\\Twig\\\\Template::ANY_CALL',
+                    '\\\\' . $prefix . '\\\\Twig\\\\Template::ANY_CALL',
+                    $contents
+                );
+            }
+
             // Fix Latte runtime-compiled templates in scoped builds.
             // Latte\Compiler\TemplateGenerator emits hardcoded `Latte\Runtime` references.
             if (str_ends_with($filePath, 'latte/latte/src/Latte/Compiler/TemplateGenerator.php')) {
