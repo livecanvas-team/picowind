@@ -105,6 +105,33 @@ return [
                     $contents
                 );
             }
+
+            // Fix Twig runtime-compiled templates in scoped builds.
+            // Twig\Node\ModuleNode generates PHP code with hardcoded `use Twig\...` imports,
+            // so generated cache files must reference the scoped namespace.
+            if (str_ends_with($filePath, 'twig/twig/src/Node/ModuleNode.php')) {
+                $contents = str_replace(
+                    'use Twig\\',
+                    'use ' . $prefix . '\\Twig\\',
+                    $contents
+                );
+            }
+
+            // Fix Latte runtime-compiled templates in scoped builds.
+            // Latte\Compiler\TemplateGenerator emits hardcoded `Latte\Runtime` references.
+            if (str_ends_with($filePath, 'latte/latte/src/Latte/Compiler/TemplateGenerator.php')) {
+                $contents = str_replace(
+                    'use Latte\\Runtime as LR;\\n\\n',
+                    'use ' . $prefix . '\\Latte\\Runtime as LR;\\n\\n',
+                    $contents
+                );
+
+                $contents = str_replace(
+                    'extends Latte\\Runtime\\Template',
+                    'extends ' . $prefix . '\\Latte\\Runtime\\Template',
+                    $contents
+                );
+            }
             
             return $contents;
         },
@@ -207,7 +234,23 @@ return [
     'expose-global-classes' => false,
     'expose-global-functions' => false,
     'expose-namespaces' => [],
-    'expose-classes' => [],
+    'expose-classes' => [
+        // Temporarily disabled for now.
+        // Keep these here in case we need to re-enable Twig class exposing.
+        // 'Twig\Environment',
+        // 'Twig\Error\LoaderError',
+        // 'Twig\Error\RuntimeError',
+        // 'Twig\Extension\CoreExtension',
+        // 'Twig\Extension\SandboxExtension',
+        // 'Twig\Markup',
+        // 'Twig\Sandbox\SecurityError',
+        // 'Twig\Sandbox\SecurityNotAllowedTagError',
+        // 'Twig\Sandbox\SecurityNotAllowedFilterError',
+        // 'Twig\Sandbox\SecurityNotAllowedFunctionError',
+        // 'Twig\Source',
+        // 'Twig\Template',
+        // 'Twig\TemplateWrapper',
+    ],
     'expose-functions' => [
         // Illuminate/Laravel helper functions used via unqualified calls in prefixed namespaces.
         'append_config',
