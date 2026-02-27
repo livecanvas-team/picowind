@@ -132,6 +132,16 @@ return [
                     $contents
                 );
             }
+
+            // Fix Blade runtime-compiled templates in scoped builds.
+            // Illuminate view compilers emit hardcoded `\\Illuminate\\...` class references.
+            if (str_contains($filePath, 'illuminate/view/Compilers/')) {
+                $contents = str_replace(
+                    '\\\\Illuminate\\\\',
+                    '\\\\' . $prefix . '\\\\Illuminate\\\\',
+                    $contents
+                );
+            }
             
             return $contents;
         },
@@ -235,8 +245,6 @@ return [
     'expose-global-functions' => false,
     'expose-namespaces' => [],
     'expose-classes' => [
-        // Temporarily disabled for now.
-        // Keep these here in case we need to re-enable Twig class exposing.
         // 'Twig\Environment',
         // 'Twig\Error\LoaderError',
         // 'Twig\Error\RuntimeError',

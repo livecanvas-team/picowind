@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.5] - 2026-02-27
+
+### Fixed
+- Fix scoped Twig/Latte/Blade runtime template generation so compiled cache files use prefixed classes and avoid deploy render fatals.
+
 ## [0.0.4] - 2026-02-27
 
 ### Fixed
@@ -24,7 +29,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - 🐣 Initial release.
 
-[unreleased]: https://github.com/livecanvas-team/picowind/compare/0.0.4...HEAD
+[unreleased]: https://github.com/livecanvas-team/picowind/compare/0.0.5...HEAD
+[0.0.5]: https://github.com/livecanvas-team/picowind/compare/0.0.4...0.0.5
 [0.0.4]: https://github.com/livecanvas-team/picowind/compare/0.0.3...0.0.4
 [0.0.3]: https://github.com/livecanvas-team/picowind/compare/0.0.2...0.0.3
 [0.0.2]: https://github.com/livecanvas-team/picowind/compare/0.0.1...0.0.2
