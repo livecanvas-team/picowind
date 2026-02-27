@@ -1,6 +1,6 @@
 === Picowind - Tailwind WordPress theme for LiveCanvas ===
-Contributors: livecanvas-team, windpress-team
-Tags: livecanvas, tailwind, tailwindcss, timber, twig, blade, latte
+Contributors: livecanvas-team, suabahasa
+Tags: livecanvas, tailwind css, twig, blade, latte
 Requires at least: 6.8
 Tested up to: 6.9
 Requires PHP: 8.1

@@ -205,5 +205,5 @@ function omni_icon(string $iconName, array $attributes = []): string
  */
 function context(): array
 {
-    return call_user_func('apply_filters', 'f!picowind/context', Timber::context());
+    return apply_filters('f!picowind/context', Timber::context());
 }
