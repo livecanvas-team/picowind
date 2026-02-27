@@ -221,10 +221,32 @@ final class DiscoveryManager
         }
 
         $classes = [];
+        $namespace = rtrim($discoveryLocation->namespace, '\\');
+        $namespacePrefix = '' === $namespace ? '' : $namespace . '\\';
+
+        $locationPath = realpath($discoveryLocation->path);
+        if (false === $locationPath) {
+            $locationPath = $discoveryLocation->path;
+        }
+
+        $normalizedLocationPath = rtrim(str_replace('\\', '/', $locationPath), '/');
+
         foreach ($classmap as $className => $filePath) {
-            if (str_starts_with($className, rtrim($discoveryLocation->namespace, '\\'))) {
-                $classes[$className] = $filePath;
+            if ('' !== $namespacePrefix && ! str_starts_with($className, $namespacePrefix)) {
+                continue;
             }
+
+            $resolvedFilePath = realpath($filePath);
+            if (false === $resolvedFilePath) {
+                $resolvedFilePath = $filePath;
+            }
+
+            $normalizedFilePath = str_replace('\\', '/', $resolvedFilePath);
+            if (! str_starts_with($normalizedFilePath, $normalizedLocationPath . '/')) {
+                continue;
+            }
+
+            $classes[$className] = $resolvedFilePath;
         }
 
         if (empty($classes)) {
@@ -234,11 +256,11 @@ final class DiscoveryManager
         $processedFiles = [];
 
         foreach ($classes as $className => $filePath) {
-            if (! class_exists($className)) {
-                continue;
-            }
-
             try {
+                if (! class_exists($className)) {
+                    continue;
+                }
+
                 $classReflector = new ClassReflector($className);
 
                 foreach ($this->discoveries as $discovery) {
