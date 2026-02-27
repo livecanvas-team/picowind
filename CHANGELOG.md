@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.6] - 2026-02-27
+
+### Fixed
+- Fix Latte scoper patcher escaping so `TemplateGenerator` references are correctly prefixed in dist builds.
+
 ## [0.0.5] - 2026-02-27
 
 ### Fixed
@@ -29,7 +34,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - 🐣 Initial release.
 
-[unreleased]: https://github.com/livecanvas-team/picowind/compare/0.0.5...HEAD
+[unreleased]: https://github.com/livecanvas-team/picowind/compare/0.0.6...HEAD
+[0.0.6]: https://github.com/livecanvas-team/picowind/compare/0.0.5...0.0.6
 [0.0.5]: https://github.com/livecanvas-team/picowind/compare/0.0.4...0.0.5
 [0.0.4]: https://github.com/livecanvas-team/picowind/compare/0.0.3...0.0.4
 [0.0.3]: https://github.com/livecanvas-team/picowind/compare/0.0.2...0.0.3

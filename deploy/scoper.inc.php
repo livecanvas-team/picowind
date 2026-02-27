@@ -121,14 +121,14 @@ return [
             // Latte\Compiler\TemplateGenerator emits hardcoded `Latte\Runtime` references.
             if (str_ends_with($filePath, 'latte/latte/src/Latte/Compiler/TemplateGenerator.php')) {
                 $contents = str_replace(
-                    'use Latte\\Runtime as LR;\\n\\n',
-                    'use ' . $prefix . '\\Latte\\Runtime as LR;\\n\\n',
+                    'use Latte\\\\Runtime as LR;\\n\\n',
+                    'use ' . $prefix . '\\\\Latte\\\\Runtime as LR;\\n\\n',
                     $contents
                 );
 
                 $contents = str_replace(
-                    'extends Latte\\Runtime\\Template',
-                    'extends ' . $prefix . '\\Latte\\Runtime\\Template',
+                    'extends Latte\\\\Runtime\\\\Template',
+                    'extends ' . $prefix . '\\\\Latte\\\\Runtime\\\\Template',
                     $contents
                 );
             }
