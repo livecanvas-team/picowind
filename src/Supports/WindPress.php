@@ -52,8 +52,9 @@ class WindPress
         // Any files with this extension will be scanned
         $file_extensions = [
             'php',
-            'js',
             'twig',
+            'latte',
+            'js',
         ];
 
         $contents = [];

@@ -54,8 +54,8 @@ jobs:
           with:
             php-version: 8.1
             coverage: none
-          env:
-            COMPOSER_TOKEN: ${{ secrets.ORG_DEV_PAT }}
+          # env:
+          #   github-token: ${{ secrets.GH_DEV_PAT_TOKEN }}
 
         # Setup Deno for update-readme-changelog script
         - uses: denoland/setup-deno@v2
@@ -121,7 +121,7 @@ jobs:
         # clone current repository and checkout/create dist branch
         - name: "Checkout or create dist branch"
           run: |
-            git clone https://x-access-token:${{ secrets.ORG_DEV_PAT }}@github.com/${{ github.repository }}.git dist-branch
+            git clone https://x-access-token:${{ secrets.GH_DEV_PAT_TOKEN }}@github.com/${{ github.repository }}.git dist-branch
             cd dist-branch
             git fetch origin dist || true
             git checkout dist 2>/dev/null || git checkout --orphan dist
@@ -179,4 +179,4 @@ jobs:
             draft: false
             prerelease: false
           env:
-            GITHUB_TOKEN: ${{ secrets.ORG_DEV_PAT }}
+            GITHUB_TOKEN: ${{ secrets.GH_DEV_PAT_TOKEN }}
