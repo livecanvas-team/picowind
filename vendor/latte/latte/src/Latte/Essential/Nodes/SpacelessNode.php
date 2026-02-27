@@ -28,7 +28,7 @@ class SpacelessNode extends StatementNode
     public function print(PrintContext $context): string
     {
         return $context->format(<<<'XX'
-ob_start('Latte\Essential\Filters::%raw', 4096) %line;
+ob_start('PicowindDeps\Latte\Essential\Filters::%raw', 4096) %line;
 try {
 	%node
 } finally {

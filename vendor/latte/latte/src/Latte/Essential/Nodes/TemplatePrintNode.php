@@ -30,7 +30,7 @@ class TemplatePrintNode extends StatementNode
     public function print(PrintContext $context): string
     {
         return $context->format(<<<'XX'
-$ʟ_bp = new Latte\Essential\Blueprint;
+$ʟ_bp = new PicowindDeps\Latte\Essential\Blueprint;
 $ʟ_bp->printBegin();
 $ʟ_bp->printClass($ʟ_bp->generateTemplateClass($this->getParameters(), extends: %dump));
 $ʟ_bp->printEnd();

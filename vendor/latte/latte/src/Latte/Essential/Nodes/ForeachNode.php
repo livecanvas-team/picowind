@@ -78,7 +78,7 @@ class ForeachNode extends StatementNode
         }
         if ($iterator) {
             return $context->format(<<<'XX'
-foreach ($iterator = $ʟ_it = new Latte\Essential\CachingIterator(%node, $ʟ_it ?? null) as %raw) %line {
+foreach ($iterator = $ʟ_it = new PicowindDeps\Latte\Essential\CachingIterator(%node, $ʟ_it ?? null) as %raw) %line {
 	%raw
 }
 $iterator = $ʟ_it = $ʟ_it->getParent();

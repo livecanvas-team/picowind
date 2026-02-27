@@ -21,7 +21,7 @@ class TraceNode extends StatementNode
     }
     public function print(PrintContext $context): string
     {
-        return $context->format('Latte\Essential\Tracer::throw() %line;', $this->position);
+        return $context->format('PicowindDeps\Latte\Essential\Tracer::throw() %line;', $this->position);
     }
     public function &getIterator(): \Generator
     {

@@ -25,7 +25,7 @@ class RollbackNode extends StatementNode
     }
     public function print(PrintContext $context): string
     {
-        return 'throw new Latte\Essential\RollbackException;';
+        return 'throw new PicowindDeps\Latte\Essential\RollbackException;';
     }
     public function &getIterator(): \Generator
     {

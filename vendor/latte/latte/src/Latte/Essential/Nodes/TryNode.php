@@ -37,7 +37,7 @@ try %line {
 	%node
 } catch (Throwable $ʟ_e) {
 	ob_clean();
-	if (!($ʟ_e instanceof Latte\Essential\RollbackException) && isset($this->global->coreExceptionHandler)) {
+	if (!($ʟ_e instanceof PicowindDeps\Latte\Essential\RollbackException) && isset($this->global->coreExceptionHandler)) {
 		($this->global->coreExceptionHandler)($ʟ_e, $this);
 	}
 	%node

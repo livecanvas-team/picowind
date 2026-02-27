@@ -52,7 +52,7 @@ trait CompilesComponents
      */
     public static function compileClassComponentOpening(string $component, string $alias, string $data, string $hash)
     {
-        return implode("\n", ['<?php if (isset($component)) { $__componentOriginal' . $hash . ' = $component; } ?>', '<?php if (isset($attributes)) { $__attributesOriginal' . $hash . ' = $attributes; } ?>', '<?php $component = ' . $component . '::resolve(' . ($data ?: '[]') . ' + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>', '<?php $component->withName(' . $alias . '); ?>', '<?php if ($component->shouldRender()): ?>', '<?php $__env->startComponent($component->resolveView(), $component->data()); ?>']);
+        return implode("\n", ['<?php if (isset($component)) { $__componentOriginal' . $hash . ' = $component; } ?>', '<?php if (isset($attributes)) { $__attributesOriginal' . $hash . ' = $attributes; } ?>', '<?php $component = ' . $component . '::resolve(' . ($data ?: '[]') . ' + (isset($attributes) && $attributes instanceof PicowindDeps\Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>', '<?php $component->withName(' . $alias . '); ?>', '<?php if ($component->shouldRender()): ?>', '<?php $__env->startComponent($component->resolveView(), $component->data()); ?>']);
     }
     /**
      * Compile the end-component statements into valid PHP.
