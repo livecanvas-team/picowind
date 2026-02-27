@@ -62,6 +62,8 @@ if (!function_exists('grapheme_strripos')) { function grapheme_strripos() { retu
 if (!function_exists('grapheme_strrpos')) { function grapheme_strrpos() { return \PicowindDeps\grapheme_strrpos(...func_get_args()); } }
 if (!function_exists('grapheme_strstr')) { function grapheme_strstr() { return \PicowindDeps\grapheme_strstr(...func_get_args()); } }
 if (!function_exists('grapheme_substr')) { function grapheme_substr() { return \PicowindDeps\grapheme_substr(...func_get_args()); } }
+if (!function_exists('lc_define_editor_config')) { function lc_define_editor_config() { return \PicowindDeps\lc_define_editor_config(...func_get_args()); } }
+if (!function_exists('lc_theme_is_livecanvas_friendly')) { function lc_theme_is_livecanvas_friendly() { return \PicowindDeps\lc_theme_is_livecanvas_friendly(...func_get_args()); } }
 if (!function_exists('mb_check_encoding')) { function mb_check_encoding() { return \PicowindDeps\mb_check_encoding(...func_get_args()); } }
 if (!function_exists('mb_chr')) { function mb_chr() { return \PicowindDeps\mb_chr(...func_get_args()); } }
 if (!function_exists('mb_convert_case')) { function mb_convert_case() { return \PicowindDeps\mb_convert_case(...func_get_args()); } }
