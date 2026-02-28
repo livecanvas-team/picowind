@@ -245,10 +245,20 @@ class WindPress
     public function after_switch_theme(): void
     {
         global $wp_filesystem;
+
+        if (! function_exists('is_plugin_active')) {
+            require_once ABSPATH . 'wp-admin/includes/plugin.php';
+        }
+
         if (empty($wp_filesystem)) {
             require_once ABSPATH . '/wp-admin/includes/file.php';
             WP_Filesystem();
         }
+
+        if (empty($wp_filesystem) || ! is_object($wp_filesystem)) {
+            return;
+        }
+
         $is_require_reload = false;
         // Require the WindPress plugin to be active
         if (! is_plugin_active('windpress/windpress.php')) {
@@ -274,21 +284,40 @@ class WindPress
                         'donate_link' => false,
                     ),
                 ));
-                if (! is_wp_error($api)) {
-                    $upgrader = new \Plugin_Upgrader();
-                    $installed = $upgrader->install($api->download_link);
+
+                if (is_wp_error($api)) {
+                    return;
+                }
+
+                $upgrader = new \Plugin_Upgrader();
+                $installed = $upgrader->install($api->download_link);
+                if (is_wp_error($installed) || ! $installed) {
+                    return;
                 }
             }
-            activate_plugin('windpress/windpress.php');
+
+            $activation_result = activate_plugin('windpress/windpress.php');
+            if (is_wp_error($activation_result)) {
+                return;
+            }
+
             $is_require_reload = true;
         }
         // Import the Picowind css file into the WindPress `main.css` file
         $main_css_path = WP_CONTENT_DIR . '/uploads/windpress/data/main.css';
+        $main_css_dir = dirname($main_css_path);
+
+        if (! is_dir($main_css_dir) && ! wp_mkdir_p($main_css_dir)) {
+            return;
+        }
+
         if (! file_exists($main_css_path)) {
             // copy the default main.css file
-            $default_main_css_path = WP_CONTENT_DIR . '/plugins/windpress/stubs/tailwindcss-v4/main.css';
+            $default_main_css_path = WP_PLUGIN_DIR . '/windpress/stubs/tailwindcss-v4/main.css';
             if (file_exists($default_main_css_path)) {
-                $wp_filesystem->copy($default_main_css_path, $main_css_path);
+                if (! $wp_filesystem->copy($default_main_css_path, $main_css_path)) {
+                    return;
+                }
             } else {
                 return;
             }
@@ -325,7 +354,10 @@ class WindPress
         if ($updated_content !== null) {
             $main_css_content = $updated_content;
         }
-        $wp_filesystem->put_contents($main_css_path, $main_css_content);
+        if (! $wp_filesystem->put_contents($main_css_path, $main_css_content)) {
+            return;
+        }
+
         if ($is_require_reload) {
             // reload with js to avoid "Headers already sent" error
             echo '<script>location.reload();</script>';

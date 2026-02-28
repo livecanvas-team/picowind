@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- Fix theme activation warnings when WindPress files or folders are missing.
+
 ## [0.0.8] - 2026-02-27
 
 ### Fixed

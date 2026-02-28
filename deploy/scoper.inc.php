@@ -257,6 +257,9 @@ return [
         'WP_CLI',
         'Symfony\Polyfill',
 
+        // WindPress
+        'WindPress',
+
         // Page builders
         'Bricks',
         
