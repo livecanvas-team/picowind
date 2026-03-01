@@ -106,143 +106,136 @@ return [
                 );
             }
 
+            $namespaceSeparatorPattern = '(?:\\\\\\\\|\\\\)';
+
+            $buildFlexibleReferencePattern = static function (string $reference) use ($namespaceSeparatorPattern): string {
+                return implode(
+                    $namespaceSeparatorPattern,
+                    array_map(
+                        static fn (string $segment): string => preg_quote($segment, '/'),
+                        explode('\\', $reference)
+                    )
+                );
+            };
+
+            $prefixLeadingReference = static function (string $code, string $reference) use ($buildFlexibleReferencePattern, $prefix): string {
+                return preg_replace_callback(
+                    '/(^|[^A-Za-z0-9_\\\\])(?:\\\\\\\\|\\\\)' . $buildFlexibleReferencePattern($reference) . '/',
+                    static fn (array $matches): string => $matches[1] . '\\' . $prefix . '\\' . $reference,
+                    $code
+                ) ?? $code;
+            };
+
+            $prefixBareReference = static function (string $code, string $reference) use ($buildFlexibleReferencePattern, $prefix): string {
+                return preg_replace_callback(
+                    '/(^|[^A-Za-z0-9_\\\\])' . $buildFlexibleReferencePattern($reference) . '/',
+                    static fn (array $matches): string => $matches[1] . $prefix . '\\' . $reference,
+                    $code
+                ) ?? $code;
+            };
+
+            $prefixLeadingNamespace = static function (string $code, string $namespace) use ($prefix): string {
+                return preg_replace_callback(
+                    '/(^|[^A-Za-z0-9_\\\\])(?:\\\\\\\\|\\\\)' . preg_quote($namespace, '/') . '(?:\\\\\\\\|\\\\)/',
+                    static fn (array $matches): string => $matches[1] . '\\' . $prefix . '\\' . $namespace . '\\',
+                    $code
+                ) ?? $code;
+            };
+
             // Fix Twig runtime-compiled templates in scoped builds.
             // Twig\Node\ModuleNode generates PHP code with hardcoded `use Twig\...` imports,
             // so generated cache files must reference the scoped namespace.
             if (str_ends_with($filePath, 'twig/twig/src/Node/ModuleNode.php')) {
-                $contents = str_replace(
-                    'use Twig\\',
-                    'use ' . $prefix . '\\Twig\\',
+                $contents = preg_replace_callback(
+                    '/(->write\("use\s+)Twig(?:\\\\\\\\|\\\\)/',
+                    static fn (array $matches): string => $matches[1] . $prefix . '\\Twig\\',
                     $contents
-                );
+                ) ?? $contents;
             }
 
             if (str_ends_with($filePath, 'twig/twig/src/Node/CaptureNode.php')) {
-                $contents = str_replace(
-                    '\\\\Twig\\\\Extension\\\\CoreExtension::captureOutput(',
-                    '\\\\' . $prefix . '\\\\Twig\\\\Extension\\\\CoreExtension::captureOutput(',
-                    $contents
-                );
+                $contents = $prefixLeadingReference($contents, 'Twig\\Extension\\CoreExtension::captureOutput');
+                $contents = $prefixBareReference($contents, 'Twig\\Extension\\CoreExtension::captureOutput');
             }
 
             if (str_ends_with($filePath, 'twig/twig/src/Node/Expression/Binary/ObjectDestructuringSetBinary.php')) {
-                $contents = str_replace(
-                    '\\\\Twig\\\\Template::ANY_CALL',
-                    '\\\\' . $prefix . '\\\\Twig\\\\Template::ANY_CALL',
-                    $contents
-                );
+                $contents = $prefixLeadingReference($contents, 'Twig\\Template::ANY_CALL');
+                $contents = $prefixBareReference($contents, 'Twig\\Template::ANY_CALL');
             }
 
             if (str_ends_with($filePath, 'twig/twig/src/Profiler/Node/EnterProfileNode.php')) {
-                $contents = str_replace(
-                    'new \\Twig\\Profiler\\Profile(',
-                    'new \\' . $prefix . '\\Twig\\Profiler\\Profile(',
-                    $contents
-                );
+                $contents = $prefixLeadingReference($contents, 'Twig\\Profiler\\Profile(');
+                $contents = $prefixBareReference($contents, 'Twig\\Profiler\\Profile(');
             }
 
             // Fix Latte runtime-compiled templates in scoped builds.
             // Latte\Compiler\TemplateGenerator emits hardcoded `Latte\Runtime` references.
             if (str_ends_with($filePath, 'latte/latte/src/Latte/Compiler/TemplateGenerator.php')) {
-                $contents = str_replace(
-                    'use Latte\\\\Runtime as LR;\\n\\n',
-                    'use ' . $prefix . '\\\\Latte\\\\Runtime as LR;\\n\\n',
-                    $contents
-                );
-
-                $contents = str_replace(
-                    'extends Latte\\\\Runtime\\\\Template',
-                    'extends ' . $prefix . '\\\\Latte\\\\Runtime\\\\Template',
-                    $contents
-                );
+                $contents = $prefixLeadingReference($contents, 'Latte\\Runtime');
+                $contents = $prefixBareReference($contents, 'Latte\\Runtime');
             }
 
             if (str_ends_with($filePath, 'latte/latte/src/Latte/Essential/Nodes/TemplatePrintNode.php')) {
-                $contents = str_replace(
-                    'new Latte\\Essential\\Blueprint;',
-                    'new ' . $prefix . '\\Latte\\Essential\\Blueprint;',
-                    $contents
-                );
+                $contents = $prefixLeadingReference($contents, 'Latte\\Essential\\Blueprint');
+                $contents = $prefixBareReference($contents, 'Latte\\Essential\\Blueprint');
             }
 
             if (str_ends_with($filePath, 'latte/latte/src/Latte/Essential/Nodes/VarPrintNode.php')) {
-                $contents = str_replace(
-                    'new Latte\\\\Essential\\\\Blueprint;',
-                    'new ' . $prefix . '\\\\Latte\\\\Essential\\\\Blueprint;',
-                    $contents
-                );
+                $contents = $prefixLeadingReference($contents, 'Latte\\Essential\\Blueprint');
+                $contents = $prefixBareReference($contents, 'Latte\\Essential\\Blueprint');
             }
 
             if (str_ends_with($filePath, 'latte/latte/src/Latte/Essential/Nodes/TraceNode.php')) {
-                $contents = str_replace(
-                    'Latte\\Essential\\Tracer::throw() %line;',
-                    $prefix . '\\Latte\\Essential\\Tracer::throw() %line;',
-                    $contents
-                );
+                $contents = $prefixLeadingReference($contents, 'Latte\\Essential\\Tracer::throw() %line;');
+                $contents = $prefixBareReference($contents, 'Latte\\Essential\\Tracer::throw() %line;');
             }
 
             if (str_ends_with($filePath, 'latte/latte/src/Latte/Essential/Nodes/ForeachNode.php')) {
-                $contents = str_replace(
-                    'new Latte\\Essential\\CachingIterator(',
-                    'new ' . $prefix . '\\Latte\\Essential\\CachingIterator(',
-                    $contents
-                );
+                $contents = $prefixLeadingReference($contents, 'Latte\\Essential\\CachingIterator(');
+                $contents = $prefixBareReference($contents, 'Latte\\Essential\\CachingIterator(');
             }
 
             if (str_ends_with($filePath, 'latte/latte/src/Latte/Essential/Nodes/SpacelessNode.php')) {
-                $contents = str_replace(
-                    "Latte\\Essential\\Filters::%raw",
-                    $prefix . '\\Latte\\Essential\\Filters::%raw',
-                    $contents
-                );
+                $contents = $prefixLeadingReference($contents, 'Latte\\Essential\\Filters::%raw');
+                $contents = $prefixBareReference($contents, 'Latte\\Essential\\Filters::%raw');
             }
 
             if (str_ends_with($filePath, 'latte/latte/src/Latte/Essential/Nodes/TryNode.php')) {
-                $contents = str_replace(
-                    'instanceof Latte\\Essential\\RollbackException',
-                    'instanceof ' . $prefix . '\\Latte\\Essential\\RollbackException',
-                    $contents
-                );
+                $contents = $prefixLeadingReference($contents, 'Latte\\Essential\\RollbackException');
+                $contents = $prefixBareReference($contents, 'Latte\\Essential\\RollbackException');
             }
 
             if (str_ends_with($filePath, 'latte/latte/src/Latte/Essential/Nodes/RollbackNode.php')) {
-                $contents = str_replace(
-                    'throw new Latte\\Essential\\RollbackException;',
-                    'throw new ' . $prefix . '\\Latte\\Essential\\RollbackException;',
-                    $contents
-                );
+                $contents = $prefixLeadingReference($contents, 'Latte\\Essential\\RollbackException');
+                $contents = $prefixBareReference($contents, 'Latte\\Essential\\RollbackException');
             }
 
             // Fix Blade runtime-compiled templates in scoped builds.
-            // Illuminate view compilers emit hardcoded `\\Illuminate\\...` class references.
+            // Illuminate view compilers emit hardcoded `\Illuminate\...` class references.
             if (str_contains($filePath, 'illuminate/view/Compilers/')) {
-                $contents = str_replace(
-                    '\\\\Illuminate\\\\',
-                    '\\\\' . $prefix . '\\\\Illuminate\\\\',
-                    $contents
-                );
+                $contents = $prefixLeadingNamespace($contents, 'Illuminate');
             }
 
             if (str_ends_with($filePath, 'illuminate/view/Compilers/ComponentTagCompiler.php')) {
-                $contents = str_replace(
-                    'make(Illuminate\\\\View\\\\Factory::class)',
-                    'make(' . $prefix . '\\\\Illuminate\\\\View\\\\Factory::class)',
+                $contents = preg_replace(
+                    '/make\(Illuminate(?:\\\\\\\\|\\\\)View(?:\\\\\\\\|\\\\)Factory::class\)/',
+                    'make(' . $prefix . '\\Illuminate\\View\\Factory::class)',
                     $contents
-                );
+                ) ?? $contents;
 
-                $contents = str_replace(
-                    'instanceof Illuminate\\View\\ComponentAttributeBag',
+                $contents = preg_replace(
+                    '/instanceof Illuminate(?:\\\\\\\\|\\\\)View(?:\\\\\\\\|\\\\)ComponentAttributeBag/',
                     'instanceof ' . $prefix . '\\Illuminate\\View\\ComponentAttributeBag',
                     $contents
-                );
+                ) ?? $contents;
             }
 
             if (str_ends_with($filePath, 'illuminate/view/Compilers/Concerns/CompilesComponents.php')) {
-                $contents = str_replace(
-                    'instanceof Illuminate\\View\\ComponentAttributeBag',
+                $contents = preg_replace(
+                    '/instanceof Illuminate(?:\\\\\\\\|\\\\)View(?:\\\\\\\\|\\\\)ComponentAttributeBag/',
                     'instanceof ' . $prefix . '\\Illuminate\\View\\ComponentAttributeBag',
                     $contents
-                );
+                ) ?? $contents;
             }
             
             return $contents;

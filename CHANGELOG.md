@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- Improve scoper patching for Twig, Latte, and Blade generated cache namespaces.
+
 ## [0.0.9] - 2026-02-28
 
 ### Fixed
