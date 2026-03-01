@@ -27,7 +27,7 @@ class VarPrintNode extends StatementNode
     {
         $vars = $this->all ? 'get_defined_vars()' : 'array_diff_key(get_defined_vars(), $this->getParameters())';
         return <<<XX
-\$ʟ_bp = new PicowindDeps\\Latte\\Essential\\Blueprint;
+\$ʟ_bp = new PicowindDeps\Latte\Essential\Blueprint;
 \$ʟ_bp->printBegin();
 \$ʟ_bp->printVars({$vars});
 \$ʟ_bp->printEnd();

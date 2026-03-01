@@ -30,7 +30,7 @@ class CaptureNode extends Node
         if (!$this->getAttribute('raw')) {
             $compiler->raw("('' === \$tmp = ");
         }
-        $compiler->raw($useYield ? "implode('', iterator_to_array(" : '\Twig\Extension\CoreExtension::captureOutput(')->raw("(function () use (&\$context, \$macros, \$blocks) {\n")->indent()->subcompile($this->getNode('body'))->write("yield from [];\n")->outdent()->write('})()');
+        $compiler->raw($useYield ? "implode('', iterator_to_array(" : '\PicowindDeps\Twig\Extension\CoreExtension::captureOutput(')->raw("(function () use (&\$context, \$macros, \$blocks) {\n")->indent()->subcompile($this->getNode('body'))->write("yield from [];\n")->outdent()->write('})()');
         if ($useYield) {
             $compiler->raw(', false))');
         } else {

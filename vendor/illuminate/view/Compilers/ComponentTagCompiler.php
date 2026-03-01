@@ -21,7 +21,7 @@ class ComponentTagCompiler
     /**
      * The Blade compiler instance.
      *
-     * @var \Illuminate\View\Compilers\BladeCompiler
+     * @var \PicowindDeps\Illuminate\View\Compilers\BladeCompiler
      */
     protected $blade;
     /**
@@ -47,7 +47,7 @@ class ComponentTagCompiler
      *
      * @param  array  $aliases
      * @param  array  $namespaces
-     * @param  \Illuminate\View\Compilers\BladeCompiler|null  $blade
+     * @param  \PicowindDeps\Illuminate\View\Compilers\BladeCompiler|null  $blade
      * @return void
      */
     public function __construct(array $aliases = [], array $namespaces = [], ?BladeCompiler $blade = null)
@@ -136,7 +136,7 @@ class ComponentTagCompiler
         // component and pass the component as a view parameter to the data so it
         // can be accessed within the component and we can render out the view.
         if (!class_exists($class)) {
-            $view = Str::startsWith($component, 'mail::') ? "\$__env->getContainer()->make(PicowindDeps\\Illuminate\\View\\Factory::class)->make('{$component}')" : "'{$class}'";
+            $view = Str::startsWith($component, 'mail::') ? "\$__env->getContainer()->make(PicowindDeps\Illuminate\View\Factory::class)->make('{$component}')" : "'{$class}'";
             $parameters = ['view' => $view, 'data' => '[' . $this->attributesToString($data->all(), $escapeBound = \false) . ']'];
             $class = AnonymousComponent::class;
         } else {
@@ -185,7 +185,7 @@ class ComponentTagCompiler
     /**
      * Attempt to find an anonymous component using the registered anonymous component paths.
      *
-     * @param  \Illuminate\Contracts\View\Factory  $viewFactory
+     * @param  \PicowindDeps\Illuminate\Contracts\View\Factory  $viewFactory
      * @param  string  $component
      * @return string|null
      */
@@ -213,7 +213,7 @@ class ComponentTagCompiler
     /**
      * Attempt to find an anonymous component using the registered anonymous component namespaces.
      *
-     * @param  \Illuminate\Contracts\View\Factory  $viewFactory
+     * @param  \PicowindDeps\Illuminate\Contracts\View\Factory  $viewFactory
      * @param  string  $component
      * @return string|null
      */
@@ -439,7 +439,7 @@ class ComponentTagCompiler
         return preg_replace_callback('/@(class)(\( ( (?>[^()]+) | (?2) )* \))/x', function ($match) {
             if ($match[1] === 'class') {
                 $match[2] = str_replace('"', "'", $match[2]);
-                return ":class=\"\\PicowindDeps\\Illuminate\\Support\\Arr::toCssClasses{$match[2]}\"";
+                return ":class=\"\PicowindDeps\Illuminate\Support\\Arr::toCssClasses{$match[2]}\"";
             }
             return $match[0];
         }, $attributeString);
@@ -455,7 +455,7 @@ class ComponentTagCompiler
         return preg_replace_callback('/@(style)(\( ( (?>[^()]+) | (?2) )* \))/x', function ($match) {
             if ($match[1] === 'style') {
                 $match[2] = str_replace('"', "'", $match[2]);
-                return ":style=\"\\PicowindDeps\\Illuminate\\Support\\Arr::toCssStyles{$match[2]}\"";
+                return ":style=\"\PicowindDeps\Illuminate\Support\\Arr::toCssStyles{$match[2]}\"";
             }
             return $match[0];
         }, $attributeString);
@@ -512,7 +512,7 @@ class ComponentTagCompiler
     protected function attributesToString(array $attributes, $escapeBound = \true)
     {
         return collect($attributes)->map(function (string $value, string $attribute) use ($escapeBound) {
-            return $escapeBound && isset($this->boundAttributes[$attribute]) && $value !== 'true' && !is_numeric($value) ? "'{$attribute}' => \\PicowindDeps\\Illuminate\\View\\Compilers\\BladeCompiler::sanitizeComponentAttribute({$value})" : "'{$attribute}' => {$value}";
+            return $escapeBound && isset($this->boundAttributes[$attribute]) && $value !== 'true' && !is_numeric($value) ? "'{$attribute}' => \PicowindDeps\Illuminate\View\\Compilers\\BladeCompiler::sanitizeComponentAttribute({$value})" : "'{$attribute}' => {$value}";
         })->implode(',');
     }
     /**

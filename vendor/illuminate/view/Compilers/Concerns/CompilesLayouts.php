@@ -19,7 +19,7 @@ trait CompilesLayouts
     protected function compileExtends($expression)
     {
         $expression = $this->stripParentheses($expression);
-        $echo = "<?php echo \$__env->make({$expression}, \\PicowindDeps\\Illuminate\\Support\\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>";
+        $echo = "<?php echo \$__env->make({$expression}, \PicowindDeps\Illuminate\Support\\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>";
         $this->footer[] = $echo;
         return '';
     }
@@ -32,7 +32,7 @@ trait CompilesLayouts
     protected function compileExtendsFirst($expression)
     {
         $expression = $this->stripParentheses($expression);
-        $echo = "<?php echo \$__env->first({$expression}, \\PicowindDeps\\Illuminate\\Support\\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>";
+        $echo = "<?php echo \$__env->first({$expression}, \PicowindDeps\Illuminate\Support\\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>";
         $this->footer[] = $echo;
         return '';
     }
@@ -55,7 +55,7 @@ trait CompilesLayouts
     protected function compileParent()
     {
         $escapedLastSection = strtr($this->lastSection, ['\\' => '\\\\', "'" => "\\'"]);
-        return "<?php echo \\PicowindDeps\\Illuminate\\View\\Factory::parentPlaceholder('{$escapedLastSection}'); ?>";
+        return "<?php echo \PicowindDeps\Illuminate\View\\Factory::parentPlaceholder('{$escapedLastSection}'); ?>";
     }
     /**
      * Compile the yield statements into valid PHP.

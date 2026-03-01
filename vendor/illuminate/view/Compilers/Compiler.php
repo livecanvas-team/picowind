@@ -11,7 +11,7 @@ abstract class Compiler
     /**
      * The filesystem instance.
      *
-     * @var \Illuminate\Filesystem\Filesystem
+     * @var \PicowindDeps\Illuminate\Filesystem\Filesystem
      */
     protected $files;
     /**
@@ -41,7 +41,7 @@ abstract class Compiler
     /**
      * Create a new compiler instance.
      *
-     * @param  \Illuminate\Filesystem\Filesystem  $files
+     * @param  \PicowindDeps\Illuminate\Filesystem\Filesystem  $files
      * @param  string  $cachePath
      * @param  string  $basePath
      * @param  bool  $shouldCache

@@ -165,7 +165,7 @@ class BladeCompiler extends Compiler implements CompilerInterface
      * Get the open and closing PHP tag tokens from the given string.
      *
      * @param  string  $contents
-     * @return \Illuminate\Support\Collection
+     * @return \PicowindDeps\Illuminate\Support\Collection
      */
     protected function getOpenAndClosingPhpTokens($contents)
     {
@@ -264,7 +264,7 @@ class BladeCompiler extends Compiler implements CompilerInterface
     /**
      * Render a component instance to HTML.
      *
-     * @param  \Illuminate\View\Component  $component
+     * @param  \PicowindDeps\Illuminate\View\Component  $component
      * @return string
      */
     public static function renderComponent(Component $component)
@@ -558,13 +558,13 @@ class BladeCompiler extends Compiler implements CompilerInterface
     {
         $this->conditions[$name] = $callback;
         $this->directive($name, function ($expression) use ($name) {
-            return $expression !== '' ? "<?php if (\\PicowindDeps\\Illuminate\\Support\\Facades\\Blade::check('{$name}', {$expression})): ?>" : "<?php if (\\PicowindDeps\\Illuminate\\Support\\Facades\\Blade::check('{$name}')): ?>";
+            return $expression !== '' ? "<?php if (\PicowindDeps\Illuminate\Support\\Facades\\Blade::check('{$name}', {$expression})): ?>" : "<?php if (\PicowindDeps\Illuminate\Support\\Facades\\Blade::check('{$name}')): ?>";
         });
         $this->directive('unless' . $name, function ($expression) use ($name) {
-            return $expression !== '' ? "<?php if (! \\PicowindDeps\\Illuminate\\Support\\Facades\\Blade::check('{$name}', {$expression})): ?>" : "<?php if (! \\PicowindDeps\\Illuminate\\Support\\Facades\\Blade::check('{$name}')): ?>";
+            return $expression !== '' ? "<?php if (! \PicowindDeps\Illuminate\Support\\Facades\\Blade::check('{$name}', {$expression})): ?>" : "<?php if (! \PicowindDeps\Illuminate\Support\\Facades\\Blade::check('{$name}')): ?>";
         });
         $this->directive('else' . $name, function ($expression) use ($name) {
-            return $expression !== '' ? "<?php elseif (\\PicowindDeps\\Illuminate\\Support\\Facades\\Blade::check('{$name}', {$expression})): ?>" : "<?php elseif (\\PicowindDeps\\Illuminate\\Support\\Facades\\Blade::check('{$name}')): ?>";
+            return $expression !== '' ? "<?php elseif (\PicowindDeps\Illuminate\Support\\Facades\\Blade::check('{$name}', {$expression})): ?>" : "<?php elseif (\PicowindDeps\Illuminate\Support\\Facades\\Blade::check('{$name}')): ?>";
         });
         $this->directive('end' . $name, function () {
             return '<?php endif; ?>';
@@ -733,7 +733,7 @@ class BladeCompiler extends Compiler implements CompilerInterface
         $alias = $alias ?: Arr::last(explode('.', $path));
         $this->directive($alias, function ($expression) use ($path) {
             $expression = $this->stripParentheses($expression) ?: '[]';
-            return "<?php echo \$__env->make('{$path}', {$expression}, \\PicowindDeps\\Illuminate\\Support\\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>";
+            return "<?php echo \$__env->make('{$path}', {$expression}, \PicowindDeps\Illuminate\Support\\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>";
         });
     }
     /**
