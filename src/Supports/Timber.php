@@ -25,6 +25,10 @@ class Timber extends Site
 
     public function __construct()
     {
+        // disable Timber's default error logging to prevent duplicate logs, since we're handling errors in our own way
+        global $timber_disable_error_log;
+        $timber_disable_error_log = true;
+
         TimberTimber::init();
         parent::__construct();
     }
