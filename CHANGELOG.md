@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- Update template fallback logic to support child themes
+
 ## [0.0.10] - 2026-03-01
 
 ### Fixed
