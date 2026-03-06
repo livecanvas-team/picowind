@@ -10,7 +10,6 @@ declare(strict_types=1);
 
 namespace Picowind\Supports;
 
-use GuzzleHttp\Utils;
 use Picowind\Core\Discovery\Attributes\Hook;
 use Picowind\Core\Discovery\Attributes\Service;
 use Picowind\Utils\Theme as UtilsTheme;
