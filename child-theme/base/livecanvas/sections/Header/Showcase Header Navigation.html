@@ -1,0 +1,44 @@
+<header class="sticky top-0 z-50 border-b border-base-300 bg-base-100/80 backdrop-blur-md">
+  <div class="navbar mx-auto max-w-7xl px-4">
+    <div class="navbar-start">
+      <a editable="inline" class="text-xl font-bold tracking-tight"></a>
+    </div>
+    <div class="navbar-center hidden md:flex">
+      <ul class="menu menu-horizontal gap-1 px-1 text-sm">
+        <li><a editable="inline">Product</a></li>
+        <li><a editable="inline">Specifications</a></li>
+        <li><a editable="inline">About</a></li>
+        <li><a editable="inline">Pricing</a></li>
+        <li><a editable="inline">Contact</a></li>
+      </ul>
+    </div>
+    <div class="navbar-end gap-2">
+      <label class="swap btn btn-ghost btn-circle btn-sm" aria-label="Toggle theme">
+        <input type="checkbox" class="theme-controller" value="dark">
+        <span class="swap-off">
+          <svg lc-helper="svg-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        </span>
+        <span class="swap-on">
+          <svg lc-helper="svg-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor"><path d="M21 14.5A8.5 8.5 0 1 1 9.5 3a7 7 0 1 0 11.5 11.5z"/></svg>
+        </span>
+      </label>
+      <button class="btn btn-ghost btn-circle btn-sm hidden md:flex" aria-label="Search">
+        <svg lc-helper="svg-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor"><path d="m21 20-5.6-5.6a7 7 0 1 0-1.4 1.4L20 21zM5 10a5 5 0 1 1 5 5 5 5 0 0 1-5-5z"/></svg>
+      </button>
+      <a editable="inline" class="btn btn-neutral btn-sm hidden rounded-full text-xs md:flex">Buy Now</a>
+      <div class="dropdown dropdown-end md:hidden">
+        <div tabindex="0" role="button" class="btn btn-ghost btn-circle" aria-label="Open menu">
+          <svg lc-helper="svg-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-5 w-5" fill="currentColor"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+        </div>
+        <ul tabindex="0" class="dropdown-content menu z-50 w-52 rounded-box bg-base-100 p-2 shadow-lg">
+          <li><a editable="inline">Product</a></li>
+          <li><a editable="inline">Specifications</a></li>
+          <li><a editable="inline">About</a></li>
+          <li><a editable="inline">Pricing</a></li>
+          <li><a editable="inline">Contact</a></li>
+          <li><a editable="inline" class="btn btn-neutral btn-sm mt-2 rounded-full">Buy Now</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</header>

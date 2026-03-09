@@ -1,0 +1,47 @@
+<header class="sticky top-0 z-50 border-b border-base-300 bg-base-100">
+  <div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
+    <a editable="inline" href="#" class="text-xl font-bold tracking-tight text-base-content"></a>
+
+    <nav class="hidden items-center gap-6 md:flex">
+      <a editable="inline" href="#" class="text-sm text-base-content/70 transition hover:text-base-content">Product</a>
+      <a editable="inline" href="#" class="text-sm text-base-content/70 transition hover:text-base-content">Specifications</a>
+      <a editable="inline" href="#" class="text-sm text-base-content/70 transition hover:text-base-content">About</a>
+      <a editable="inline" href="#" class="border-b-2 border-base-content pb-0.5 text-sm font-semibold text-base-content">Pricing</a>
+      <a editable="inline" href="#" class="text-sm text-base-content/70 transition hover:text-base-content">Contact</a>
+    </nav>
+
+    <div class="flex items-center gap-3">
+      <label class="swap btn btn-ghost btn-circle btn-sm" aria-label="Toggle theme">
+        <input type="checkbox" class="theme-controller" value="dark">
+        <span class="swap-off">
+          <svg lc-helper="svg-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        </span>
+        <span class="swap-on">
+          <svg lc-helper="svg-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor"><path d="M21 14.5A8.5 8.5 0 1 1 9.5 3a7 7 0 1 0 11.5 11.5z"/></svg>
+        </span>
+      </label>
+      <a editable="inline" href="#" class="btn btn-sm btn-outline hidden rounded-full border-base-300 px-5 text-base-content hover:border-base-content hover:bg-base-content hover:text-base-100 md:inline-flex">
+        Buy now
+        <svg lc-helper="svg-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="ml-1 h-3 w-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+      </a>
+      <div class="dropdown dropdown-end md:hidden">
+        <label tabindex="0" class="btn btn-ghost btn-sm" aria-label="Open menu">
+          <svg lc-helper="svg-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-5 w-5" fill="currentColor"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+        </label>
+        <ul tabindex="0" class="dropdown-content menu z-50 mt-2 w-52 rounded-box bg-base-100 p-4 shadow-lg">
+          <li><a editable="inline" href="#" class="text-base-content/80">Product</a></li>
+          <li><a editable="inline" href="#" class="text-base-content/80">Specifications</a></li>
+          <li><a editable="inline" href="#" class="text-base-content/80">About</a></li>
+          <li><a editable="inline" href="#" class="font-semibold text-base-content">Pricing</a></li>
+          <li><a editable="inline" href="#" class="text-base-content/80">Contact</a></li>
+          <li class="mt-2">
+            <a editable="inline" href="#" class="btn btn-sm btn-outline rounded-full border-base-300">
+              Buy now
+              <svg lc-helper="svg-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-3 w-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</header>
