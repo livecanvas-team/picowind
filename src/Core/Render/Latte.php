@@ -54,7 +54,7 @@ class Latte
 
         // Auto-refresh in development
         if (\defined('WP_DEBUG') && \constant('WP_DEBUG')) {
-            $this->latte->setAutoRefresh(true);
+            $this->latte->setAutoRefresh(UtilsTheme::is_template_cache_auto_refresh());
         }
 
         // Register custom extension with tags and functions

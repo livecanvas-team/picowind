@@ -10,10 +10,6 @@ declare(strict_types=1);
 
 namespace Picowind\Utils;
 
-use RecursiveDirectoryIterator;
-use RecursiveIteratorIterator;
-use SplFileInfo;
-
 use function get_stylesheet_directory;
 use function get_template_directory;
 
@@ -92,52 +88,11 @@ class Theme
             return $upload_dir . '/picowind/cache';
         }
 
-        $cache_version = self::get_child_views_cache_version();
-
         if (! isset(self::CACHE_DIRECTORIES[$name])) {
-            $base_path = $upload_dir . '/picowind/cache/' . $name;
-            return '' === $cache_version ? $base_path : $base_path . '/' . $cache_version;
+            return $upload_dir . '/picowind/cache/' . $name;
         }
 
-        $base_path = $upload_dir . '/' . self::CACHE_DIRECTORIES[$name];
-        return '' === $cache_version ? $base_path : $base_path . '/' . $cache_version;
-    }
-
-    private static function get_child_views_cache_version(): string
-    {
-        if (! self::is_child_theme()) {
-            return '';
-        }
-
-        $views_dir = rtrim((string) self::child_dir(), '/') . '/views';
-        if (! is_dir($views_dir)) {
-            return '';
-        }
-
-        $hash_source = [];
-
-        $iterator = new RecursiveIteratorIterator(
-            new RecursiveDirectoryIterator($views_dir, RecursiveDirectoryIterator::SKIP_DOTS),
-        );
-
-        /** @var SplFileInfo $file */
-        foreach ($iterator as $file) {
-            if (! $file->isFile()) {
-                continue;
-            }
-
-            $path = (string) $file->getPathname();
-            $relative_path = substr($path, strlen($views_dir) + 1);
-            $hash_source[] = $relative_path . '|' . (string) $file->getMTime() . '|' . (string) $file->getSize();
-        }
-
-        sort($hash_source);
-
-        if (empty($hash_source)) {
-            return '';
-        }
-
-        return 'v-' . substr(sha1(implode(';', $hash_source)), 0, 12);
+        return $upload_dir . '/' . self::CACHE_DIRECTORIES[$name];
     }
 
     public static function is_child_theme(): bool
@@ -170,5 +125,10 @@ class Theme
     public static function child_dir(): ?string
     {
         return is_child_theme() ? get_stylesheet_directory() : null;
+    }
+
+    public static function is_template_cache_auto_refresh(): bool
+    {
+        return apply_filters('f!picowind/render/template/cache:auto_refresh', true);
     }
 }

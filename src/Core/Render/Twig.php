@@ -48,9 +48,7 @@ class Twig
     public function filter_env(array $options): array
     {
         $options['cache'] = UtilsTheme::get_cache_path('twig');
-
-        // Auto-reload in development, set to `false` in production for better performance
-        $options['auto_reload'] = defined('WP_DEBUG') && WP_DEBUG;
+        $options['auto_reload'] = UtilsTheme::is_template_cache_auto_refresh();
 
         return $options;
     }
