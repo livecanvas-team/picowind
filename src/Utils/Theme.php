@@ -101,4 +101,8 @@ class Theme
     {
         return is_child_theme() ? get_stylesheet_directory() : null;
     }
+    public static function is_template_cache_auto_refresh(): bool
+    {
+        return apply_filters('f!picowind/render/template/cache:auto_refresh', \true);
+    }
 }

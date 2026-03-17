@@ -10,6 +10,7 @@ namespace Picowind\Supports;
 
 use Picowind\Core\Discovery\Attributes\Hook;
 use Picowind\Core\Discovery\Attributes\Service;
+use Picowind\Utils\Theme as UtilsTheme;
 use PicowindDeps\Timber\Site;
 use PicowindDeps\Timber\Timber as TimberTimber;
 use function PicowindDeps\get_fields;
@@ -20,6 +21,9 @@ class Timber extends Site
     private ?string $original_template = null;
     public function __construct()
     {
+        // disable Timber's default error logging to prevent duplicate logs, since we're handling errors in our own way
+        global $timber_disable_error_log;
+        $timber_disable_error_log = \true;
         TimberTimber::init();
         parent::__construct();
     }
@@ -65,7 +69,7 @@ class Timber extends Site
         // If it didn't (meaning Twig rendering failed and no fallback was triggered),
         // then include index.php as fallback
         if (\false === $output || empty(trim($output))) {
-            include get_template_directory() . '/index.php';
+            include UtilsTheme::is_child_theme() && file_exists(UtilsTheme::child_dir() . '/index.php') ? UtilsTheme::child_dir() . '/index.php' : UtilsTheme::parent_dir() . '/index.php';
         } else {
             echo $output;
         }

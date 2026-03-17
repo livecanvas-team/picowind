@@ -16,14 +16,15 @@ final class ControllerDiscovery implements \Picowind\Core\Discovery\Discovery
     use \Picowind\Core\Discovery\IsDiscovery;
     private array $controllers = [];
     private array $routes = [];
+    private array $registeredRouteKeys = [];
     public function __construct(private Container $container)
     {
         $this->discoveryItems = new \Picowind\Core\Discovery\DiscoveryItems();
     }
     public function discover(\Picowind\Core\Discovery\DiscoveryLocation $discoveryLocation, \Picowind\Core\Discovery\ClassReflector $classReflector): void
     {
-        $controllerAttribute = $classReflector->getAttribute(Controller::class);
-        if (null === $controllerAttribute) {
+        $controllerAttributes = $classReflector->getAttributes(Controller::class);
+        if (empty($controllerAttributes)) {
             return;
         }
         $routes = [];
@@ -33,7 +34,12 @@ final class ControllerDiscovery implements \Picowind\Core\Discovery\Discovery
                 $routes[] = ['methodName' => $methodReflector->getName(), 'path' => $routeAttribute->path, 'methods' => $routeAttribute->methods, 'name' => $routeAttribute->name, 'middleware' => $routeAttribute->middleware ?? [], 'permission_callback' => $routeAttribute->permission_callback, 'args' => $routeAttribute->args ?? []];
             }
         }
-        $this->discoveryItems->add($discoveryLocation, ['className' => $classReflector->getName(), 'prefix' => $controllerAttribute->prefix ?? '', 'namespace' => $controllerAttribute->namespace ?? 'picowind/v1', 'middleware' => $controllerAttribute->middleware ?? [], 'routes' => $routes]);
+        foreach ($controllerAttributes as $controllerAttribute) {
+            $namespaces = $this->resolveControllerNamespaces($controllerAttribute);
+            foreach ($namespaces as $namespace) {
+                $this->discoveryItems->add($discoveryLocation, ['className' => $classReflector->getName(), 'prefix' => $controllerAttribute->prefix ?? '', 'namespace' => $namespace, 'middleware' => $controllerAttribute->middleware ?? [], 'routes' => $routes]);
+            }
+        }
     }
     public function apply(): void
     {
@@ -51,11 +57,37 @@ final class ControllerDiscovery implements \Picowind\Core\Discovery\Discovery
         if (!$this->container->has($className) && !$this->container->is_compiled()) {
             $this->container->register($className, $className);
         }
-        $this->controllers[$className] = ['class' => $className, 'prefix' => $prefix, 'namespace' => $namespace, 'middleware' => $controllerMiddleware];
+        $controllerKey = $className . '@' . $namespace . $prefix;
+        $this->controllers[$controllerKey] = ['class' => $className, 'prefix' => $prefix, 'namespace' => $namespace, 'middleware' => $controllerMiddleware];
         foreach ($data['routes'] as $routeData) {
             $fullPath = $prefix . $routeData['path'];
+            $methods = is_array($routeData['methods']) ? implode(',', $routeData['methods']) : (string) $routeData['methods'];
+            $routeKey = implode('|', [$namespace, $fullPath, $methods, $className, $routeData['methodName']]);
+            if (isset($this->registeredRouteKeys[$routeKey])) {
+                continue;
+            }
+            $this->registeredRouteKeys[$routeKey] = \true;
             $this->routes[] = ['namespace' => $namespace, 'path' => $fullPath, 'methods' => $routeData['methods'], 'controller' => $className, 'action' => $routeData['methodName'], 'name' => $routeData['name'], 'middleware' => array_merge($controllerMiddleware, $routeData['middleware']), 'permission_callback' => $routeData['permission_callback'], 'args' => $routeData['args']];
         }
+    }
+    /**
+     * @return array<string>
+     */
+    private function resolveControllerNamespaces(Controller $controllerAttribute): array
+    {
+        $namespaces = array_merge([$controllerAttribute->namespace ?? 'picowind/v1'], is_array($controllerAttribute->aliases ?? null) ? $controllerAttribute->aliases : []);
+        $normalizedNamespaces = [];
+        foreach ($namespaces as $namespace) {
+            if (!is_string($namespace)) {
+                continue;
+            }
+            $namespace = trim($namespace);
+            if ('' === $namespace) {
+                continue;
+            }
+            $normalizedNamespaces[] = $namespace;
+        }
+        return array_values(array_unique($normalizedNamespaces));
     }
     private function registerRestRoutes(): void
     {

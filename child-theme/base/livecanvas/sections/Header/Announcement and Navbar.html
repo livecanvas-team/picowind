@@ -1,0 +1,47 @@
+<section>
+  <header class="sticky top-0 z-50 border-b border-base-300 bg-base-100">
+    <div class="navbar container mx-auto px-4 lg:px-8">
+      <div class="navbar-start">
+        <span editable="inline" class="text-xl font-black tracking-wider"></span>
+      </div>
+
+      <div class="navbar-center hidden lg:flex">
+        <ul class="menu menu-horizontal gap-1 px-1 text-sm font-medium">
+          <li><a editable="inline" href="#">Home</a></li>
+          <li><a editable="inline" href="#">Audio Systems</a></li>
+          <li><a editable="inline" href="#">About</a></li>
+          <li><a editable="inline" href="#">Pricing</a></li>
+          <li><a editable="inline" href="#">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="navbar-end gap-2">
+        <label class="swap btn btn-ghost btn-circle btn-sm" aria-label="Toggle theme">
+          <input type="checkbox" class="theme-controller" value="dark">
+          <span class="swap-off">
+            <svg lc-helper="svg-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          </span>
+          <span class="swap-on">
+            <svg lc-helper="svg-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor"><path d="M21 14.5A8.5 8.5 0 1 1 9.5 3a7 7 0 1 0 11.5 11.5z"/></svg>
+          </span>
+        </label>
+        <a href="#" class="btn btn-sm btn-ghost hidden lg:inline-flex" aria-label="Cart">
+          <svg lc-helper="svg-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor"><path d="M3 4h2l2.2 10.5a2 2 0 0 0 2 1.5h7.9a2 2 0 0 0 2-1.6L22 7H7.2"/><circle cx="10" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/></svg>
+        </a>
+        <a editable="inline" href="#" class="btn btn-sm btn-primary rounded-full hidden lg:inline-flex">Buy Pulse One</a>
+
+        <div class="dropdown dropdown-end lg:hidden">
+          <label tabindex="0" class="btn btn-ghost btn-sm">Menu</label>
+          <ul tabindex="0" class="dropdown-content menu z-50 w-52 rounded-box bg-base-100 p-2 shadow">
+            <li><a editable="inline" href="#">Home</a></li>
+            <li><a editable="inline" href="#">Audio Systems</a></li>
+            <li><a editable="inline" href="#">About</a></li>
+            <li><a editable="inline" href="#">Pricing</a></li>
+            <li><a editable="inline" href="#">Contact</a></li>
+            <li><a editable="inline" href="#">Buy Pulse One</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </header>
+</section>
