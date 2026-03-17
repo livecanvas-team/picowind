@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.11] - 2026-03-17
+
 ### Added
 - Add REST controller namespace aliases via `#[Controller(aliases: [...])]` and support repeatable controller attributes.
 
@@ -60,7 +62,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - 🐣 Initial release.
 
-[unreleased]: https://github.com/livecanvas-team/picowind/compare/0.0.10...HEAD
+[unreleased]: https://github.com/livecanvas-team/picowind/compare/0.0.11...HEAD
+[0.0.11]: https://github.com/livecanvas-team/picowind/compare/0.0.10...0.0.11
 [0.0.10]: https://github.com/livecanvas-team/picowind/compare/0.0.9...0.0.10
 [0.0.9]: https://github.com/livecanvas-team/picowind/compare/0.0.8...0.0.9
 [0.0.8]: https://github.com/livecanvas-team/picowind/compare/0.0.7...0.0.8
