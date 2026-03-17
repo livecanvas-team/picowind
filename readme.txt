@@ -4,7 +4,7 @@ Tags: livecanvas, tailwind css, twig, blade, latte
 Requires at least: 6.8
 Tested up to: 6.9
 Requires PHP: 8.1
-Stable tag: 0.0.12
+Stable tag: 0.0.13
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -109,6 +109,8 @@ Yes. Picowind resolves templates from child and parent locations with a fallback
 5. Omni Icon usage in templates
 
 == Changelog ==
+
+= 0.0.13 - 2026-03-17 =
 
 = 0.0.12 - 2026-03-17 =
 
