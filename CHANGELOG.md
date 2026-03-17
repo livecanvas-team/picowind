@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Add REST controller namespace aliases via `#[Controller(aliases: [...])]` and support repeatable controller attributes.
+
 ### Fixed
 - Update template fallback logic to support child themes
 

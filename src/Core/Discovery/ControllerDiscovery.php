@@ -21,6 +21,8 @@ final class ControllerDiscovery implements Discovery
 
     private array $routes = [];
 
+    private array $registeredRouteKeys = [];
+
     public function __construct(
         private Container $container,
     ) {
@@ -29,9 +31,9 @@ final class ControllerDiscovery implements Discovery
 
     public function discover(DiscoveryLocation $discoveryLocation, ClassReflector $classReflector): void
     {
-        $controllerAttribute = $classReflector->getAttribute(Controller::class);
+        $controllerAttributes = $classReflector->getAttributes(Controller::class);
 
-        if (null === $controllerAttribute) {
+        if (empty($controllerAttributes)) {
             return;
         }
 
@@ -52,13 +54,19 @@ final class ControllerDiscovery implements Discovery
             }
         }
 
-        $this->discoveryItems->add($discoveryLocation, [
-            'className' => $classReflector->getName(),
-            'prefix' => $controllerAttribute->prefix ?? '',
-            'namespace' => $controllerAttribute->namespace ?? 'picowind/v1',
-            'middleware' => $controllerAttribute->middleware ?? [],
-            'routes' => $routes,
-        ]);
+        foreach ($controllerAttributes as $controllerAttribute) {
+            $namespaces = $this->resolveControllerNamespaces($controllerAttribute);
+
+            foreach ($namespaces as $namespace) {
+                $this->discoveryItems->add($discoveryLocation, [
+                    'className' => $classReflector->getName(),
+                    'prefix' => $controllerAttribute->prefix ?? '',
+                    'namespace' => $namespace,
+                    'middleware' => $controllerAttribute->middleware ?? [],
+                    'routes' => $routes,
+                ]);
+            }
+        }
     }
 
     public function apply(): void
@@ -81,7 +89,9 @@ final class ControllerDiscovery implements Discovery
             $this->container->register($className, $className);
         }
 
-        $this->controllers[$className] = [
+        $controllerKey = $className . '@' . $namespace . $prefix;
+
+        $this->controllers[$controllerKey] = [
             'class' => $className,
             'prefix' => $prefix,
             'namespace' => $namespace,
@@ -90,6 +100,14 @@ final class ControllerDiscovery implements Discovery
 
         foreach ($data['routes'] as $routeData) {
             $fullPath = $prefix . $routeData['path'];
+            $methods = is_array($routeData['methods']) ? implode(',', $routeData['methods']) : (string) $routeData['methods'];
+            $routeKey = implode('|', [$namespace, $fullPath, $methods, $className, $routeData['methodName']]);
+
+            if (isset($this->registeredRouteKeys[$routeKey])) {
+                continue;
+            }
+
+            $this->registeredRouteKeys[$routeKey] = true;
 
             $this->routes[] = [
                 'namespace' => $namespace,
@@ -103,6 +121,34 @@ final class ControllerDiscovery implements Discovery
                 'args' => $routeData['args'],
             ];
         }
+    }
+
+    /**
+     * @return array<string>
+     */
+    private function resolveControllerNamespaces(Controller $controllerAttribute): array
+    {
+        $namespaces = array_merge([
+            $controllerAttribute->namespace ?? 'picowind/v1',
+        ], is_array($controllerAttribute->aliases ?? null) ? $controllerAttribute->aliases : []);
+
+        $normalizedNamespaces = [];
+
+        foreach ($namespaces as $namespace) {
+            if (! is_string($namespace)) {
+                continue;
+            }
+
+            $namespace = trim($namespace);
+
+            if ('' === $namespace) {
+                continue;
+            }
+
+            $normalizedNamespaces[] = $namespace;
+        }
+
+        return array_values(array_unique($normalizedNamespaces));
     }
 
     private function registerRestRoutes(): void

@@ -44,6 +44,25 @@ final class ClassReflector
     }
 
     /**
+     * @template T
+     * @param class-string<T> $attributeClass
+     * @return array<T>
+     */
+    public function getAttributes(string $attributeClass): array
+    {
+        $attributes = $this->reflectionClass->getAttributes($attributeClass);
+
+        if (empty($attributes)) {
+            return [];
+        }
+
+        return array_map(
+            static fn (ReflectionAttribute $attribute): object => $attribute->newInstance(),
+            $attributes,
+        );
+    }
+
+    /**
      * @return array<MethodReflector>
      */
     public function getPublicMethods(): array
