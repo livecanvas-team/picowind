@@ -11,6 +11,7 @@ namespace Picowind\Core\Render;
 use Picowind\Core\Discovery\Attributes\Hook;
 use Picowind\Core\Discovery\Attributes\Service;
 use Picowind\Core\Render\Twig\BladeTokenParser;
+use Picowind\Core\Render\Twig\HandlebarsTokenParser;
 use Picowind\Core\Render\Twig\LatteTokenParser;
 use Picowind\Utils\Theme as UtilsTheme;
 use PicowindDeps\Timber\Timber;
@@ -123,6 +124,25 @@ class Twig
         // Render the Latte template without printing
         return render($template, $finalContext, 'latte', \false) ?? '';
     }
+    /**
+     * Renders a Handlebars template from within Twig.
+     * Mimics Twig's include behavior with context passing.
+     *
+     * @param array $context The current Twig context (automatically passed by needs_context)
+     * @param string $template The Handlebars template path
+     * @param array $with Additional variables to pass to the template
+     * @param bool $only Whether to pass only the 'with' variables (no parent context)
+     * @return string The rendered Handlebars template
+     */
+    public function renderHandlebarsTemplate(array $context, string $template, array $with = [], bool $only = \false): string
+    {
+        if ($only) {
+            $finalContext = $with;
+        } else {
+            $finalContext = array_merge($context, $with);
+        }
+        return render($template, $finalContext, 'handlebars', \false) ?? '';
+    }
     #[Hook('timber/twig', 'filter')]
     public function add_blade_function_to_twig(Environment $twigEnvironment): Environment
     {
@@ -145,6 +165,18 @@ class Twig
     public function add_latte_tag_to_twig(Environment $twigEnvironment): Environment
     {
         $twigEnvironment->addTokenParser(new LatteTokenParser());
+        return $twigEnvironment;
+    }
+    #[Hook('timber/twig', 'filter')]
+    public function add_handlebars_function_to_twig(Environment $twigEnvironment): Environment
+    {
+        $twigEnvironment->addFunction(new TwigFunction('handlebars', $this->renderHandlebarsTemplate(...), ['is_safe' => ['html'], 'needs_context' => \true]));
+        return $twigEnvironment;
+    }
+    #[Hook('timber/twig', 'filter')]
+    public function add_handlebars_tag_to_twig(Environment $twigEnvironment): Environment
+    {
+        $twigEnvironment->addTokenParser(new HandlebarsTokenParser());
         return $twigEnvironment;
     }
     #[Hook('timber/twig', 'filter')]

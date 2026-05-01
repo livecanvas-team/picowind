@@ -29,6 +29,7 @@ class Blade
         $this->registerTimberHelpers();
         $this->registerTwigDirective();
         $this->registerLatteDirective();
+        $this->registerHandlebarsDirective();
         $this->registerOmniIconDirective();
     }
     private function registerTimberHelpers(): void
@@ -57,6 +58,13 @@ class Blade
         $this->bladeBlade->directive('latte', function ($expression) {
             // Wrap the expression in array brackets to handle multiple arguments
             return "<?php\n                \$__latteArgs = [{$expression}];\n                \$__latteTemplate = isset(\$__latteArgs[0]) ? \$__latteArgs[0] : '';\n                \$__latteExtra = isset(\$__latteArgs[1]) ? \$__latteArgs[1] : [];\n                if (!empty(\$__latteTemplate)) {\n                    \$__latteContext = array_filter(get_defined_vars(), function(\$k) {\n                        return substr(\$k, 0, 2) !== '__';\n                    }, ARRAY_FILTER_USE_KEY);\n                    \$__latteContext = array_merge(\$__latteContext, \$__latteExtra);\n                    echo \\Picowind\\render(\$__latteTemplate, \$__latteContext, 'latte', false);\n                }\n            ?>";
+        });
+    }
+    private function registerHandlebarsDirective(): void
+    {
+        $this->bladeBlade->directive('handlebars', static function ($expression) {
+            // Wrap the expression in array brackets to handle multiple arguments
+            return "<?php\n                \$__handlebarsArgs = [{$expression}];\n                \$__handlebarsTemplate = isset(\$__handlebarsArgs[0]) ? \$__handlebarsArgs[0] : '';\n                \$__handlebarsExtra = isset(\$__handlebarsArgs[1]) ? \$__handlebarsArgs[1] : [];\n                if (!empty(\$__handlebarsTemplate)) {\n                    \$__handlebarsContext = array_filter(get_defined_vars(), function(\$k) {\n                        return substr(\$k, 0, 2) !== '__';\n                    }, ARRAY_FILTER_USE_KEY);\n                    \$__handlebarsContext = array_merge(\$__handlebarsContext, \$__handlebarsExtra);\n                    echo \\Picowind\\render(\$__handlebarsTemplate, \$__handlebarsContext, 'handlebars', false);\n                }\n            ?>";
         });
     }
     private function registerOmniIconDirective(): void

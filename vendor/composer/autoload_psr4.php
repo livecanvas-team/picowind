@@ -44,6 +44,8 @@ return array(
     'PicowindDeps\\Illuminate\\Container\\' => array($vendorDir . '/illuminate/container'),
     'PicowindDeps\\Illuminate\\Bus\\' => array($vendorDir . '/illuminate/bus'),
     'PicowindDeps\\Doctrine\\Inflector\\' => array($vendorDir . '/doctrine/inflector/src'),
+    'PicowindDeps\\DevTheorem\\Handlebars\\' => array($vendorDir . '/devtheorem/php-handlebars/src'),
+    'PicowindDeps\\DevTheorem\\HandlebarsParser\\' => array($vendorDir . '/devtheorem/php-handlebars-parser/src'),
     'PicowindDeps\\Carbon\\Doctrine\\' => array($vendorDir . '/carbonphp/carbon-doctrine-types/src/Carbon/Doctrine'),
     'PicowindDeps\\Carbon\\' => array($vendorDir . '/nesbot/carbon/src/Carbon'),
 );

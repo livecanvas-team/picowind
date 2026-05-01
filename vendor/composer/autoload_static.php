@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitff277cf69469d910c7ba7b2f517b02d5
+class ComposerStaticInitbe15a20757f18b154657132e8740ea80
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
@@ -71,6 +71,8 @@ class ComposerStaticInitff277cf69469d910c7ba7b2f517b02d5
             'PicowindDeps\\Illuminate\\Container\\' => 34,
             'PicowindDeps\\Illuminate\\Bus\\' => 28,
             'PicowindDeps\\Doctrine\\Inflector\\' => 32,
+            'PicowindDeps\\DevTheorem\\Handlebars\\' => 35,
+            'PicowindDeps\\DevTheorem\\HandlebarsParser\\' => 41,
             'PicowindDeps\\Carbon\\Doctrine\\' => 29,
             'PicowindDeps\\Carbon\\' => 20,
         ),
@@ -232,6 +234,14 @@ class ComposerStaticInitff277cf69469d910c7ba7b2f517b02d5
         array (
             0 => __DIR__ . '/..' . '/doctrine/inflector/src',
         ),
+        'PicowindDeps\\DevTheorem\\Handlebars\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/devtheorem/php-handlebars/src',
+        ),
+        'PicowindDeps\\DevTheorem\\HandlebarsParser\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/devtheorem/php-handlebars-parser/src',
+        ),
         'PicowindDeps\\Carbon\\Doctrine\\' =>
         array (
             0 => __DIR__ . '/..' . '/carbonphp/carbon-doctrine-types/src/Carbon/Doctrine',
@@ -330,6 +340,54 @@ class ComposerStaticInitff277cf69469d910c7ba7b2f517b02d5
         'PicowindDeps\\Carbon\\Translator' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Translator.php',
         'PicowindDeps\\Carbon\\TranslatorImmutable' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/TranslatorImmutable.php',
         'PicowindDeps\\Carbon\\TranslatorStrongTypeInterface' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/TranslatorStrongTypeInterface.php',
+        'PicowindDeps\\DevTheorem\\HandlebarsParser\\Ast\\ArrayLiteral' => __DIR__ . '/..' . '/devtheorem/php-handlebars-parser/src/Ast/ArrayLiteral.php',
+        'PicowindDeps\\DevTheorem\\HandlebarsParser\\Ast\\BlockStatement' => __DIR__ . '/..' . '/devtheorem/php-handlebars-parser/src/Ast/BlockStatement.php',
+        'PicowindDeps\\DevTheorem\\HandlebarsParser\\Ast\\BooleanLiteral' => __DIR__ . '/..' . '/devtheorem/php-handlebars-parser/src/Ast/BooleanLiteral.php',
+        'PicowindDeps\\DevTheorem\\HandlebarsParser\\Ast\\CloseBlock' => __DIR__ . '/..' . '/devtheorem/php-handlebars-parser/src/Ast/CloseBlock.php',
+        'PicowindDeps\\DevTheorem\\HandlebarsParser\\Ast\\CommentStatement' => __DIR__ . '/..' . '/devtheorem/php-handlebars-parser/src/Ast/CommentStatement.php',
+        'PicowindDeps\\DevTheorem\\HandlebarsParser\\Ast\\ContentStatement' => __DIR__ . '/..' . '/devtheorem/php-handlebars-parser/src/Ast/ContentStatement.php',
+        'PicowindDeps\\DevTheorem\\HandlebarsParser\\Ast\\Decorator' => __DIR__ . '/..' . '/devtheorem/php-handlebars-parser/src/Ast/Decorator.php',
+        'PicowindDeps\\DevTheorem\\HandlebarsParser\\Ast\\Expression' => __DIR__ . '/..' . '/devtheorem/php-handlebars-parser/src/Ast/Expression.php',
+        'PicowindDeps\\DevTheorem\\HandlebarsParser\\Ast\\Hash' => __DIR__ . '/..' . '/devtheorem/php-handlebars-parser/src/Ast/Hash.php',
+        'PicowindDeps\\DevTheorem\\HandlebarsParser\\Ast\\HashPair' => __DIR__ . '/..' . '/devtheorem/php-handlebars-parser/src/Ast/HashPair.php',
+        'PicowindDeps\\DevTheorem\\HandlebarsParser\\Ast\\InverseChain' => __DIR__ . '/..' . '/devtheorem/php-handlebars-parser/src/Ast/InverseChain.php',
+        'PicowindDeps\\DevTheorem\\HandlebarsParser\\Ast\\Literal' => __DIR__ . '/..' . '/devtheorem/php-handlebars-parser/src/Ast/Literal.php',
+        'PicowindDeps\\DevTheorem\\HandlebarsParser\\Ast\\MustacheStatement' => __DIR__ . '/..' . '/devtheorem/php-handlebars-parser/src/Ast/MustacheStatement.php',
+        'PicowindDeps\\DevTheorem\\HandlebarsParser\\Ast\\Node' => __DIR__ . '/..' . '/devtheorem/php-handlebars-parser/src/Ast/Node.php',
+        'PicowindDeps\\DevTheorem\\HandlebarsParser\\Ast\\NullLiteral' => __DIR__ . '/..' . '/devtheorem/php-handlebars-parser/src/Ast/NullLiteral.php',
+        'PicowindDeps\\DevTheorem\\HandlebarsParser\\Ast\\NumberLiteral' => __DIR__ . '/..' . '/devtheorem/php-handlebars-parser/src/Ast/NumberLiteral.php',
+        'PicowindDeps\\DevTheorem\\HandlebarsParser\\Ast\\OpenBlock' => __DIR__ . '/..' . '/devtheorem/php-handlebars-parser/src/Ast/OpenBlock.php',
+        'PicowindDeps\\DevTheorem\\HandlebarsParser\\Ast\\OpenHelper' => __DIR__ . '/..' . '/devtheorem/php-handlebars-parser/src/Ast/OpenHelper.php',
+        'PicowindDeps\\DevTheorem\\HandlebarsParser\\Ast\\OpenPartialBlock' => __DIR__ . '/..' . '/devtheorem/php-handlebars-parser/src/Ast/OpenPartialBlock.php',
+        'PicowindDeps\\DevTheorem\\HandlebarsParser\\Ast\\PartialBlockStatement' => __DIR__ . '/..' . '/devtheorem/php-handlebars-parser/src/Ast/PartialBlockStatement.php',
+        'PicowindDeps\\DevTheorem\\HandlebarsParser\\Ast\\PartialStatement' => __DIR__ . '/..' . '/devtheorem/php-handlebars-parser/src/Ast/PartialStatement.php',
+        'PicowindDeps\\DevTheorem\\HandlebarsParser\\Ast\\PathExpression' => __DIR__ . '/..' . '/devtheorem/php-handlebars-parser/src/Ast/PathExpression.php',
+        'PicowindDeps\\DevTheorem\\HandlebarsParser\\Ast\\PathSegment' => __DIR__ . '/..' . '/devtheorem/php-handlebars-parser/src/Ast/PathSegment.php',
+        'PicowindDeps\\DevTheorem\\HandlebarsParser\\Ast\\Position' => __DIR__ . '/..' . '/devtheorem/php-handlebars-parser/src/Ast/Position.php',
+        'PicowindDeps\\DevTheorem\\HandlebarsParser\\Ast\\Program' => __DIR__ . '/..' . '/devtheorem/php-handlebars-parser/src/Ast/Program.php',
+        'PicowindDeps\\DevTheorem\\HandlebarsParser\\Ast\\SourceLocation' => __DIR__ . '/..' . '/devtheorem/php-handlebars-parser/src/Ast/SourceLocation.php',
+        'PicowindDeps\\DevTheorem\\HandlebarsParser\\Ast\\Statement' => __DIR__ . '/..' . '/devtheorem/php-handlebars-parser/src/Ast/Statement.php',
+        'PicowindDeps\\DevTheorem\\HandlebarsParser\\Ast\\StringLiteral' => __DIR__ . '/..' . '/devtheorem/php-handlebars-parser/src/Ast/StringLiteral.php',
+        'PicowindDeps\\DevTheorem\\HandlebarsParser\\Ast\\StripFlags' => __DIR__ . '/..' . '/devtheorem/php-handlebars-parser/src/Ast/StripFlags.php',
+        'PicowindDeps\\DevTheorem\\HandlebarsParser\\Ast\\SubExpression' => __DIR__ . '/..' . '/devtheorem/php-handlebars-parser/src/Ast/SubExpression.php',
+        'PicowindDeps\\DevTheorem\\HandlebarsParser\\Ast\\UndefinedLiteral' => __DIR__ . '/..' . '/devtheorem/php-handlebars-parser/src/Ast/UndefinedLiteral.php',
+        'PicowindDeps\\DevTheorem\\HandlebarsParser\\ErrorContext' => __DIR__ . '/..' . '/devtheorem/php-handlebars-parser/src/ErrorContext.php',
+        'PicowindDeps\\DevTheorem\\HandlebarsParser\\Lexer' => __DIR__ . '/..' . '/devtheorem/php-handlebars-parser/src/Lexer.php',
+        'PicowindDeps\\DevTheorem\\HandlebarsParser\\Parser' => __DIR__ . '/..' . '/devtheorem/php-handlebars-parser/src/Parser.php',
+        'PicowindDeps\\DevTheorem\\HandlebarsParser\\ParserAbstract' => __DIR__ . '/..' . '/devtheorem/php-handlebars-parser/src/ParserAbstract.php',
+        'PicowindDeps\\DevTheorem\\HandlebarsParser\\ParserFactory' => __DIR__ . '/..' . '/devtheorem/php-handlebars-parser/src/ParserFactory.php',
+        'PicowindDeps\\DevTheorem\\HandlebarsParser\\Phlexer\\Phlexer' => __DIR__ . '/..' . '/devtheorem/php-handlebars-parser/src/Phlexer/Phlexer.php',
+        'PicowindDeps\\DevTheorem\\HandlebarsParser\\Phlexer\\Rule' => __DIR__ . '/..' . '/devtheorem/php-handlebars-parser/src/Phlexer/Rule.php',
+        'PicowindDeps\\DevTheorem\\HandlebarsParser\\Phlexer\\Token' => __DIR__ . '/..' . '/devtheorem/php-handlebars-parser/src/Phlexer/Token.php',
+        'PicowindDeps\\DevTheorem\\HandlebarsParser\\StripInfo' => __DIR__ . '/..' . '/devtheorem/php-handlebars-parser/src/StripInfo.php',
+        'PicowindDeps\\DevTheorem\\HandlebarsParser\\WhitespaceControl' => __DIR__ . '/..' . '/devtheorem/php-handlebars-parser/src/WhitespaceControl.php',
+        'PicowindDeps\\DevTheorem\\Handlebars\\Compiler' => __DIR__ . '/..' . '/devtheorem/php-handlebars/src/Compiler.php',
+        'PicowindDeps\\DevTheorem\\Handlebars\\Handlebars' => __DIR__ . '/..' . '/devtheorem/php-handlebars/src/Handlebars.php',
+        'PicowindDeps\\DevTheorem\\Handlebars\\HelperOptions' => __DIR__ . '/..' . '/devtheorem/php-handlebars/src/HelperOptions.php',
+        'PicowindDeps\\DevTheorem\\Handlebars\\Options' => __DIR__ . '/..' . '/devtheorem/php-handlebars/src/Options.php',
+        'PicowindDeps\\DevTheorem\\Handlebars\\Runtime' => __DIR__ . '/..' . '/devtheorem/php-handlebars/src/Runtime.php',
+        'PicowindDeps\\DevTheorem\\Handlebars\\RuntimeContext' => __DIR__ . '/..' . '/devtheorem/php-handlebars/src/RuntimeContext.php',
+        'PicowindDeps\\DevTheorem\\Handlebars\\SafeString' => __DIR__ . '/..' . '/devtheorem/php-handlebars/src/SafeString.php',
         'PicowindDeps\\Doctrine\\Inflector\\CachedWordInflector' => __DIR__ . '/..' . '/doctrine/inflector/src/CachedWordInflector.php',
         'PicowindDeps\\Doctrine\\Inflector\\GenericLanguageInflectorFactory' => __DIR__ . '/..' . '/doctrine/inflector/src/GenericLanguageInflectorFactory.php',
         'PicowindDeps\\Doctrine\\Inflector\\Inflector' => __DIR__ . '/..' . '/doctrine/inflector/src/Inflector.php',
@@ -1845,8 +1903,11 @@ class ComposerStaticInitff277cf69469d910c7ba7b2f517b02d5
         'Picowind\\Core\\Discovery\\MethodReflector' => __DIR__ . '/../..' . '/src/Core/Discovery/MethodReflector.php',
         'Picowind\\Core\\Discovery\\ServiceDiscovery' => __DIR__ . '/../..' . '/src/Core/Discovery/ServiceDiscovery.php',
         'Picowind\\Core\\Render\\Blade' => __DIR__ . '/../..' . '/src/Core/Render/Blade.php',
+        'Picowind\\Core\\Render\\Handlebars' => __DIR__ . '/../..' . '/src/Core/Render/Handlebars.php',
+        'Picowind\\Core\\Render\\HandlebarsContextValue' => __DIR__ . '/../..' . '/src/Core/Render/HandlebarsContextValue.php',
         'Picowind\\Core\\Render\\Latte' => __DIR__ . '/../..' . '/src/Core/Render/Latte.php',
         'Picowind\\Core\\Render\\Latte\\BladeTag' => __DIR__ . '/../..' . '/src/Core/Render/Latte/BladeTag.php',
+        'Picowind\\Core\\Render\\Latte\\HandlebarsTag' => __DIR__ . '/../..' . '/src/Core/Render/Latte/HandlebarsTag.php',
         'Picowind\\Core\\Render\\Latte\\LatteExtension' => __DIR__ . '/../..' . '/src/Core/Render/Latte/LatteExtension.php',
         'Picowind\\Core\\Render\\Latte\\MultiDirectoryLoader' => __DIR__ . '/../..' . '/src/Core/Render/Latte/MultiDirectoryLoader.php',
         'Picowind\\Core\\Render\\Latte\\TimberFunctionsExtension' => __DIR__ . '/../..' . '/src/Core/Render/Latte/TimberFunctionsExtension.php',
@@ -1856,6 +1917,8 @@ class ComposerStaticInitff277cf69469d910c7ba7b2f517b02d5
         'Picowind\\Core\\Render\\Twig' => __DIR__ . '/../..' . '/src/Core/Render/Twig.php',
         'Picowind\\Core\\Render\\Twig\\BladeNode' => __DIR__ . '/../..' . '/src/Core/Render/Twig/BladeNode.php',
         'Picowind\\Core\\Render\\Twig\\BladeTokenParser' => __DIR__ . '/../..' . '/src/Core/Render/Twig/BladeTokenParser.php',
+        'Picowind\\Core\\Render\\Twig\\HandlebarsNode' => __DIR__ . '/../..' . '/src/Core/Render/Twig/HandlebarsNode.php',
+        'Picowind\\Core\\Render\\Twig\\HandlebarsTokenParser' => __DIR__ . '/../..' . '/src/Core/Render/Twig/HandlebarsTokenParser.php',
         'Picowind\\Core\\Render\\Twig\\LatteNode' => __DIR__ . '/../..' . '/src/Core/Render/Twig/LatteNode.php',
         'Picowind\\Core\\Render\\Twig\\LatteTokenParser' => __DIR__ . '/../..' . '/src/Core/Render/Twig/LatteTokenParser.php',
         'Picowind\\Core\\Template' => __DIR__ . '/../..' . '/src/Core/Template.php',
@@ -1889,9 +1952,9 @@ class ComposerStaticInitff277cf69469d910c7ba7b2f517b02d5
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitff277cf69469d910c7ba7b2f517b02d5::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitff277cf69469d910c7ba7b2f517b02d5::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitff277cf69469d910c7ba7b2f517b02d5::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitbe15a20757f18b154657132e8740ea80::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitbe15a20757f18b154657132e8740ea80::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitbe15a20757f18b154657132e8740ea80::$classMap;
 
         }, null, ClassLoader::class);
     }

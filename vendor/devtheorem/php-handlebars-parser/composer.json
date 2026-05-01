@@ -1,0 +1,50 @@
+{
+    "name": "devtheorem\/php-handlebars-parser",
+    "description": "Parse Handlebars templates to a spec-compliant AST with PHP.",
+    "keywords": [
+        "Handlebars",
+        "PHP",
+        "template",
+        "parse",
+        "AST"
+    ],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Theodore Brown",
+            "email": "theodorejb@outlook.com"
+        }
+    ],
+    "require": {
+        "php": ">=8.2"
+    },
+    "require-dev": {
+        "friendsofphp\/php-cs-fixer": "^3.95",
+        "ircmaxell\/php-yacc": "^0.0.8",
+        "jbboehr\/handlebars-spec": "dev-master",
+        "phpstan\/phpstan": "^2.1.54",
+        "phpunit\/phpunit": "^11.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "PicowindDeps\\DevTheorem\\HandlebarsParser\\": "src\/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "PicowindDeps\\DevTheorem\\HandlebarsParser\\Test\\": "tests\/"
+        }
+    },
+    "scripts": {
+        "analyze": "phpstan analyze",
+        "cs-fix": "php-cs-fixer fix -v",
+        "test": "vendor\/bin\/phpunit tests"
+    },
+    "config": {
+        "platform": {
+            "php": "8.2.29"
+        },
+        "sort-packages": true
+    }
+}

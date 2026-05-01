@@ -20,6 +20,6 @@ class LatteExtension extends Extension
      */
     public function getTags(): array
     {
-        return ['_' => [\Picowind\Core\Render\Latte\UnderscoreFunctionTag::class, 'create'], 'twig' => [\Picowind\Core\Render\Latte\TwigTag::class, 'create'], 'blade' => [\Picowind\Core\Render\Latte\BladeTag::class, 'create']];
+        return ['_' => [\Picowind\Core\Render\Latte\UnderscoreFunctionTag::class, 'create'], 'twig' => [\Picowind\Core\Render\Latte\TwigTag::class, 'create'], 'blade' => [\Picowind\Core\Render\Latte\BladeTag::class, 'create'], 'handlebars' => [\Picowind\Core\Render\Latte\HandlebarsTag::class, 'create']];
     }
 }

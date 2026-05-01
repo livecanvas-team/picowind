@@ -10,6 +10,7 @@ namespace Picowind\Core;
 
 use Picowind\Core\Discovery\Attributes\Service;
 use Picowind\Core\Render\Blade as RenderBlade;
+use Picowind\Core\Render\Handlebars as RenderHandlebars;
 use Picowind\Core\Render\Latte as RenderLatte;
 use Picowind\Core\Render\Twig as RenderTwig;
 use Picowind\Exceptions\UnsupportedRenderEngineException;
@@ -21,7 +22,7 @@ use Picowind\Exceptions\UnsupportedRenderEngineException;
 #[Service]
 class Template
 {
-    public function __construct(private readonly RenderTwig $renderTwig, private readonly RenderBlade $renderBlade, private readonly RenderLatte $renderLatte)
+    public function __construct(private readonly RenderTwig $renderTwig, private readonly RenderBlade $renderBlade, private readonly RenderLatte $renderLatte, private readonly RenderHandlebars $renderHandlebars)
     {
     }
     /**
@@ -29,7 +30,7 @@ class Template
      *
      * @param string $template_string The template string to render
      * @param array $context Context data to pass to template
-     * @param string $engine Engine to use ('twig', 'blade', 'latte'). Default is 'twig'
+     * @param string $engine Engine to use ('twig', 'blade', 'latte', 'handlebars'). Default is 'twig'
      * @param ?bool $print Whether to print output. Default true
      * @return void|string Rendered output if $print is false, otherwise void
      */
@@ -59,7 +60,7 @@ class Template
     /**
      * @param string|array $paths Template path(s) including file extension
      * @param array $context Context data to pass to template
-     * @param ?string $engine Engine to use ('twig', 'blade', 'latte', etc). Auto-detected if null
+     * @param ?string $engine Engine to use ('twig', 'blade', 'latte', 'handlebars', etc). Auto-detected if null
      * @param ?bool $print Whether to print output. Default true
      * @return void|string Rendered output if $print is false, otherwise void
      */
@@ -131,6 +132,7 @@ class Template
         $engine = match ($ext) {
             'twig' => 'twig',
             'latte' => 'latte',
+            'hbs', 'handlebars' => 'handlebars',
             'php' => 'blade',
             '?' => throw new UnsupportedRenderEngineException('?', 'Cannot determine engine from `.?` extension.'),
             default => 'twig',
@@ -149,6 +151,7 @@ class Template
             'twig' => $this->renderTwig->render_template($paths, $context, \false),
             'blade' => $this->renderBlade->render_template($paths, $context, \false),
             'latte' => $this->renderLatte->render_template($paths, $context, \false),
+            'handlebars' => $this->renderHandlebars->render_template($paths, $context, \false),
             default => throw new UnsupportedRenderEngineException($engine),
         };
     }
@@ -163,6 +166,7 @@ class Template
             'twig' => $this->renderTwig->render_string($template_string, $context, \false),
             'blade' => $this->renderBlade->render_string($template_string, $context, \false),
             'latte' => $this->renderLatte->render_string($template_string, $context, \false),
+            'handlebars' => $this->renderHandlebars->render_string($template_string, $context, \false),
             default => throw new UnsupportedRenderEngineException($engine),
         };
     }
@@ -175,6 +179,7 @@ class Template
                 'twig' => '.twig',
                 'blade' => '.blade.php',
                 'latte' => '.latte',
+                'handlebars' => '.hbs',
                 default => throw new UnsupportedRenderEngineException($engine),
             };
             // Allow custom extension mapping for custom engines
@@ -188,6 +193,7 @@ class Template
                 'twig' => '.twig',
                 'blade' => '.blade.php',
                 'latte' => '.latte',
+                'handlebars' => '.hbs',
                 default => throw new UnsupportedRenderEngineException($engine),
             };
             // Allow custom extension mapping for custom engines

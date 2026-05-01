@@ -73,6 +73,121 @@
             "install-path": "..\/carbonphp\/carbon-doctrine-types"
         },
         {
+            "name": "devtheorem\/php-handlebars",
+            "version": "v2.0.0",
+            "version_normalized": "2.0.0.0",
+            "source": {
+                "type": "git",
+                "url": "https:\/\/github.com\/devtheorem\/php-handlebars.git",
+                "reference": "093e6c96d39cb5050e866147ff57a05ea1c301cc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https:\/\/api.github.com\/repos\/devtheorem\/php-handlebars\/zipball\/093e6c96d39cb5050e866147ff57a05ea1c301cc",
+                "reference": "093e6c96d39cb5050e866147ff57a05ea1c301cc",
+                "shasum": ""
+            },
+            "require": {
+                "devtheorem\/php-handlebars-parser": "^2.1",
+                "php": ">=8.2"
+            },
+            "require-dev": {
+                "friendsofphp\/php-cs-fixer": "^3.95",
+                "jbboehr\/handlebars-spec": "dev-master",
+                "phpstan\/phpstan": "^2.1.51",
+                "phpunit\/phpunit": "^11.5"
+            },
+            "time": "2026-04-28T03:00:32+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "PicowindDeps\\DevTheorem\\Handlebars\\": "src\/"
+                }
+            },
+            "notification-url": "https:\/\/packagist.org\/downloads\/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Theodore Brown",
+                    "email": "theodorejb@outlook.com"
+                }
+            ],
+            "description": "A blazing fast, spec-compliant PHP implementation of Handlebars.",
+            "keywords": [
+                "compile",
+                "handlebars",
+                "mustache",
+                "parse",
+                "render",
+                "template"
+            ],
+            "support": {
+                "issues": "https:\/\/github.com\/devtheorem\/php-handlebars\/issues",
+                "source": "https:\/\/github.com\/devtheorem\/php-handlebars\/tree\/v2.0.0"
+            },
+            "install-path": "..\/devtheorem\/php-handlebars"
+        },
+        {
+            "name": "devtheorem\/php-handlebars-parser",
+            "version": "v2.1.1",
+            "version_normalized": "2.1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https:\/\/github.com\/devtheorem\/php-handlebars-parser.git",
+                "reference": "a45b34baeb7d5304787aa30380758177b4193773"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https:\/\/api.github.com\/repos\/devtheorem\/php-handlebars-parser\/zipball\/a45b34baeb7d5304787aa30380758177b4193773",
+                "reference": "a45b34baeb7d5304787aa30380758177b4193773",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2"
+            },
+            "require-dev": {
+                "friendsofphp\/php-cs-fixer": "^3.95",
+                "ircmaxell\/php-yacc": "^0.0.8",
+                "jbboehr\/handlebars-spec": "dev-master",
+                "phpstan\/phpstan": "^2.1.54",
+                "phpunit\/phpunit": "^11.5"
+            },
+            "time": "2026-04-29T19:31:33+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "PicowindDeps\\DevTheorem\\HandlebarsParser\\": "src\/"
+                }
+            },
+            "notification-url": "https:\/\/packagist.org\/downloads\/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Theodore Brown",
+                    "email": "theodorejb@outlook.com"
+                }
+            ],
+            "description": "Parse Handlebars templates to a spec-compliant AST with PHP.",
+            "keywords": [
+                "ast",
+                "handlebars",
+                "parse",
+                "php",
+                "template"
+            ],
+            "support": {
+                "issues": "https:\/\/github.com\/devtheorem\/php-handlebars-parser\/issues",
+                "source": "https:\/\/github.com\/devtheorem\/php-handlebars-parser\/tree\/v2.1.1"
+            },
+            "install-path": "..\/devtheorem\/php-handlebars-parser"
+        },
+        {
             "name": "doctrine\/inflector",
             "version": "2.1.0",
             "version_normalized": "2.1.0.0",

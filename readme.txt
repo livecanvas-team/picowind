@@ -4,7 +4,7 @@ Tags: livecanvas, tailwind css, twig, blade, latte
 Requires at least: 6.8
 Tested up to: 6.9
 Requires PHP: 8.1
-Stable tag: 0.0.13
+Stable tag: 0.0.14
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -109,6 +109,12 @@ Yes. Picowind resolves templates from child and parent locations with a fallback
 5. Omni Icon usage in templates
 
 == Changelog ==
+
+= 0.0.14 - 2026-05-01 =
+**Added**
+* Add first-class Handlebars template engine support for `.hbs` and `.handlebars` templates, including partials, Timber helpers, and cross-engine rendering from Twig, Latte, and Blade.
+**Changed**
+* Raise the minimum PHP requirement to 8.2 for the Handlebars renderer dependency.
 
 = 0.0.13 - 2026-03-17 =
 

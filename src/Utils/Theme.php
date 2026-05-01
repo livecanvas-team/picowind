@@ -24,7 +24,7 @@ class Theme
     /**
      * Cache directory names
      */
-    public const CACHE_DIRECTORIES = ['twig' => 'picowind/cache/twig', 'blade' => 'picowind/cache/blade', 'latte' => 'picowind/cache/latte'];
+    public const CACHE_DIRECTORIES = ['twig' => 'picowind/cache/twig', 'blade' => 'picowind/cache/blade', 'latte' => 'picowind/cache/latte', 'handlebars' => 'picowind/cache/handlebars'];
     /**
      * Get all template directories with full paths
      *
@@ -59,7 +59,7 @@ class Theme
     /**
      * Get cache path for a specific feature
      *
-     * @param ?string $name Feature name (e.g., 'twig', 'blade', 'latte')
+     * @param ?string $name Feature name (e.g., 'twig', 'blade', 'latte', 'handlebars')
      * @return string The cache path
      */
     public static function get_cache_path(?string $name = null): string
