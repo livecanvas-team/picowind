@@ -35,6 +35,7 @@ class Blade
         $this->registerTimberHelpers();
         $this->registerTwigDirective();
         $this->registerLatteDirective();
+        $this->registerHandlebarsDirective();
         $this->registerOmniIconDirective();
     }
 
@@ -89,6 +90,25 @@ class Blade
                     }, ARRAY_FILTER_USE_KEY);
                     \$__latteContext = array_merge(\$__latteContext, \$__latteExtra);
                     echo \\Picowind\\render(\$__latteTemplate, \$__latteContext, 'latte', false);
+                }
+            ?>";
+        });
+    }
+
+    private function registerHandlebarsDirective(): void
+    {
+        $this->bladeBlade->directive('handlebars', static function ($expression) {
+            // Wrap the expression in array brackets to handle multiple arguments
+            return "<?php
+                \$__handlebarsArgs = [{$expression}];
+                \$__handlebarsTemplate = isset(\$__handlebarsArgs[0]) ? \$__handlebarsArgs[0] : '';
+                \$__handlebarsExtra = isset(\$__handlebarsArgs[1]) ? \$__handlebarsArgs[1] : [];
+                if (!empty(\$__handlebarsTemplate)) {
+                    \$__handlebarsContext = array_filter(get_defined_vars(), function(\$k) {
+                        return substr(\$k, 0, 2) !== '__';
+                    }, ARRAY_FILTER_USE_KEY);
+                    \$__handlebarsContext = array_merge(\$__handlebarsContext, \$__handlebarsExtra);
+                    echo \\Picowind\\render(\$__handlebarsTemplate, \$__handlebarsContext, 'handlebars', false);
                 }
             ?>";
         });

@@ -36,6 +36,7 @@ class Theme
         'twig' => 'picowind/cache/twig',
         'blade' => 'picowind/cache/blade',
         'latte' => 'picowind/cache/latte',
+        'handlebars' => 'picowind/cache/handlebars',
     ];
 
     /**
@@ -77,7 +78,7 @@ class Theme
     /**
      * Get cache path for a specific feature
      *
-     * @param ?string $name Feature name (e.g., 'twig', 'blade', 'latte')
+     * @param ?string $name Feature name (e.g., 'twig', 'blade', 'latte', 'handlebars')
      * @return string The cache path
      */
     public static function get_cache_path(?string $name = null): string

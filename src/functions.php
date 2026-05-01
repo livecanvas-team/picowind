@@ -19,7 +19,7 @@ use Timber\Timber;
  *
  * @param string|array $paths The path to the template file(s) including the file extension.
  * @param array  $context The context data to pass to the template.
- * @param ?string $engine The template engine to use ('twig', 'latte', 'blade', 'php', etc). Default is 'twig' or determined by file extension.
+ * @param ?string $engine The template engine to use ('twig', 'latte', 'blade', 'handlebars', 'php', etc). Default is 'twig' or determined by file extension.
  * @param ?bool $print Whether to print the rendered template. Default is true.
  * @return void|string The rendered template output if $print is false, otherwise void.
  */
@@ -64,7 +64,7 @@ function render($paths, array $context = [], ?string $engine = null, ?bool $prin
  * Build template fallback candidates for supported engines.
  *
  * For each template path, this returns candidates in the following order:
- * Twig (`.twig`), Blade (`.blade.php`) and Latte (`.latte`).
+ * Twig (`.twig`), Blade (`.blade.php`), Latte (`.latte`) and Handlebars (`.hbs`, `.handlebars`).
  *
  * @param string|array $templates Template path(s) with or without extension.
  * @return array<int, string>
@@ -87,11 +87,17 @@ function template_fallbacks(string|array $templates): array
             $base = substr($base, 0, -5);
         } elseif (str_ends_with($base, '.latte')) {
             $base = substr($base, 0, -6);
+        } elseif (str_ends_with($base, '.handlebars')) {
+            $base = substr($base, 0, -11);
+        } elseif (str_ends_with($base, '.hbs')) {
+            $base = substr($base, 0, -4);
         }
 
         $fallbacks[] = $base . '.twig';
         $fallbacks[] = $base . '.blade.php';
         $fallbacks[] = $base . '.latte';
+        $fallbacks[] = $base . '.hbs';
+        $fallbacks[] = $base . '.handlebars';
     }
 
     return array_values(array_unique($fallbacks));
@@ -102,7 +108,7 @@ function template_fallbacks(string|array $templates): array
  *
  * @param string $template_string The template string to render.
  * @param array  $context The context data to pass to the template.
- * @param string $engine The template engine to use ('twig', 'latte', 'blade'). Default is 'twig'.
+ * @param string $engine The template engine to use ('twig', 'latte', 'blade', 'handlebars'). Default is 'twig'.
  * @param ?bool $print Whether to print the rendered template. Default is true.
  * @return void|string The rendered template output if $print is false, otherwise void.
  */

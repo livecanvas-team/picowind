@@ -27,6 +27,7 @@ class LatteExtension extends Extension
             '_' => [UnderscoreFunctionTag::class, 'create'],
             'twig' => [TwigTag::class, 'create'],
             'blade' => [BladeTag::class, 'create'],
+            'handlebars' => [HandlebarsTag::class, 'create'],
         ];
     }
 }

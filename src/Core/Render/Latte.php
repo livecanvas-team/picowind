@@ -63,6 +63,7 @@ class Latte
         $this->registerTimberFunctions();
         $this->registerTwigFunction();
         $this->registerBladeFunction();
+        $this->registerHandlebarsFunction();
         $this->registerOmniIconFunction();
     }
 
@@ -110,6 +111,15 @@ class Latte
         // Register function syntax: {blade('template.blade.php', [vars])}
         $this->latte->addFunction('blade', function (string $template, array $context = []) {
             $output = render($template, $context, 'blade', false) ?? '';
+            return new Html($output);
+        });
+    }
+
+    private function registerHandlebarsFunction(): void
+    {
+        // Register function syntax: {handlebars('template.hbs', [vars])}
+        $this->latte->addFunction('handlebars', static function (string $template, array $context = []) {
+            $output = render($template, $context, 'handlebars', false) ?? '';
             return new Html($output);
         });
     }

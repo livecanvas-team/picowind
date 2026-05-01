@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Add first-class Handlebars template engine support for `.hbs` and `.handlebars` templates, including partials, Timber helpers, and cross-engine rendering from Twig, Latte, and Blade.
+
+### Changed
+- Raise the minimum PHP requirement to 8.2 for the Handlebars renderer dependency.
+
 ## [0.0.13] - 2026-03-17
 
 ## [0.0.12] - 2026-03-17
