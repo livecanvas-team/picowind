@@ -52,10 +52,10 @@ jobs:
 
         - run: pnpm build
 
-        # Setup PHP 8.1 for initial composer operations (Symfony 6.4 requirement)
+        # Setup PHP 8.2 for Composer dependencies and php-scoper requirements.
         - uses: shivammathur/setup-php@v2
           with:
-            php-version: 8.1
+            php-version: 8.2
             coverage: none
           # env:
           #   github-token: ${{ secrets.GH_DEV_PAT_TOKEN }}
@@ -104,7 +104,7 @@ jobs:
             mkdir -p picowind-deploy
             rsync -av --exclude picowind-deploy --exclude .git --exclude node_modules ./ picowind-deploy/ --quiet
 
-        # Setup PHP 8.2 for php-scoper (humbug/php-scoper requires php ^8.2)
+        # Ensure PHP 8.2 is active for php-scoper (humbug/php-scoper requires php ^8.2).
         - uses: shivammathur/setup-php@v2
           with:
             php-version: 8.2
@@ -124,7 +124,7 @@ jobs:
         # clone current repository and checkout/create dist branch
         - name: "Checkout or create dist branch"
           run: |
-            git clone https://x-access-token:${{ secrets.GH_DEV_PAT_TOKEN }}@github.com/${{ github.repository }}.git dist-branch
+            git clone https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git dist-branch
             cd dist-branch
             git fetch origin dist || true
             git checkout dist 2>/dev/null || git checkout --orphan dist
@@ -182,4 +182,4 @@ jobs:
             draft: false
             prerelease: false
           env:
-            GITHUB_TOKEN: ${{ secrets.GH_DEV_PAT_TOKEN }}
+            GITHUB_TOKEN: ${{ github.token }}

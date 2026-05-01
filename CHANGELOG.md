@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.14] - 2026-05-01
+
 ### Added
 - Add first-class Handlebars template engine support for `.hbs` and `.handlebars` templates, including partials, Timber helpers, and cross-engine rendering from Twig, Latte, and Blade.
 
@@ -72,7 +74,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - 🐣 Initial release.
 
-[unreleased]: https://github.com/livecanvas-team/picowind/compare/0.0.13...HEAD
+[unreleased]: https://github.com/livecanvas-team/picowind/compare/0.0.14...HEAD
+[0.0.14]: https://github.com/livecanvas-team/picowind/compare/0.0.13...0.0.14
 [0.0.13]: https://github.com/livecanvas-team/picowind/compare/0.0.12...0.0.13
 [0.0.12]: https://github.com/livecanvas-team/picowind/compare/0.0.11...0.0.12
 [0.0.11]: https://github.com/livecanvas-team/picowind/compare/0.0.10...0.0.11
