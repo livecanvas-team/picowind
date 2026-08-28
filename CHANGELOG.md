@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- Migrate the Vite/WordPress asset integration from `kucrut/vite-for-wp` to [`nabasa/vp-wp`](https://github.com/nabasa-dev/vp-wp).
+
 ## [0.0.14] - 2026-05-01
 
 ### Added

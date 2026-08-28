@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace Picowind\Supports;
 
-use Kucrut\Vite;
+use Nabasa\VitePlus\Assets;
 use Picowind\Core\Discovery\Attributes\Hook;
 use Picowind\Core\Discovery\Attributes\Service;
 use Picowind\Utils\Theme as UtilsTheme;
+
+use function Nabasa\VitePlus\development_asset_src;
+use function Nabasa\VitePlus\get_manifest;
 
 #[Service]
 class Theme
@@ -123,18 +126,21 @@ class Theme
         $handle = 'picowind:admin';
 
         $theme_dir = UtilsTheme::parent_dir() ?? UtilsTheme::current_dir();
-        $manifest = Vite\get_manifest($theme_dir . '/public/build');
+        $assets = new Assets($theme_dir . '/public/build', 'picowind');
+        $manifest = get_manifest($assets->manifest_dir(), $assets->scope());
+        $i18n_url = $manifest->is_dev
+            ? development_asset_src($manifest, 'resources/wp-i18n.js')
+            : $assets->url('wp-i18n.js');
 
         wp_enqueue_script(
             $handle . '-i18n',
-            $manifest->is_dev ? Vite\generate_development_asset_src($manifest, 'resources/wp-i18n.js') : Vite\prepare_asset_url($manifest->dir) . '/wp-i18n.js',
+            $i18n_url,
             ['wp-i18n'],
             null,
         );
         wp_set_script_translations($handle . '-i18n', 'picowind');
 
-        Vite\enqueue_asset(
-            (UtilsTheme::parent_dir() ?? UtilsTheme::current_dir()) . '/public/build',
+        $assets->enqueue(
             'resources/admin/main.ts',
             [
                 'handle' => $handle,

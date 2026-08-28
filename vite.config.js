@@ -1,8 +1,8 @@
-import path from 'path';
-import { defineConfig } from 'vite';
+import { fileURLToPath, URL } from 'node:url';
+
+import { defineConfig } from 'vite-plus';
 import vue from '@vitejs/plugin-vue';
-import { v4wp } from '@kucrut/vite-for-wp';
-import { wp_scripts } from '@kucrut/vite-for-wp/plugins';
+import { wordpress, wordpressExternals } from '@nabasa/vp-wp';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 import tailwindcss from '@tailwindcss/vite';
 import Icons from 'unplugin-icons/vite';
@@ -29,14 +29,15 @@ export default defineConfig({
         //         fs: 'memfs', // Since `fs` is not supported in browsers, we can use the `memfs` package to polyfill it.
         //     },
         // }),
-        v4wp({
-            input: {
+        ...wordpress({
+            entry: {
                 admin: 'resources/admin/main.ts',
             },
             outDir: 'public/build',
+            sourcemap: false,
         }),
         vue(),
-        wp_scripts(),
+        ...(await wordpressExternals()),
         Icons({
             autoInstall: true,
             scale: 1
@@ -112,8 +113,8 @@ export default defineConfig({
     publicDir: 'assets/static',
     resolve: {
         alias: {
-            '~': path.resolve(__dirname), // root directory
-            '@': path.resolve(__dirname, './resources'),
+            '~': fileURLToPath(new URL('.', import.meta.url)), // root directory
+            '@': fileURLToPath(new URL('./resources', import.meta.url)),
             // 'source-map-js': 'source-map'
         },
     },

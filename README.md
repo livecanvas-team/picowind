@@ -9,7 +9,7 @@ A modern WordPress theme for LiveCanvas with multi-engine template support (Twig
 ## Requirements
 
 - PHP >= 8.2
-- Node.js >= 24.9.0
+- Node.js >= 24.11.0
 - Composer
 - pnpm
 
