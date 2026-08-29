@@ -24,24 +24,27 @@
         "noFallthroughCasesInSwitch": true,
 
         /* Paths */
-        "baseUrl": ".",
         "paths": {
             "~/*": [
                 "./*"
+            ],
+            "@/admin/*": [
+                "./resources/admin/*"
+            ],
+            "@/components/*": [
+                "./resources/components/*"
             ],
             "@/*": [
                 "./resources/*"
             ],
         },
         "types": [
-            "unplugin-icons/types/vue",
+            "vite/client"
         ]
     },
     "include": [
         "resources/**/*.ts",
         "resources/**/*.tsx",
-        "resources/**/*.vue",
-        "auto-imports.d.ts",
-        "components.d.ts"
+        "resources/declarations.d.ts"
     ]
 }

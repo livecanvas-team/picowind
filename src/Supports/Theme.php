@@ -141,7 +141,7 @@ class Theme
         wp_set_script_translations($handle . '-i18n', 'picowind');
 
         $assets->enqueue(
-            'resources/admin/main.ts',
+            'resources/admin/main.tsx',
             [
                 'handle' => $handle,
                 'in_footer' => true,
@@ -163,6 +163,8 @@ class Theme
         ];
 
         if (current_user_can('manage_options')) {
+            $current_user = wp_get_current_user();
+
             $metadata['_wpnonce'] = wp_create_nonce('picowind');
 
             $metadata['rest_api'] = [
@@ -178,6 +180,12 @@ class Theme
                 'web_history' => admin_url(add_query_arg([
                     'page' => 'picowind',
                 ], 'themes.php')),
+            ];
+
+            $metadata['current_user'] = [
+                'name' => $current_user->display_name,
+                'avatar' => get_avatar_url($current_user->ID, ['size' => 96]),
+                'role' => $current_user->roles[0] ?? '',
             ];
 
             $metadata['is_debug'] = defined('WP_DEBUG') && WP_DEBUG;

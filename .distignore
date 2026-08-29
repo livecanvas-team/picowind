@@ -3,6 +3,7 @@ node_modules
 .npmrc
 pnpm-workspace.yaml
 vite.config.js
+vite.config.ts
 tsconfig.json
 mago.toml
 rector.php
@@ -16,6 +17,7 @@ components.d.ts
 /.github
 /.vscode
 /.agents
+/.codex
 /.wordpress-org
 /node_modules
 /vendor/bin
@@ -23,12 +25,14 @@ components.d.ts
 /deploy
 /yaak
 /resources
+/.env*
 /.editorconfig
 /.gitattributes
 /.gitignore
 /.php-version
 /.distignore
 /composer.lock
+/components.json
 /package.json
 /package-lock.json
 /pnpm-lock.yaml
@@ -62,6 +66,7 @@ components.d.ts
 # Build tools
 /webpack.config.js
 /vite.config.js
+/vite.config.ts
 /tsconfig.json
 /.babelrc
 /.eslintrc

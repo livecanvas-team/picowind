@@ -20,15 +20,19 @@ function dontTouchMe(css: string) {
     const ast = csstree.parse(css);
 
     csstree.walk(ast, {
-        enter: (node, item, list) => {
+        enter: (node: csstree.CssNode) => {
             if (node.type === 'Atrule' && node.name === 'keyframes') {
                 return csstree.walk.skip;
             }
 
             if (node.type === 'SelectorList') {
-                node.children.forEach(selector => {
+                const selectorList = node as csstree.SelectorList;
+
+                selectorList.children.forEach(selectorNode => {
+                    const selector = selectorNode as csstree.Selector;
+
                     // if not the following Pseudo classes are present, skip
-                    if (selector.children.some(child => child.type === 'PseudoClassSelector' && !['visible', 'hover', 'focus', 'focus-visible', 'focus-within', 'target', 'read-write', 'active', 'visited', 'link'].includes(child.name))) {
+                    if (selector.children.some((child: csstree.CssNode) => child.type === 'PseudoClassSelector' && !['visible', 'hover', 'focus', 'focus-visible', 'focus-within', 'target', 'read-write', 'active', 'visited', 'link'].includes(child.name))) {
                         return;
                     }
 
@@ -50,7 +54,7 @@ function dontTouchMe(css: string) {
                                 name: '*'
                             }
                         ]
-                    })
+                    } as unknown as csstree.CssNode)
                 });
             }
         }
@@ -66,17 +70,20 @@ if (wpbody) {
     wpbody.classList.add('picowind-style');
 }
 
-// watch for changes in the body element and add the class picowind-style to picowind' element
+// Keep WordPress admin styles from leaking into Base UI portals.
 const observer = new MutationObserver((mutationsList) => {
     for (const mutation of mutationsList) {
         if (mutation.type === 'childList' && mutation.addedNodes.length) {
             mutation.addedNodes.forEach(node => {
-                if (node instanceof HTMLElement && !node.closest('#wpbody') && node.dataset) {
-                    Object.keys(node.dataset).forEach(key => {
-                        if (key.startsWith('reka') || key.startsWith('dismissable')) {
-                            node.classList.add('picowind-style')
-                        }
-                    })
+                if (
+                    node instanceof HTMLElement
+                    && !node.closest('#wpbody')
+                    && (
+                        node.matches('[data-slot], [data-base-ui-portal]')
+                        || Boolean(node.querySelector('[data-slot], [data-base-ui-portal]'))
+                    )
+                ) {
+                    node.classList.add('picowind-style')
                 }
             })
         }

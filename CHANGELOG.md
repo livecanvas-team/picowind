@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Changed
+- Update the deployment workflow and release tooling.
 - Migrate the Vite/WordPress asset integration from `kucrut/vite-for-wp` to [`nabasa/vp-wp`](https://github.com/nabasa-dev/vp-wp).
 - Update Mago to 1.47.4.
 - Update the Mago configuration for the latest release.

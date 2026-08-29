@@ -16,6 +16,8 @@ declare module "*.svg"
     export default content;
 }
 
+declare module "*.css";
+
 interface Window {
     picowind: {
         // The version of Picowind.
@@ -50,7 +52,7 @@ interface Window {
 
             site_url: string;
 
-            // Vue Router base URL.
+            // WordPress admin URL for the Picowind screen.
             web_history: string;
         };
 
