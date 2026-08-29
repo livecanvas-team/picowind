@@ -1,4 +1,4 @@
-php-version = "8.1.0"
+php-version = "8.2.0"
 
 [source]
 paths = [
@@ -49,12 +49,9 @@ trait-name = { psr = false }
 class-name = { psr = false }
 literal-named-argument = { enabled = false } # todo
 no-error-control-operator = { enabled = false }
-no-boolean-literal-comparison = { enabled = false }
 too-many-methods = { enabled = false }
 kan-defect = { enabled = false }
 cyclomatic-complexity = { enabled = false }
-return-type = { ignore-arrow-function = true, ignore-closure = true }
-parameter-type = { ignore-arrow-function = true, ignore-closure = true }
 too-many-enum-cases = { enabled = false }
 no-redundant-file = { enabled = false }
 assertion-style = { style = "this" }
@@ -71,5 +68,5 @@ prefer-arrow-function = { enabled = false } # enable when references are fixed
 prefer-first-class-callable = { enabled = false } # enable when arguments are fixed
 strict-behavior = { allow-loose-behavior = true }
 
-# [analyzer]
-# override-attribute = { enabled = false } # CONSIDER ENABLING
+[analyzer]
+no-boolean-literal-comparison = false

@@ -58,7 +58,7 @@
         "lint": "vendor/bin/mago lint --potentially-unsafe --minimum-fail-level=note"
     },
     "require-dev": {
-        "carthage-software/mago": "^1.0.0-beta.24",
-        "rector/rector": "^2.1"
+        "carthage-software/mago": "^1.47.4",
+        "rector/rector": "^2.6.4"
     }
 }
