@@ -729,7 +729,7 @@ final class OnboardingController
 
         $baseSlug = $this->resolveBundledThemeSlug($bundledTheme);
         $themeSlug = $this->generateUniqueThemeSlug($baseSlug);
-        $destination = trailingslashit(get_theme_root()) . $themeSlug;
+        $destination = trailingslashit(get_theme_root(get_template())) . $themeSlug;
 
         $filesystem = new Filesystem();
 
@@ -832,8 +832,9 @@ final class OnboardingController
     {
         $slug = $baseSlug;
         $counter = 1;
+        $themeRoot = trailingslashit(get_theme_root(get_template()));
 
-        while (is_dir(trailingslashit(get_theme_root()) . $slug)) {
+        while (is_dir($themeRoot . $slug) || is_link($themeRoot . $slug)) {
             $slug = $baseSlug . '-' . $counter;
             $counter++;
         }

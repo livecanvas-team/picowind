@@ -14,6 +14,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update Rector to 2.6.4.
 - Modernize the Rector configuration for the latest release.
 
+### Fixed
+- Fix child-theme installation when the active theme uses a non-default theme root.
+- Prevent activation failures caused by dangling child-theme symlinks.
+
 ## [0.0.14] - 2026-05-01
 
 ### Added
