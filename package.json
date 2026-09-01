@@ -1,6 +1,6 @@
 {
   "name": "picowind",
-  "version": "0.0.0",
+  "version": "0.0.15",
   "private": true,
   "type": "module",
   "volta": {
@@ -32,7 +32,7 @@
     "vite-plus": "0.2.8",
     "vitest": "4.1.10"
   },
-  "packageManager": "pnpm@10.15.1+sha512.34e538c329b5553014ca8e8f4535997f96180a1d0f614339357449935350d924e22f8614682191264ec33d1462ac21561aff97f6bb18065351c162c7e8f6de67",
+  "packageManager": "pnpm@12.2.1+sha512.f55ca68aacb9eb5ab69c66f828a98af89a32286703aef1f8da131ca7eab4d677f34bfa85e186467a919c0799df8b6f4aa240f7dc2919b33b3273190104162616",
   "dependencies": {
     "@base-ui/react": "^1.7.0",
     "class-variance-authority": "^0.7.1",
