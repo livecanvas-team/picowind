@@ -69,7 +69,10 @@ class Redis6Proxy extends \Redis implements ResetInterface, LazyObjectInterface
     {
         return ($this->lazyObjectState->realInstance ??= ($this->lazyObjectState->initializer)())->append(...\func_get_args());
     }
-    public function auth(#[\SensitiveParameter] $credentials): \Redis|bool
+    public function auth(
+        #[\SensitiveParameter]
+        $credentials
+    ): \Redis|bool
     {
         return ($this->lazyObjectState->realInstance ??= ($this->lazyObjectState->initializer)())->auth(...\func_get_args());
     }
@@ -513,7 +516,17 @@ class Redis6Proxy extends \Redis implements ResetInterface, LazyObjectInterface
     {
         return ($this->lazyObjectState->realInstance ??= ($this->lazyObjectState->initializer)())->ltrim(...\func_get_args());
     }
-    public function migrate($host, $port, $key, $dstdb, $timeout, $copy = \false, $replace = \false, #[\SensitiveParameter] $credentials = null): \Redis|bool
+    public function migrate(
+        $host,
+        $port,
+        $key,
+        $dstdb,
+        $timeout,
+        $copy = \false,
+        $replace = \false,
+        #[\SensitiveParameter]
+        $credentials = null
+    ): \Redis|bool
     {
         return ($this->lazyObjectState->realInstance ??= ($this->lazyObjectState->initializer)())->migrate(...\func_get_args());
     }

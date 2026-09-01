@@ -59,15 +59,43 @@ class RelayProxy extends \Relay\Relay implements ResetInterface, LazyObjectInter
     use Relay20Trait;
     use SwapdbTrait;
     private const LAZY_OBJECT_PROPERTY_SCOPES = [];
-    public function __construct($host = null, $port = 6379, $connect_timeout = 0.0, $command_timeout = 0.0, #[\SensitiveParameter] $context = [], $database = 0)
+    public function __construct(
+        $host = null,
+        $port = 6379,
+        $connect_timeout = 0.0,
+        $command_timeout = 0.0,
+        #[\SensitiveParameter]
+        $context = [],
+        $database = 0
+    )
     {
         return ($this->lazyObjectState->realInstance ??= ($this->lazyObjectState->initializer)())->__construct(...\func_get_args());
     }
-    public function connect($host, $port = 6379, $timeout = 0.0, $persistent_id = null, $retry_interval = 0, $read_timeout = 0.0, #[\SensitiveParameter] $context = [], $database = 0): bool
+    public function connect(
+        $host,
+        $port = 6379,
+        $timeout = 0.0,
+        $persistent_id = null,
+        $retry_interval = 0,
+        $read_timeout = 0.0,
+        #[\SensitiveParameter]
+        $context = [],
+        $database = 0
+    ): bool
     {
         return ($this->lazyObjectState->realInstance ??= ($this->lazyObjectState->initializer)())->connect(...\func_get_args());
     }
-    public function pconnect($host, $port = 6379, $timeout = 0.0, $persistent_id = null, $retry_interval = 0, $read_timeout = 0.0, #[\SensitiveParameter] $context = [], $database = 0): bool
+    public function pconnect(
+        $host,
+        $port = 6379,
+        $timeout = 0.0,
+        $persistent_id = null,
+        $retry_interval = 0,
+        $read_timeout = 0.0,
+        #[\SensitiveParameter]
+        $context = [],
+        $database = 0
+    ): bool
     {
         return ($this->lazyObjectState->realInstance ??= ($this->lazyObjectState->initializer)())->pconnect(...\func_get_args());
     }
@@ -211,7 +239,10 @@ class RelayProxy extends \Relay\Relay implements ResetInterface, LazyObjectInter
     {
         return ($this->lazyObjectState->realInstance ??= ($this->lazyObjectState->initializer)())->rawCommand(...\func_get_args());
     }
-    public function auth(#[\SensitiveParameter] $auth): bool
+    public function auth(
+        #[\SensitiveParameter]
+        $auth
+    ): bool
     {
         return ($this->lazyObjectState->realInstance ??= ($this->lazyObjectState->initializer)())->auth(...\func_get_args());
     }
@@ -255,7 +286,17 @@ class RelayProxy extends \Relay\Relay implements ResetInterface, LazyObjectInter
     {
         return ($this->lazyObjectState->realInstance ??= ($this->lazyObjectState->initializer)())->restore(...\func_get_args());
     }
-    public function migrate($host, $port, $key, $dstdb, $timeout, $copy = \false, $replace = \false, #[\SensitiveParameter] $credentials = null): \Relay\Relay|bool
+    public function migrate(
+        $host,
+        $port,
+        $key,
+        $dstdb,
+        $timeout,
+        $copy = \false,
+        $replace = \false,
+        #[\SensitiveParameter]
+        $credentials = null
+    ): \Relay\Relay|bool
     {
         return ($this->lazyObjectState->realInstance ??= ($this->lazyObjectState->initializer)())->migrate(...\func_get_args());
     }

@@ -22,6 +22,6 @@ return array(
     'ffecb95d45175fd40f75be8a23b34f90' => $vendorDir . '/twig/twig/src/Resources/debug.php',
     'c7baa00073ee9c61edf148c51917cfb4' => $vendorDir . '/twig/twig/src/Resources/escaper.php',
     'f844ccf1d25df8663951193c3fc307c8' => $vendorDir . '/twig/twig/src/Resources/string_loader.php',
-    'b7e1c4cbafbabee94a69519a450ea263' => $vendorDir . '/kucrut/vite-for-wp/vite-for-wp.php',
+    '3c9ebf3d7a29b377eb2a8001857b1f68' => $vendorDir . '/nabasa/vp-wp/vp-wp.php',
     '27fc77d3cacfc9ff7e4ad1b96f337fb6' => $baseDir . '/src/functions.php',
 );

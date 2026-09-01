@@ -66,7 +66,11 @@ trait RedisTrait
      *
      * @throws InvalidArgumentException when the DSN is invalid
      */
-    public static function createConnection(#[\SensitiveParameter] string $dsn, array $options = []): \Redis|\RedisArray|\RedisCluster|\PicowindDeps\Predis\ClientInterface|Relay
+    public static function createConnection(
+        #[\SensitiveParameter]
+        string $dsn,
+        array $options = []
+    ): \Redis|\RedisArray|\RedisCluster|\PicowindDeps\Predis\ClientInterface|Relay
     {
         if (str_starts_with($dsn, 'redis:')) {
             $scheme = 'redis';

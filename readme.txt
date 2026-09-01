@@ -3,8 +3,8 @@ Contributors: livecanvas-team, suabahasa
 Tags: livecanvas, tailwind css, twig, blade, latte
 Requires at least: 6.8
 Tested up to: 6.9
-Requires PHP: 8.1
-Stable tag: 0.0.14
+Requires PHP: 8.2
+Stable tag: 0.0.15
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -110,10 +110,30 @@ Yes. Picowind resolves templates from child and parent locations with a fallback
 
 == Changelog ==
 
-= 0.0.14 - 2026-05-01 =
-**Added**
-* Add first-class Handlebars template engine support for `.hbs` and `.handlebars` templates, including partials, Timber helpers, and cross-engine rendering from Twig, Latte, and Blade.
+= 0.0.15 - 2026-09-01 =
+
 **Changed**
+
+* Update the deployment workflow and release tooling.
+* Migrate the Vite/WordPress asset integration from `kucrut/vite-for-wp` to [`nabasa/vp-wp`](https://github.com/nabasa-dev/vp-wp).
+* Update Mago to 1.47.4.
+* Update the Mago configuration for the latest release.
+* Update Rector to 2.6.4.
+* Modernize the Rector configuration for the latest release.
+
+**Fixed**
+
+* Fix child-theme installation when the active theme uses a non-default theme root.
+* Prevent activation failures caused by dangling child-theme symlinks.
+
+= 0.0.14 - 2026-05-01 =
+
+**Added**
+
+* Add first-class Handlebars template engine support for `.hbs` and `.handlebars` templates, including partials, Timber helpers, and cross-engine rendering from Twig, Latte, and Blade.
+
+**Changed**
+
 * Raise the minimum PHP requirement to 8.2 for the Handlebars renderer dependency.
 
 = 0.0.13 - 2026-03-17 =
@@ -121,47 +141,69 @@ Yes. Picowind resolves templates from child and parent locations with a fallback
 = 0.0.12 - 2026-03-17 =
 
 = 0.0.11 - 2026-03-17 =
+
 **Added**
+
 * Add REST controller namespace aliases via `#[Controller(aliases: [...])]` and support repeatable controller attributes.
+
 **Fixed**
+
 * Update template fallback logic to support child themes
 
 = 0.0.10 - 2026-03-01 =
+
 **Fixed**
+
 * Improve scoper patching for Twig, Latte, and Blade generated cache namespaces.
 
 = 0.0.9 - 2026-02-28 =
+
 **Fixed**
+
 * Fix theme activation warnings when WindPress files or folders are missing.
 
 = 0.0.8 - 2026-02-27 =
+
 **Fixed**
+
 * Expand scoper patch coverage for additional Twig/Latte/Blade compiled runtime references to prevent prefixed-build render fatals.
 
 = 0.0.7 - 2026-02-27 =
+
 **Fixed**
+
 * Fix Twig scoper patching for hardcoded runtime references (`captureOutput` and `Template::ANY_CALL`) in compiled templates.
 
 = 0.0.6 - 2026-02-27 =
+
 **Fixed**
+
 * Fix Latte scoper patcher escaping so `TemplateGenerator` references are correctly prefixed in dist builds.
 
 = 0.0.5 - 2026-02-27 =
+
 **Fixed**
+
 * Fix scoped Twig/Latte/Blade runtime template generation so compiled cache files use prefixed classes and avoid deploy render fatals.
 
 = 0.0.4 - 2026-02-27 =
+
 **Fixed**
+
 * Expose scoped Illuminate helper functions (including `tap`/`value`) to prevent Blade render fatals in prefixed builds.
 
 = 0.0.3 - 2026-02-27 =
+
 **Fixed**
+
 * Fix discovery autoloading scoped vendor classes (`PicowindDeps\...`) to prevent deploy fatals.
 
 = 0.0.2 - 2026-02-27 =
 
 = 0.0.1 - 2026-02-27 =
+
 **Added**
+
 * 🐣 Initial release.
 
 [See changelog for all versions.](https://github.com/livecanvas-team/picowind/blob/main/CHANGELOG.md)

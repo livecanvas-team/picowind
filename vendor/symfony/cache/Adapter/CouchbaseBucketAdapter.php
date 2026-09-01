@@ -36,7 +36,11 @@ class CouchbaseBucketAdapter extends AbstractAdapter
         $this->enableVersioning();
         $this->marshaller = $marshaller ?? new DefaultMarshaller();
     }
-    public static function createConnection(#[\SensitiveParameter] array|string $servers, array $options = []): \PicowindDeps\CouchbaseBucket
+    public static function createConnection(
+        #[\SensitiveParameter]
+        array|string $servers,
+        array $options = []
+    ): \PicowindDeps\CouchbaseBucket
     {
         if (\is_string($servers)) {
             $servers = [$servers];

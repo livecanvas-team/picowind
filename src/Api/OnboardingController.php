@@ -14,6 +14,26 @@ use WP_REST_Response;
 final class OnboardingController
 {
     /**
+     * Return the complete dashboard state in one request.
+     */
+    #[Route(path: '/dashboard', methods: 'GET', permission_callback: 'manage_options')]
+    public function getDashboard(): WP_REST_Response
+    {
+        try {
+            $childTheme = $this->getActiveChildTheme();
+            $themes = $this->getBundledThemes();
+            $plugins = $this->getRecommendedPluginsWithStatus();
+            $activePlugins = array_filter($plugins, static fn(array $plugin): bool => (bool) ($plugin['active'] ?? \false));
+            $installedThemes = array_filter($themes, static fn(array $theme): bool => (bool) ($theme['installed'] ?? \false));
+            $totalSetupItems = count($plugins) + 1;
+            $readySetupItems = count($activePlugins) + (!empty($childTheme) ? 1 : 0);
+            $setupProgress = $totalSetupItems > 0 ? (int) round($readySetupItems / $totalSetupItems * 100) : 100;
+            return new WP_REST_Response(['success' => \true, 'data' => ['status' => ['completed' => (bool) Config::get('onboarding.completed', \false), 'hasChildTheme' => !empty($childTheme), 'childTheme' => $childTheme], 'themes' => array_values($themes), 'plugins' => array_values($plugins), 'summary' => ['setupProgress' => $setupProgress, 'readyItems' => $readySetupItems, 'totalItems' => $totalSetupItems, 'installedThemes' => count($installedThemes), 'availableThemes' => count($themes), 'activePlugins' => count($activePlugins), 'recommendedPlugins' => count($plugins)]]], 200);
+        } catch (Exception $e) {
+            return new WP_REST_Response(['success' => \false, 'message' => $e->getMessage()], 500);
+        }
+    }
+    /**
      * Get onboarding status
      */
     #[Route(path: '/status', methods: 'GET', permission_callback: 'manage_options')]
@@ -353,7 +373,7 @@ final class OnboardingController
         }
         $baseSlug = $this->resolveBundledThemeSlug($bundledTheme);
         $themeSlug = $this->generateUniqueThemeSlug($baseSlug);
-        $destination = trailingslashit(get_theme_root()) . $themeSlug;
+        $destination = trailingslashit(get_theme_root(get_template())) . $themeSlug;
         $filesystem = new Filesystem();
         try {
             $filesystem->mirror($sourcePath, $destination);
@@ -430,7 +450,8 @@ final class OnboardingController
     {
         $slug = $baseSlug;
         $counter = 1;
-        while (is_dir(trailingslashit(get_theme_root()) . $slug)) {
+        $themeRoot = trailingslashit(get_theme_root(get_template()));
+        while (is_dir($themeRoot . $slug) || is_link($themeRoot . $slug)) {
             $slug = $baseSlug . '-' . $counter;
             $counter++;
         }

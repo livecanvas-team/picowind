@@ -81,7 +81,11 @@ class MemcachedAdapter extends AbstractAdapter
      *
      * @throws \ErrorException When invalid options or servers are provided
      */
-    public static function createConnection(#[\SensitiveParameter] array|string $servers, array $options = []): \Memcached
+    public static function createConnection(
+        #[\SensitiveParameter]
+        array|string $servers,
+        array $options = []
+    ): \Memcached
     {
         if (\is_string($servers)) {
             $servers = [$servers];

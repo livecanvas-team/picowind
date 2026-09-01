@@ -87,7 +87,11 @@ abstract class AbstractAdapter implements AdapterInterface, CacheInterface, Logg
         }
         return new ChainAdapter([$apcu, $opcache]);
     }
-    public static function createConnection(#[\SensitiveParameter] string $dsn, array $options = []): mixed
+    public static function createConnection(
+        #[\SensitiveParameter]
+        string $dsn,
+        array $options = []
+    ): mixed
     {
         if (str_starts_with($dsn, 'redis:') || str_starts_with($dsn, 'rediss:')) {
             return RedisAdapter::createConnection($dsn, $options);

@@ -14,7 +14,7 @@
     "require": {
         "php": ">=8.2",
         "devtheorem\/php-handlebars": "^2.0",
-        "kucrut\/vite-for-wp": "^0.12.0",
+        "nabasa\/vp-wp": "^0.3.0",
         "latte\/latte": "^3.0",
         "psr\/container": "^2.0",
         "psr\/log": "^2.0|^3.0",
@@ -58,7 +58,7 @@
         "lint": "vendor\/bin\/mago lint --potentially-unsafe --minimum-fail-level=note"
     },
     "require-dev": {
-        "carthage-software\/mago": "^1.0.0-beta.24",
-        "rector\/rector": "^2.1"
+        "carthage-software\/mago": "^1.47.4",
+        "rector\/rector": "^2.6.4"
     }
 }

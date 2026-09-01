@@ -26,7 +26,10 @@ final class Dsn
     private ?string $path;
     private array $options = [];
     private string $originalDsn;
-    public function __construct(#[\SensitiveParameter] string $dsn)
+    public function __construct(
+        #[\SensitiveParameter]
+        string $dsn
+    )
     {
         $this->originalDsn = $dsn;
         if (\false === $params = parse_url($dsn)) {

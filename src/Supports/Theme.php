@@ -3,10 +3,12 @@
 declare (strict_types=1);
 namespace Picowind\Supports;
 
-use PicowindDeps\Kucrut\Vite;
+use PicowindDeps\Nabasa\VitePlus\Assets;
 use Picowind\Core\Discovery\Attributes\Hook;
 use Picowind\Core\Discovery\Attributes\Service;
 use Picowind\Utils\Theme as UtilsTheme;
+use function PicowindDeps\Nabasa\VitePlus\development_asset_src;
+use function PicowindDeps\Nabasa\VitePlus\get_manifest;
 #[Service]
 class Theme
 {
@@ -78,19 +80,23 @@ class Theme
     {
         $handle = 'picowind:admin';
         $theme_dir = UtilsTheme::parent_dir() ?? UtilsTheme::current_dir();
-        $manifest = Vite\get_manifest($theme_dir . '/public/build');
-        wp_enqueue_script($handle . '-i18n', $manifest->is_dev ? Vite\generate_development_asset_src($manifest, 'resources/wp-i18n.js') : Vite\prepare_asset_url($manifest->dir) . '/wp-i18n.js', ['wp-i18n'], null);
+        $assets = new Assets($theme_dir . '/public/build', 'picowind');
+        $manifest = get_manifest($assets->manifest_dir(), $assets->scope());
+        $i18n_url = $manifest->is_dev ? development_asset_src($manifest, 'resources/wp-i18n.js') : $assets->url('wp-i18n.js');
+        wp_enqueue_script($handle . '-i18n', $i18n_url, ['wp-i18n'], null);
         wp_set_script_translations($handle . '-i18n', 'picowind');
-        Vite\enqueue_asset((UtilsTheme::parent_dir() ?? UtilsTheme::current_dir()) . '/public/build', 'resources/admin/main.ts', ['handle' => $handle, 'in_footer' => \true, 'dependencies' => ['wp-hooks', 'wp-i18n']]);
+        $assets->enqueue('resources/admin/main.tsx', ['handle' => $handle, 'in_footer' => \true, 'dependencies' => ['wp-hooks', 'wp-i18n']]);
     }
     public function admin_page_metadata()
     {
         $theme = UtilsTheme::is_child_theme() ? wp_get_theme(basename(UtilsTheme::parent_dir())) : wp_get_theme();
         $metadata = ['_version' => $theme->get('Version'), '_wp_version' => get_bloginfo('version'), 'assets' => ['url' => $theme->get_template_directory_uri() . '/public/build']];
         if (current_user_can('manage_options')) {
+            $current_user = wp_get_current_user();
             $metadata['_wpnonce'] = wp_create_nonce('picowind');
             $metadata['rest_api'] = ['nonce' => wp_create_nonce('wp_rest'), 'root' => esc_url_raw(rest_url()), 'namespace' => 'picowind/v1', 'url' => esc_url_raw(rest_url('picowind/v1'))];
             $metadata['site_meta'] = ['name' => get_bloginfo('name'), 'site_url' => get_site_url(), 'web_history' => admin_url(add_query_arg(['page' => 'picowind'], 'themes.php'))];
+            $metadata['current_user'] = ['name' => $current_user->display_name, 'avatar' => get_avatar_url($current_user->ID, ['size' => 96]), 'role' => $current_user->roles[0] ?? ''];
             $metadata['is_debug'] = defined('WP_DEBUG') && \WP_DEBUG;
         }
         $metadata = apply_filters('a!picowind/supports/theme_support:admin_page_metadata', $metadata);

@@ -46,14 +46,20 @@ class ChildTheme
     {
         $themeName = self::CHILD_THEME_BASE_NAME;
         $counter = 0;
-        while ($this->filesystem->exists($this->get_theme_path($themeName))) {
+        while (\true) {
+            $themePath = $this->get_theme_path($themeName);
+            // file_exists() returns false for dangling symlinks, but mkdir() follows them.
+            if (!$this->filesystem->exists($themePath) && !is_link($themePath)) {
+                break;
+            }
             if ($this->is_picowind_child_theme($themeName)) {
                 return $themeName;
             }
             $counter++;
             $themeName = self::CHILD_THEME_BASE_NAME . '-' . $counter;
         }
-        $this->filesystem->mirror($this->sourcePath, $this->get_theme_path($themeName));
+        $this->filesystem->mirror($this->sourcePath, $themePath);
+        wp_clean_themes_cache();
         return $themeName;
     }
     private function is_parent_activated(WP_Theme $theme): bool
@@ -62,7 +68,7 @@ class ChildTheme
     }
     private function is_picowind_child_theme(string $themeSlug): bool
     {
-        $theme = wp_get_theme($themeSlug);
+        $theme = wp_get_theme($themeSlug, get_theme_root(get_template()));
         if (!$theme->exists()) {
             return \false;
         }
@@ -70,6 +76,6 @@ class ChildTheme
     }
     private function get_theme_path(string $themeName): string
     {
-        return get_theme_root() . '/' . $themeName;
+        return get_theme_root(get_template()) . '/' . $themeName;
     }
 }
