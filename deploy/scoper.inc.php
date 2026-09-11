@@ -265,6 +265,10 @@ return [
 
         'Etch',
 
+        // Jooosi
+        'JooosiIcon',
+        'OmniIcon',
+
         // Cache plugins
     ],
     'exclude-classes' => array_merge(
