@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Document `jooosi_icon` usage in Twig, Blade, Latte, and Handlebars templates.
+
+### Changed
+- Rebrand the Omni Icon as Jooosi Icon.
+
 ## [0.0.15] - 2026-09-01
 
 ### Changed

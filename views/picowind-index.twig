@@ -391,7 +391,7 @@
 						{% elseif site.icon is not empty %}
 							<img src="{{ site.icon }}" alt="{{ site.title }} logo">
 						{% else %}
-							{{ omni_icon('lucide:origami', {width: 64, height: 64}) }}
+							{{ jooosi_icon('lucide:origami', {width: 64, height: 64}) }}
 						{% endif %}
 					</div>
 
@@ -406,7 +406,7 @@
 				<div class="cards-grid">
 					<div class="card">
 						<div class="cart-title">
-							{{ omni_icon('tabler:box', {class: 'card-icon', width: 40, height: 40}) }}
+							{{ jooosi_icon('tabler:box', {class: 'card-icon', width: 40, height: 40}) }}
 							<h3>Theme Version</h3>
 						</div>
 						<p>
@@ -418,7 +418,7 @@
 
 					<div class="card">
 						<div class="cart-title">
-							{{ omni_icon('tabler:folder-open', {class: 'card-icon', width: 40, height: 40}) }}
+							{{ jooosi_icon('tabler:folder-open', {class: 'card-icon', width: 40, height: 40}) }}
 							<h3>Site URL</h3>
 						</div>
 						<p>Your WordPress website is ready at</p>
@@ -428,7 +428,7 @@
 
 					<div class="card">
 						<div class="cart-title">
-							{{ omni_icon('tabler:question-mark', {class: 'card-icon', width: 40, height: 40}) }}
+							{{ jooosi_icon('tabler:question-mark', {class: 'card-icon', width: 40, height: 40}) }}
 							<h3>Why am I seeing this?</h3>
 						</div>
 						<p>
@@ -439,7 +439,7 @@
 
 				<p class="next-step" role="note">
 					<strong>Next Step</strong>
-					{{ omni_icon('tabler:square-chevrons-right', {class: '', width: 24, height: 24}) }}
+					{{ jooosi_icon('tabler:square-chevrons-right', {class: '', width: 24, height: 24}) }}
 					<span>
 						{% if user is not null and user.can('switch_themes') %}
 							<a target="_blank" href="{{ function('get_admin_url') }}themes.php">Use a child theme</a> to start customizing your site.

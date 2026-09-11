@@ -22,7 +22,7 @@ use RuntimeException;
 use Throwable;
 use Traversable;
 
-use function Picowind\omni_icon;
+use function Picowind\jooosi_icon;
 use function Picowind\render;
 
 #[Service]
@@ -127,7 +127,8 @@ class Handlebars
             'blade' => fn (mixed ...$args): SafeString => $this->render_engine_helper('blade', $args),
             'handlebars' => fn (mixed ...$args): SafeString => $this->render_engine_helper('handlebars', $args),
             'latte' => fn (mixed ...$args): SafeString => $this->render_engine_helper('latte', $args),
-            'omni_icon' => fn (mixed ...$args): SafeString => $this->omni_icon_helper($args),
+            'jooosi_icon' => fn (mixed ...$args): SafeString => $this->jooosi_icon_helper($args),
+            'omni_icon' => fn (mixed ...$args): SafeString => $this->jooosi_icon_helper($args),
             'timber' => fn (mixed ...$args): mixed => $this->timber_helper($args),
             'twig' => fn (mixed ...$args): SafeString => $this->render_engine_helper('twig', $args),
         ];
@@ -200,7 +201,7 @@ class Handlebars
         return new SafeString($output);
     }
 
-    private function omni_icon_helper(array $args): SafeString
+    private function jooosi_icon_helper(array $args): SafeString
     {
         $options = $this->pop_helper_options($args);
         $icon_name = array_shift($args);
@@ -219,7 +220,7 @@ class Handlebars
             $attributes = array_merge($attributes, $this->denormalize_value($options->hash));
         }
 
-        return new SafeString(omni_icon($icon_name, $attributes));
+        return new SafeString(jooosi_icon($icon_name, $attributes));
     }
 
     private function timber_helper(array $args): mixed

@@ -9,7 +9,7 @@
 	<div class="card-body">
 		{% if not theme.mods.singlepost_disable_date %}
 			<div class="text-sm text-base-content/60 mb-2">
-				{{ omni_icon("lucide:calendar", {class: "inline w-4 h-4 mr-1"}) }}
+				{{ jooosi_icon("lucide:calendar", {class: "inline w-4 h-4 mr-1"}) }}
 				{{ post.date }}
 			</div>
 		{% endif %}
@@ -33,7 +33,7 @@
 		<div class="card-actions justify-end mt-4">
 			<a href="{{ post.link }}" class="btn btn-primary btn-sm">
 				{{ __('Read More', 'picowind-base') }}
-				{{ omni_icon("lucide:arrow-right", {class: "inline w-4 h-4 ml-1"}) }}
+				{{ jooosi_icon("lucide:arrow-right", {class: "inline w-4 h-4 ml-1"}) }}
 			</a>
 		</div>
 	</div>

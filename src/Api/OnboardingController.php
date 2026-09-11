@@ -662,12 +662,12 @@ final class OnboardingController
                 'url' => 'https://wordpress.org/plugins/yabe-webfont/',
                 'description' => 'Use custom fonts, Google Fonts, or Adobe Fonts.',
             ],
-            'omni-icon' => [
-                'id' => 'omni-icon',
-                'name' => 'Omni Icon',
-                'slug' => 'omni-icon',
+            'jooosi-icon' => [
+                'id' => 'jooosi-icon',
+                'name' => 'Jooosi Icon',
+                'slug' => 'jooosi-icon',
                 'source' => 'wporg',
-                'url' => 'https://wordpress.org/plugins/omni-icon/',
+                'url' => 'https://wordpress.org/plugins/jooosi-icon/',
                 'description' => 'Modern SVG icon library for WordPress.',
             ],
             'livecanvas' => [

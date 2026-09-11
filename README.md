@@ -122,6 +122,36 @@ Picowind\render('components/card.hbs', ['title' => 'Welcome']);
 Picowind\render_string('<div>{{title}}</div>', ['title' => 'Hello'], 'handlebars');
 ```
 
+#### Jooosi Icon helper
+
+The `jooosi_icon` helper is available in Twig, Blade, Latte, and Handlebars templates. It renders SVG icons through Jooosi Icon, while the legacy `omni_icon` helper remains available as a compatibility alias.
+
+##### Twig
+
+```twig
+{{ jooosi_icon('mdi:home', {class: 'icon'}) }}
+```
+
+##### Blade
+
+```blade
+@jooosi_icon('mdi:home', ['class' => 'icon'])
+```
+
+##### Latte
+
+```latte
+{jooosi_icon('mdi:home', ['class' => 'icon'])}
+```
+
+##### Handlebars
+
+Use triple braces because the helper returns safe SVG HTML:
+
+```handlebars
+{{{jooosi_icon "mdi:home" class="icon"}}}
+```
+
 #### Timber-compatible function helpers (Blade + Latte + Handlebars)
 
 Twig includes Timber helpers like `get_post`, `get_posts`, `function`, `fn`, and translation functions.
@@ -239,7 +269,7 @@ Templates are loaded from multiple directories in order of priority:
 Picowind provides several PHP helper functions for common tasks:
 
 - `Picowind\context()` - Get global WordPress context
-- `Picowind\omni_icon($name, $attributes)` - Render SVG icons via Omni Icon plugin (supports Iconify, local uploads, and bundled icons)
+- `Picowind\jooosi_icon($name, $attributes)` - Render SVG icons via Jooosi Icon (with legacy Omni Icon compatibility; supports Iconify, local uploads, and bundled icons)
 
 ### Hooks and Services
 

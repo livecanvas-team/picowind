@@ -41,14 +41,14 @@
 
 						{% if not theme.mods.singlepost_disable_date %}
 							<span class="flex items-center gap-1">
-								{{ omni_icon("lucide:calendar", {class: "w-4 h-4"}) }}
+								{{ jooosi_icon("lucide:calendar", {class: "w-4 h-4"}) }}
 								{{ post.date }}
 							</span>
 						{% endif %}
 
 						{% if not theme.mods.singlepost_disable_author %}
 							<span class="flex items-center gap-1">
-								{{ omni_icon("lucide:user", {class: "w-4 h-4"}) }}
+								{{ jooosi_icon("lucide:user", {class: "w-4 h-4"}) }}
 								{{ __('by', 'picowind-base') }}
 								{{ post.author.name }}
 							</span>
@@ -71,31 +71,31 @@
 						class="flex gap-3 flex-wrap">
 						{# Facebook #}
 						<a href="https://www.facebook.com/sharer.php?u={{ post.link }}" target="_blank" rel="nofollow" class="btn btn-outline gap-2">
-							{{ omni_icon("fa7-brands:facebook", {class: "w-5 h-5"}) }}
+							{{ jooosi_icon("fa7-brands:facebook", {class: "w-5 h-5"}) }}
 							<span class="hidden lg:inline">Facebook</span>
 						</a>
 
 						{# Twitter/X #}
 						<a href="https://twitter.com/share?url={{ post.link }}&text={{ post.title }}" target="_blank" rel="nofollow" class="btn btn-outline gap-2">
-							{{ omni_icon("fa7-brands:x-twitter", {class: "w-5 h-5"}) }}
+							{{ jooosi_icon("fa7-brands:x-twitter", {class: "w-5 h-5"}) }}
 							<span class="hidden lg:inline">Twitter</span>
 						</a>
 
 						{# WhatsApp #}
 						<a href="https://api.whatsapp.com/send?text={{ post.link }}" target="_blank" rel="nofollow" class="btn btn-outline gap-2">
-							{{ omni_icon("fa7-brands:whatsapp", {class: "w-5 h-5"}) }}
+							{{ jooosi_icon("fa7-brands:whatsapp", {class: "w-5 h-5"}) }}
 							<span class="hidden lg:inline">WhatsApp</span>
 						</a>
 
 						{# Telegram #}
 						<a href="https://telegram.me/share/url?url={{ post.link }}" target="_blank" rel="nofollow" class="btn btn-outline gap-2">
-							{{ omni_icon("fa7-brands:telegram", {class: "w-5 h-5"}) }}
+							{{ jooosi_icon("fa7-brands:telegram", {class: "w-5 h-5"}) }}
 							<span class="hidden lg:inline">Telegram</span>
 						</a>
 
 						{# Email #}
 						<a href="mailto:?subject={{ post.title }}&body={{ post.link }}" target="_blank" rel="nofollow" class="btn btn-outline gap-2">
-							{{ omni_icon("lucide:mail", {class: "w-5 h-5"}) }}
+							{{ jooosi_icon("lucide:mail", {class: "w-5 h-5"}) }}
 							<span class="hidden lg:inline">Email</span>
 						</a>
 					</div>

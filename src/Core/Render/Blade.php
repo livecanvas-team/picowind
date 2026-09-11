@@ -36,7 +36,7 @@ class Blade
         $this->registerTwigDirective();
         $this->registerLatteDirective();
         $this->registerHandlebarsDirective();
-        $this->registerOmniIconDirective();
+        $this->registerJooosiIconDirectives();
     }
 
     private function registerTimberHelpers(): void
@@ -114,20 +114,21 @@ class Blade
         });
     }
 
-    private function registerOmniIconDirective(): void
+    private function registerJooosiIconDirectives(): void
     {
-        $this->bladeBlade->directive('omni_icon', function ($expression) {
-            // Wrap the expression in array brackets to handle multiple arguments
-            // Uses Omni Icon plugin via OmniIcon wrapper
-            return "<?php
-                \$__omniIconArgs = [{$expression}];
-                \$__iconName = isset(\$__omniIconArgs[0]) ? \$__omniIconArgs[0] : '';
-                \$__iconAttrs = isset(\$__omniIconArgs[1]) ? \$__omniIconArgs[1] : [];
-                if (!empty(\$__iconName)) {
-                    echo \\Picowind\\omni_icon(\$__iconName, \$__iconAttrs);
-                }
-            ?>";
-        });
+        foreach (['jooosi_icon', 'omni_icon'] as $directive) {
+            $this->bladeBlade->directive($directive, function ($expression) {
+                // Wrap the expression in array brackets to handle multiple arguments.
+                return "<?php
+                    \$__jooosiIconArgs = [{$expression}];
+                    \$__iconName = isset(\$__jooosiIconArgs[0]) ? \$__jooosiIconArgs[0] : '';
+                    \$__iconAttrs = isset(\$__jooosiIconArgs[1]) ? \$__jooosiIconArgs[1] : [];
+                    if (!empty(\$__iconName)) {
+                        echo \\Picowind\\jooosi_icon(\$__iconName, \$__iconAttrs);
+                    }
+                ?>";
+            });
+        }
     }
 
     /**

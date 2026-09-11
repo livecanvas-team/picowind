@@ -30,7 +30,7 @@ You can render templates with one engine, mix engines in the same page, and keep
 * Default fallback engine order: Twig, then Blade, then Latte
 * Child theme-friendly template resolution
 * Tailwind-based starter structure
-* Omni Icon helper integration through `Picowind\omni_icon()`
+* Jooosi Icon helper integration through `Picowind\jooosi_icon()` with legacy `Picowind\omni_icon()` compatibility
 * Service and hook auto-discovery using PHP attributes
 
 === Render API ===
@@ -92,9 +92,18 @@ Yes. Picowind exposes Timber-compatible helper callables for Blade and Latte so 
 
 Use:
 
-`Picowind\omni_icon('mdi:home', ['class' => 'icon'])`
+`Picowind\jooosi_icon('mdi:home', ['class' => 'icon'])`
 
-This helper integrates with the Omni Icon plugin when installed.
+The legacy `Picowind\omni_icon()` helper remains available as a compatibility alias.
+
+This helper integrates with Jooosi Icon when installed, with legacy Omni Icon fallback support.
+
+The `jooosi_icon` helper is also available in templates:
+
+* Twig: `{{ jooosi_icon('mdi:home', {class: 'icon'}) }}`
+* Blade: `@jooosi_icon('mdi:home', ['class' => 'icon'])`
+* Latte: `{jooosi_icon('mdi:home', ['class' => 'icon'])}`
+* Handlebars: `{{{jooosi_icon "mdi:home" class="icon"}}}`
 
 = Is a child theme supported? =
 
@@ -106,7 +115,7 @@ Yes. Picowind resolves templates from child and parent locations with a fallback
 2. Multi-engine component rendering
 3. Child theme template override example
 4. LiveCanvas editing workflow
-5. Omni Icon usage in templates
+5. Jooosi Icon usage in templates
 
 == Changelog ==
 
