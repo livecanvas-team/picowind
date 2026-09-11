@@ -17,7 +17,7 @@ use Picowind\Utils\Theme as UtilsTheme;
 use PicowindDeps\Timber\Timber;
 use PicowindDeps\Twig\Environment;
 use PicowindDeps\Twig\TwigFunction;
-use function Picowind\omni_icon;
+use function Picowind\jooosi_icon;
 use function Picowind\render;
 #[Service]
 class Twig
@@ -180,9 +180,11 @@ class Twig
         return $twigEnvironment;
     }
     #[Hook('timber/twig', 'filter')]
-    public function add_omni_icon_function_to_twig(Environment $twigEnvironment): Environment
+    public function add_jooosi_icon_functions_to_twig(Environment $twigEnvironment): Environment
     {
-        $twigEnvironment->addFunction(new TwigFunction('omni_icon', omni_icon(...), ['is_safe' => ['html']]));
+        foreach (['jooosi_icon', 'omni_icon'] as $function) {
+            $twigEnvironment->addFunction(new TwigFunction($function, jooosi_icon(...), ['is_safe' => ['html']]));
+        }
         return $twigEnvironment;
     }
 }

@@ -50,7 +50,7 @@ class Latte
         $this->registerTwigFunction();
         $this->registerBladeFunction();
         $this->registerHandlebarsFunction();
-        $this->registerOmniIconFunction();
+        $this->registerJooosiIconFunctions();
     }
     private function registerTimberFunctions(): void
     {
@@ -98,14 +98,14 @@ class Latte
             return new Html($output);
         });
     }
-    private function registerOmniIconFunction(): void
+    private function registerJooosiIconFunctions(): void
     {
-        // Register function syntax: {omni_icon('mdi:home', ['class' => 'icon'])}
-        // Uses Omni Icon plugin via OmniIcon wrapper
-        $this->latte->addFunction('omni_icon', function (string $iconName, array $attributes = []) {
-            $output = \Picowind\omni_icon($iconName, $attributes);
-            return new Html($output);
-        });
+        foreach (['jooosi_icon', 'omni_icon'] as $function) {
+            $this->latte->addFunction($function, function (string $iconName, array $attributes = []) {
+                $output = \Picowind\jooosi_icon($iconName, $attributes);
+                return new Html($output);
+            });
+        }
     }
     /**
      * Render a Latte template.

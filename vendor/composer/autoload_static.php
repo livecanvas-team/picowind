@@ -1929,6 +1929,7 @@ class ComposerStaticInit09e02a71edcf4d9598b8e327c608c569
         'Picowind\\Supports\\Blockstudio' => __DIR__ . '/../..' . '/src/Supports/Blockstudio.php',
         'Picowind\\Supports\\ChildTheme' => __DIR__ . '/../..' . '/src/Supports/ChildTheme.php',
         'Picowind\\Supports\\Gutenberg' => __DIR__ . '/../..' . '/src/Supports/Gutenberg.php',
+        'Picowind\\Supports\\JooosiIcon' => __DIR__ . '/../..' . '/src/Supports/JooosiIcon.php',
         'Picowind\\Supports\\LiveCanvas' => __DIR__ . '/../..' . '/src/Supports/LiveCanvas.php',
         'Picowind\\Supports\\OmniIcon' => __DIR__ . '/../..' . '/src/Supports/OmniIcon.php',
         'Picowind\\Supports\\Shortcode' => __DIR__ . '/../..' . '/src/Supports/Shortcode.php',

@@ -1682,6 +1682,7 @@ return array(
     'Picowind\\Supports\\Blockstudio' => $baseDir . '/src/Supports/Blockstudio.php',
     'Picowind\\Supports\\ChildTheme' => $baseDir . '/src/Supports/ChildTheme.php',
     'Picowind\\Supports\\Gutenberg' => $baseDir . '/src/Supports/Gutenberg.php',
+    'Picowind\\Supports\\JooosiIcon' => $baseDir . '/src/Supports/JooosiIcon.php',
     'Picowind\\Supports\\LiveCanvas' => $baseDir . '/src/Supports/LiveCanvas.php',
     'Picowind\\Supports\\OmniIcon' => $baseDir . '/src/Supports/OmniIcon.php',
     'Picowind\\Supports\\Shortcode' => $baseDir . '/src/Supports/Shortcode.php',

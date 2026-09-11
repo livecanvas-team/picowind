@@ -5,11 +5,11 @@
             {# Previous button #}
             {% if posts.pagination.prev %}
                 <a href="{{ posts.pagination.prev.link }}" class="join-item btn">
-                    {{ omni_icon("lucide:chevron-left", {class: "w-4 h-4"}) }}
+                    {{ jooosi_icon("lucide:chevron-left", {class: "w-4 h-4"}) }}
                 </a>
             {% else %}
                 <button class="join-item btn btn-disabled">
-                    {{ omni_icon("lucide:chevron-left", {class: "w-4 h-4"}) }}
+                    {{ jooosi_icon("lucide:chevron-left", {class: "w-4 h-4"}) }}
                 </button>
             {% endif %}
 
@@ -29,11 +29,11 @@
             {# Next button #}
             {% if posts.pagination.next %}
                 <a href="{{ posts.pagination.next.link }}" class="join-item btn">
-                    {{ omni_icon("lucide:chevron-right", {class: "w-4 h-4"}) }}
+                    {{ jooosi_icon("lucide:chevron-right", {class: "w-4 h-4"}) }}
                 </a>
             {% else %}
                 <button class="join-item btn btn-disabled">
-                    {{ omni_icon("lucide:chevron-right", {class: "w-4 h-4"}) }}
+                    {{ jooosi_icon("lucide:chevron-right", {class: "w-4 h-4"}) }}
                 </button>
             {% endif %}
         </div>

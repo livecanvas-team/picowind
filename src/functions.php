@@ -9,7 +9,7 @@ declare (strict_types=1);
 namespace Picowind;
 
 use Picowind\Core\Template;
-use Picowind\Supports\OmniIcon;
+use Picowind\Supports\JooosiIcon;
 use PicowindDeps\Timber\Timber;
 /**
  * Render a template using the specified engine.
@@ -106,31 +106,44 @@ function render_string(string $template_string, array $context = [], string $eng
     }
 }
 /**
- * Render an icon using Omni Icon plugin.
+ * Render an icon using Jooosi Icon.
  *
- * This function wraps the Omni Icon plugin's IconService to render icons.
- * Requires the Omni Icon plugin to be installed and activated.
+ * The Jooosi Icon plugin is the primary provider. Legacy Omni Icon is used
+ * automatically when Jooosi Icon is unavailable.
  *
- * @param string $iconName Icon name in format "prefix:icon-name" (e.g., "mdi:home", "local:my-logo", "omni:windpress")
+ * @param string $iconName Icon name in format "prefix:icon-name" (e.g., "mdi:home", "local:my-logo", "jooosi:windpress")
  * @param array  $attributes Optional HTML attributes to add to the SVG element
  * @return string SVG HTML string or empty string if icon not found
  *
  * @example
  * // Basic usage
- * echo Picowind\omni_icon('mdi:home');
- * echo Picowind\omni_icon('local:my-logo');
- * echo Picowind\omni_icon('omni:windpress');
+ * echo Picowind\jooosi_icon('mdi:home');
+ * echo Picowind\jooosi_icon('local:my-logo');
+ * echo Picowind\jooosi_icon('jooosi:windpress');
  *
  * // With attributes
- * echo Picowind\omni_icon('mdi:home', ['class' => 'icon-large', 'width' => '32']);
+ * echo Picowind\jooosi_icon('mdi:home', ['class' => 'icon-large', 'width' => '32']);
  */
-function omni_icon(string $iconName, array $attributes = []): string
+function jooosi_icon(string $iconName, array $attributes = []): string
 {
     $theme = \Picowind\Theme::get_instance();
     $container = $theme->container();
-    /** @var \Picowind\Supports\OmniIcon */
-    $omniIcon = $container->get(OmniIcon::class);
-    return $omniIcon->get_icon($iconName, $attributes) ?? '';
+    /** @var \Picowind\Supports\JooosiIcon */
+    $jooosiIcon = $container->get(JooosiIcon::class);
+    return $jooosiIcon->get_icon($iconName, $attributes) ?? '';
+}
+/**
+ * Legacy alias for jooosi_icon().
+ *
+ * @deprecated Use Picowind\jooosi_icon() instead.
+ *
+ * @param string $iconName Icon name in format "prefix:icon-name"
+ * @param array  $attributes Optional HTML attributes to add to the SVG element
+ * @return string SVG HTML string or empty string if icon not found
+ */
+function omni_icon(string $iconName, array $attributes = []): string
+{
+    return jooosi_icon($iconName, $attributes);
 }
 /**
  * Gets the global context.

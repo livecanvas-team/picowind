@@ -30,7 +30,7 @@ class Blade
         $this->registerTwigDirective();
         $this->registerLatteDirective();
         $this->registerHandlebarsDirective();
-        $this->registerOmniIconDirective();
+        $this->registerJooosiIconDirectives();
     }
     private function registerTimberHelpers(): void
     {
@@ -67,13 +67,14 @@ class Blade
             return "<?php\n                \$__handlebarsArgs = [{$expression}];\n                \$__handlebarsTemplate = isset(\$__handlebarsArgs[0]) ? \$__handlebarsArgs[0] : '';\n                \$__handlebarsExtra = isset(\$__handlebarsArgs[1]) ? \$__handlebarsArgs[1] : [];\n                if (!empty(\$__handlebarsTemplate)) {\n                    \$__handlebarsContext = array_filter(get_defined_vars(), function(\$k) {\n                        return substr(\$k, 0, 2) !== '__';\n                    }, ARRAY_FILTER_USE_KEY);\n                    \$__handlebarsContext = array_merge(\$__handlebarsContext, \$__handlebarsExtra);\n                    echo \\Picowind\\render(\$__handlebarsTemplate, \$__handlebarsContext, 'handlebars', false);\n                }\n            ?>";
         });
     }
-    private function registerOmniIconDirective(): void
+    private function registerJooosiIconDirectives(): void
     {
-        $this->bladeBlade->directive('omni_icon', function ($expression) {
-            // Wrap the expression in array brackets to handle multiple arguments
-            // Uses Omni Icon plugin via OmniIcon wrapper
-            return "<?php\n                \$__omniIconArgs = [{$expression}];\n                \$__iconName = isset(\$__omniIconArgs[0]) ? \$__omniIconArgs[0] : '';\n                \$__iconAttrs = isset(\$__omniIconArgs[1]) ? \$__omniIconArgs[1] : [];\n                if (!empty(\$__iconName)) {\n                    echo \\Picowind\\omni_icon(\$__iconName, \$__iconAttrs);\n                }\n            ?>";
-        });
+        foreach (['jooosi_icon', 'omni_icon'] as $directive) {
+            $this->bladeBlade->directive($directive, function ($expression) {
+                // Wrap the expression in array brackets to handle multiple arguments.
+                return "<?php\n                    \$__jooosiIconArgs = [{$expression}];\n                    \$__iconName = isset(\$__jooosiIconArgs[0]) ? \$__jooosiIconArgs[0] : '';\n                    \$__iconAttrs = isset(\$__jooosiIconArgs[1]) ? \$__jooosiIconArgs[1] : [];\n                    if (!empty(\$__iconName)) {\n                        echo \\Picowind\\jooosi_icon(\$__iconName, \$__iconAttrs);\n                    }\n                ?>";
+            });
+        }
     }
     /**
      * Render a Blade template.

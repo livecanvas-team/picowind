@@ -25,7 +25,7 @@
 	{% if comments_open %}
 		<div class="comment-respond bg-base-200/50 rounded-2xl p-6 md:p-8">
 			<h3 class="text-2xl font-bold mb-6 flex items-center gap-2">
-				{{ omni_icon("lucide:message-circle", {class: "w-6 h-6"}) }}
+				{{ jooosi_icon("lucide:message-circle", {class: "w-6 h-6"}) }}
 				{{ __('Leave a Reply', 'picowind-base') }}
 			</h3>
 			{{ function('comment_form', {
@@ -43,7 +43,7 @@
 	{% elseif show_closed_message %}
 		{# Comments Closed Message #}
 		<div class="alert">
-			{{ omni_icon("lucide:alert-triangle", {class: "stroke-current shrink-0 h-6 w-6"}) }}
+				{{ jooosi_icon("lucide:alert-triangle", {class: "stroke-current shrink-0 h-6 w-6"}) }}
 			<span>{{ __('Comments are closed.', 'picowind-base') }}</span>
 		</div>
 	{% endif %}
@@ -86,7 +86,7 @@
 							</div>
 
 							<div class="badge badge-ghost badge-sm gap-1">
-								{{ omni_icon("lucide:clock", {class: "w-3 h-3"}) }}
+								{{ jooosi_icon("lucide:clock", {class: "w-3 h-3"}) }}
 								<a href="{{ function('get_comment_link', comment.comment_ID) }}" class="link link-hover text-xs">
 									{{ function('get_comment_date', '', comment.comment_ID) }}
 									{{ __('at', 'picowind-base') }}
@@ -98,7 +98,7 @@
 							{% set edit_link = function('get_edit_comment_link', comment.comment_ID) %}
 							{% if edit_link %}
 								<a href="{{ edit_link }}" class="badge badge-outline badge-sm">
-									{{ omni_icon("lucide:edit", {class: "w-3 h-3"}) }}
+									{{ jooosi_icon("lucide:edit", {class: "w-3 h-3"}) }}
 									{{ __('Edit', 'picowind-base') }}
 								</a>
 							{% endif %}
@@ -108,7 +108,7 @@
 						<div class="prose prose-sm md:prose-base max-w-none">
 							{% if comment.comment_approved == '0' %}
 								<div class="alert alert-info mb-4">
-									{{ omni_icon("lucide:info", {class: "w-5 h-5"}) }}
+								{{ jooosi_icon("lucide:info", {class: "w-5 h-5"}) }}
 									<span>{{ __('Your comment is awaiting moderation.', 'picowind-base') }}</span>
 								</div>
 							{% endif %}
