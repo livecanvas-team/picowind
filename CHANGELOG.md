@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.16] - 2026-09-11
+
 ### Added
 - Document `jooosi_icon` usage in Twig, Blade, Latte, and Handlebars templates.
 
@@ -94,7 +96,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - 🐣 Initial release.
 
-[unreleased]: https://github.com/livecanvas-team/picowind/compare/0.0.15...HEAD
+[unreleased]: https://github.com/livecanvas-team/picowind/compare/0.0.16...HEAD
+[0.0.16]: https://github.com/livecanvas-team/picowind/compare/0.0.15...0.0.16
 [0.0.15]: https://github.com/livecanvas-team/picowind/compare/0.0.14...0.0.15
 [0.0.14]: https://github.com/livecanvas-team/picowind/compare/0.0.13...0.0.14
 [0.0.13]: https://github.com/livecanvas-team/picowind/compare/0.0.12...0.0.13

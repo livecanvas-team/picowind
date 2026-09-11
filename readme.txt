@@ -4,7 +4,7 @@ Tags: livecanvas, tailwind css, twig, blade, latte
 Requires at least: 6.8
 Tested up to: 6.9
 Requires PHP: 8.2
-Stable tag: 0.0.15
+Stable tag: 0.0.16
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -118,6 +118,16 @@ Yes. Picowind resolves templates from child and parent locations with a fallback
 5. Jooosi Icon usage in templates
 
 == Changelog ==
+
+= 0.0.16 - 2026-09-11 =
+
+**Added**
+
+* Document `jooosi_icon` usage in Twig, Blade, Latte, and Handlebars templates.
+
+**Changed**
+
+* Rebrand the Omni Icon as Jooosi Icon.
 
 = 0.0.15 - 2026-09-01 =
 
