@@ -11,6 +11,10 @@ declare(strict_types=1);
 namespace Picowind\Supports;
 
 use Picowind\Core\Discovery\Attributes\Service;
+use JooosiIcon\Services\IconService as JooosiIconService;
+use OmniIcon\Services\IconService as OmniIconService;
+use JooosiIcon\Plugin as JooosiIconPlugin;
+use OmniIcon\Plugin as OmniIconPlugin;
 
 /**
  * Jooosi Icon plugin wrapper service.
@@ -31,68 +35,6 @@ use Picowind\Core\Discovery\Attributes\Service;
 class JooosiIcon
 {
     /**
-     * Plugin and service classes ordered from primary to compatibility.
-     *
-     * @var array<string, string>
-     */
-    private const ICON_PLUGINS = [
-        'JooosiIcon\Plugin' => 'JooosiIcon\Services\IconService',
-        'OmniIcon\Plugin' => 'OmniIcon\Services\IconService',
-    ];
-
-    /**
-     * Resolve the first installed icon plugin.
-     *
-     * @return null|string
-     */
-    private function get_plugin_class(): ?string
-    {
-        foreach (array_keys(self::ICON_PLUGINS) as $pluginClass) {
-            if (class_exists($pluginClass)) {
-                return $pluginClass;
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * Check if an icon plugin is installed and activated.
-     *
-     * @return bool True if an icon plugin is active, false otherwise
-     */
-    private function is_icon_plugin_active(): bool
-    {
-        return null !== $this->get_plugin_class();
-    }
-
-    /**
-     * Get the active icon plugin's IconService instance.
-     *
-     * @return null|object
-     */
-    private function get_icon_service(): ?object
-    {
-        $pluginClass = $this->get_plugin_class();
-        if (null === $pluginClass) {
-            return null;
-        }
-
-        try {
-            $plugin = $pluginClass::get_instance();
-            $container = $plugin->container();
-
-            return $container->get(self::ICON_PLUGINS[$pluginClass]);
-        } catch (\Throwable $e) {
-            if (defined('WP_DEBUG') && WP_DEBUG) {
-                error_log("JooosiIcon: Failed to get IconService - {$e->getMessage()}");
-            }
-
-            return null;
-        }
-    }
-
-    /**
      * Get an icon using Jooosi Icon, with legacy Omni Icon compatibility.
      *
      * @param string $iconName Icon name in format "prefix:icon-name" (e.g., "mdi:home", "local:my-logo", "jooosi:windpress")
@@ -101,21 +43,16 @@ class JooosiIcon
      */
     public function get_icon(string $iconName, array $attributes = []): ?string
     {
-        if (! $this->is_icon_plugin_active()) {
-            if (defined('WP_DEBUG') && WP_DEBUG) {
-                error_log('JooosiIcon: Jooosi Icon is not installed or activated. Legacy Omni Icon compatibility was also not found.');
-            }
-
-            return null;
-        }
-
         if (! str_contains($iconName, ':')) {
             return null;
         }
 
         try {
-            $iconService = $this->get_icon_service();
-            if (null === $iconService || ! method_exists($iconService, 'get_icon')) {
+            if (class_exists(JooosiIconService::class)) {
+                $iconService = JooosiIconPlugin::get_instance()->container()->get(JooosiIconService::class);
+            } elseif (class_exists(OmniIconService::class)) {
+                $iconService = OmniIconPlugin::get_instance()->container()->get(OmniIconService::class);
+            } else {
                 return null;
             }
 
@@ -128,7 +65,19 @@ class JooosiIcon
                 }
             }
 
-            return $iconService->get_icon($iconName, $attributes);
+            /** @var JooosiIconService|OmniIconService $iconService */
+
+            $sanitized = $iconService->get_icon($iconName, $attributes);
+
+            if ($sanitized === false || empty($sanitized)) {
+                if (defined('WP_DEBUG') && WP_DEBUG) {
+                    error_log("JooosiIcon: failed to retrieve icon '{$iconName}'");
+                }
+                return null;
+            }
+
+            // remove XML declaration if present
+            return preg_replace('/\A(?:\xEF\xBB\xBF)?\s*<\?xml(?=\s).*?\?>\s*/is', '', $sanitized);
         } catch (\Throwable $e) {
             if (defined('WP_DEBUG') && WP_DEBUG) {
                 error_log("JooosiIcon error: {$e->getMessage()}");
