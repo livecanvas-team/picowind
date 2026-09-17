@@ -4,7 +4,7 @@ Tags: livecanvas, tailwind css, twig, blade, latte
 Requires at least: 6.8
 Tested up to: 6.9
 Requires PHP: 8.2
-Stable tag: 0.0.16
+Stable tag: 0.0.17
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -118,6 +118,12 @@ Yes. Picowind resolves templates from child and parent locations with a fallback
 5. Jooosi Icon usage in templates
 
 == Changelog ==
+
+= 0.0.17 - 2026-09-17 =
+
+**Fixed**
+
+* Jooosi Icon service resolution and SVG output handling.
 
 = 0.0.16 - 2026-09-11 =
 
